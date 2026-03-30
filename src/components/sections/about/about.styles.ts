@@ -13,7 +13,7 @@ export const aboutStyles = {
 
   bioSection: "flex flex-col md:flex-row gap-5 md:gap-8 items-start",
   avatarWrapper:
-    "w-24 h-32 md:w-36 md:h-52 flex-shrink-0 rounded-lg overflow-hidden border-2 border-accent-primary/30 bg-surface flex items-center justify-center",
+    "relative w-24 h-32 md:w-36 md:h-52 flex-shrink-0 rounded-lg overflow-hidden border-2 border-accent-primary/30 bg-surface flex items-center justify-center",
   avatarInitial:
     "w-full h-full flex items-center justify-center text-3xl md:text-5xl font-bold text-accent-primary",
 
