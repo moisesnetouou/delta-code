@@ -14,7 +14,7 @@ export const heroStyles = {
   socialLink: `
     p-3 md:p-3 rounded-xl bg-surface/80 border border-foreground-muted/10 
     hover:border-accent-primary/50 hover:bg-accent-primary/10 
-    transition-all duration-300 group cursor-pointer
+    transition-all duration-300 group
   `,
   socialIcon:
     "w-5 h-5 md:w-6 md:h-6 text-foreground-muted group-hover:text-accent-primary transition-colors",
