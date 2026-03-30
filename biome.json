@@ -1,8 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.0/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
   "linter": {
     "enabled": true,
     "rules": {
@@ -11,8 +8,17 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "spaces",
+    "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 80
+    "lineWidth": 80,
+    "formatWithErrors": true
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "files": {
+    "includes": ["src/**", "app/**", "*.ts", "*.tsx", "*.json"]
   }
 }

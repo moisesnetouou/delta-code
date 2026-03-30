@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: "Moisés Neto",
-  title: "Frontend Engineer | React & Next.js",
-  tagline: "Building performant interfaces with modern tools",
+  title: "Frontend Engineer (React & Next.js) | IA & Automação",
+  tagline: "",
   email: "moisesnetored@gmail.com",
   phone: "(92) 99508-5478",
   location: "Manaus, Brasil",
@@ -10,38 +10,88 @@ export const personalInfo = {
 };
 
 export const summary =
-  "Desenvolvedor Frontend com +5 anos de experiência em arquitetura de aplicações, liderança técnica e construção de interfaces escaláveis. Especialista em testes automatizados, automação com IA e práticas modernas de DX (Developer Experience).";
+  "Desenvolvedor Frontend com +5 anos de experiência em arquitetura de aplicações, liderança técnica e construção de interfaces escaláveis. Especialista em testes automatizados, automação com IA e práticas modernas de DX (Developer Experience). Já resolvi demandas que passaram por outras pessoas e, mesmo não sendo diretamente do meu cargo, consegui entregar resultados: criei fluxo de chatbot integrando n8n para suprir limitações da plataforma, e automatizei análise de tickets da Blip usando CLI com prompts, Node.js e IA. Resolvi em menos de 3 dias algo que manualmente levaria semanas ou um mês, usando apenas $5 em tokens.";
 
 export const experiences = [
   {
     id: "1",
-    role: "Senior Frontend Developer",
-    company: "Tech Solutions",
-    location: "Remoto",
-    period: "2022 - Atual",
+    role: "Frontend Engineer",
+    company: "i_mais",
+    companyUrl: "https://imais.com.br/",
+    location: "Manaus, Brasil",
+    period: "Set 2025 - Atual",
     description:
-      "Liderança técnica em projetos de grande escala. Implementação de arquitetura de componentes reutilizáveis, migração para Next.js 14, e otimização de performance com redução de 40% no bundle size.",
-    technologies: ["React", "Next.js", "TypeScript", "GraphQL", "Testing Library"],
+      "Liderança técnica de projetos frontend com React, Next.js e TypeScript. Definição de stack, padrões de arquitetura e garantias de qualidade. Automação de testes com estrutura própria baseada em Playwright MCP, criando testes para novas funcionalidades em minutos. Pipeline de testes (unitários, integração e E2E) via GitHub Actions. Integração com Sentry MCP para análise e resolução de bugs em tempo real. CLI com IA para análise automática de tickets, processando 300 tickets de uma vez e gerando relatórios consolidados. Revisão de PRs automatizada com Claude Code e skills customizadas. Colaboração com UX/UI para transformar protótipos em interfaces responsivas com TailwindCSS, Shadcn e Radix UI. Deploy contínuo com GitHub Actions (stage e production) com pipelines de tipagem, lint e testes.",
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Playwright",
+      "Sentry MCP",
+      "GitHub Actions",
+      "TailwindCSS",
+      "Hygraph",
+      "Claude Code",
+      "Radix UI",
+    ],
   },
   {
     id: "2",
-    role: "Frontend Developer",
-    company: "Digital Agency",
+    role: "Tech Lead Temporário",
+    company: "i_mais",
+    companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
-    period: "2020 - 2022",
+    period: "Jan 2026 - Abr 2026",
     description:
-      "Desenvolvimento de interfaces responsivas para clientes de diversos setores. Participação em squads ágeis e implementação de design systems.",
-    technologies: ["React", "TypeScript", "TailwindCSS", "Storybook", "Jest"],
+      "Liderança de time de 3 desenvolvedores (2 frontend + 1 backend) + 1 UX. Responsável por dailies, orientação técnica e decisões de produto. Coordenação de ambas as áreas (frontend e backend). Auxílio na lógica de produto e validação de soluções.",
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Liderança Técnica",
+      "Scrum",
+    ],
   },
   {
     id: "3",
-    role: "Junior Frontend Developer",
-    company: "Startup Innovadora",
+    role: "Desenvolvedor Frontend Pleno",
+    company: "i_mais",
+    companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
-    period: "2018 - 2020",
+    period: "Out 2022 - Set 2025",
     description:
-      "Desenvolvimento de features para aplicação web SaaS. Colaboração com equipe de design para implementação de UI/UX.",
-    technologies: ["JavaScript", "React", "CSS", "Git", "Figma"],
+      "Supervisão e suporte técnico a desenvolvedores júnior e pleno. Decisões técnicas dos projetos sem necessidade de aprovação do tech lead. Documentação técnica de projetos frontend e fluxos de chatbot. Treinamento de novos devs sobre construção de chatbots e fluxos Blip. Projeto de maior impacto: Leads — que escalou significativamente. Estruturação de arquiteturas escaláveis. Implementação de testes automatizados com Vitest, Testing Library, Cypress e Playwright.",
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "Vitest",
+      "Testing Library",
+      "Cypress",
+      "Playwright",
+    ],
+  },
+  {
+    id: "4",
+    role: "Desenvolvedor Frontend Jr",
+    company: "i_mais",
+    companyUrl: "https://imais.com.br/",
+    location: "Manaus, Brasil",
+    period: "Jul 2021 - Set 2022",
+    description:
+      "Desenvolvimento de aplicações web e blogs com React, PrismicCMS, HTML, CSS, JavaScript. Desenvolvimento de aplicativos mobile com React Native e Expo. Criação e manutenção de documentação de componentes com Storybook. Projeto e implementação do bot inicial da empresa. Entregou +8 projetos.",
+    technologies: [
+      "React",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Blip",
+      "Prismic",
+      "React Native",
+      "Expo",
+      "Storybook",
+    ],
   },
 ];
 
@@ -51,7 +101,13 @@ export const projects = [
     title: "E-commerce Platform",
     description:
       "Plataforma completa de e-commerce com React e Node.js. Inclui sistema de pagamentos, inventário em tempo real e dashboard administrativo.",
-    technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "TailwindCSS"],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Stripe",
+      "PostgreSQL",
+      "TailwindCSS",
+    ],
     link: "https://github.com/moisesnetouou/ecommerce",
     live: "https://ecommerce-demo.com",
   },
@@ -59,7 +115,7 @@ export const projects = [
     id: "2",
     title: "Task Management App",
     description:
-      "Aplicação de gestão de tarefas com Kanban board, gamificação e integração com日历. Focus em UX e performance.",
+      "Aplicação de gestão de tarefas com Kanban board, gamificação e integração com calendário. Focus em UX e performance.",
     technologies: ["React", "Vite", "Zustand", "Firebase", "Framer Motion"],
     link: "https://github.com/moisesnetouou/taskapp",
   },
@@ -83,7 +139,7 @@ export const projects = [
 
 export const skills = [
   {
-    category: "Frontend",
+    category: "Frontend & Frameworks",
     items: [
       "React",
       "Next.js",
@@ -91,45 +147,120 @@ export const skills = [
       "JavaScript",
       "HTML/CSS",
       "TailwindCSS",
-      "Framer Motion",
-      "Storybook",
+      "Zustand",
+      "React Query",
+      "Zod",
+      "Chakra UI",
+      "Shadcn",
+      "Radix UI",
+      "Styled Components",
+      "Stitches",
     ],
   },
   {
-    category: "Testing & Quality",
-    items: ["Jest", "React Testing Library", "Cypress", "Playwright", "ESLint", "Prettier"],
+    category: "Prototipação & Design",
+    items: ["Figma", "Pencil", "FigJam"],
   },
   {
-    category: "Tools & DevOps",
-    items: ["Git", "GitHub Actions", "Docker", "Vercel", "npm/yarn/pnpm"],
+    category: "Automação & IA",
+    items: [
+      "Claude Code",
+      "OpenCode",
+      "Playwright MCP",
+      "Sentry MCP",
+      "n8n",
+      "CLI customizado com IA",
+      "Automação de Processos",
+    ],
+  },
+  {
+    category: "Bots & Chatbots",
+    items: [
+      "Blip",
+      "Criação de Fluxograma",
+      "Arquiteto de Bot",
+      "RD Conversas",
+      "ManyChat",
+      "BotConversas",
+    ],
+  },
+  {
+    category: "CMS & Headless",
+    items: ["Prismic", "Hygraph"],
+  },
+  {
+    category: "Backend",
+    items: [
+      "Node.js",
+      "Fastify",
+      "Prisma",
+      "Drizzle",
+      "REST API",
+      "PostgreSQL",
+      "Swagger",
+    ],
+  },
+  {
+    category: "Testes & Qualidade",
+    items: [
+      "Vitest",
+      "Testing Library",
+      "Cypress",
+      "Playwright",
+      "Jest",
+      "Testes Unitários",
+      "Testes de Integração",
+      "Testes E2E",
+    ],
+  },
+  {
+    category: "Ferramentas & Infra",
+    items: [
+      "Git",
+      "GitHub Actions",
+      "CI/CD",
+      "Jira",
+      "Vercel",
+      "Railway",
+      "Docker",
+      "Deploy",
+    ],
   },
   {
     category: "Soft Skills",
-    items: ["Liderança Técnica", "Code Review", "Mentoria", "Comunicação", "Agile/Scrum"],
+    items: [
+      "Liderança Técnica",
+      "Mentoria",
+      "Scrum",
+      "Kanban",
+      "Pensamento Crítico",
+      "Comunicação",
+      "Documentação Técnica",
+    ],
   },
 ];
 
 export const certifications = [
   {
     id: "1",
-    title: "Meta Front-End Developer Professional Certificate",
-    issuer: "Meta",
-    date: "2023",
-    link: "https://www.coursera.org/professional-certificates/meta-front-end-developer",
+    title: "NLW Operator - Fullstack",
+    issuer: "Rocketseat",
+    date: "Mar 2026",
+    link: "https://app.rocketseat.com.br/certificates/3ed35a9a-62ba-4fbc-b664-8cef30805589",
   },
   {
     id: "2",
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    date: "2022",
-    link: "https://aws.amazon.com/certification/",
+    title: "Desafio Full-Stack com IA",
+    issuer: "Rocketseat",
+    date: "Nov 2025",
+    link: "https://app.rocketseat.com.br/certificates/2662d39d-922f-4ee9-b1df-db477e90b73d",
   },
   {
     id: "3",
-    title: "React Advanced Patterns - Workshop",
-    issuer: "Frontend Masters",
-    date: "2022",
-    link: "https://frontendmasters.com/workshops/react-advanced/",
+    title: "NLW Agents - Avançado",
+    issuer: "Rocketseat",
+    date: "Jul 2025",
+    link: "https://app.rocketseat.com.br/certificates/7a226fe8-eee9-44ad-ade8-7c82fef33764",
   },
 ];
 

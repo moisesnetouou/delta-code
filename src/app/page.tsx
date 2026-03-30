@@ -1,17 +1,16 @@
-import Hero from "@/components/sections/hero/hero";
 import About from "@/components/sections/about/about";
-import Experience from "@/components/sections/experience/experience";
-import Projects from "@/components/sections/projects/projects";
-import Skills from "@/components/sections/skills/skills";
-import Certifications from "@/components/sections/certifications/certifications";
 import Contact from "@/components/sections/contact/contact";
+import Hero from "@/components/sections/hero/hero";
+import Skills from "@/components/sections/skills/skills";
+import Timeline from "@/components/sections/timeline/timeline";
 import {
-  personalInfo,
-  summary,
-  experiences,
-  projects,
-  skills,
   certifications,
+  education,
+  experiences,
+  languages,
+  personalInfo,
+  skills,
+  summary,
 } from "@/data/portfolio-data";
 
 export default function Home() {
@@ -26,15 +25,18 @@ export default function Home() {
         email={personalInfo.email}
       />
 
-      <About summary={summary} location={personalInfo.location} phone={personalInfo.phone} />
+      <About
+        summary={summary}
+        location={personalInfo.location}
+        phone={personalInfo.phone}
+        education={education}
+        languages={languages}
+        certifications={certifications}
+      />
 
-      <Experience experiences={experiences} />
-
-      <Projects projects={projects} />
+      <Timeline experiences={experiences} />
 
       <Skills skills={skills} />
-
-      <Certifications certifications={certifications} />
 
       <Contact
         email={personalInfo.email}

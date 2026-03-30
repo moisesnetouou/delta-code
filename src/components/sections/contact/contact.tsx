@@ -1,91 +1,135 @@
 "use client";
 
-import { GitBranch, Link, Mail, Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { Download, Mail, Send } from "lucide-react";
+import { useEffect, useState } from "react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
+import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
 import { contactStyles } from "./contact.styles";
 import type { ContactProps } from "./contact.types";
 
 export default function Contact({ email, linkedin, github }: ContactProps) {
+  const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
+  const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById("contact");
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const isVisible = rect.bottom <= window.innerHeight + 100;
+        if (isVisible && !isAchievementUnlocked("view_contact")) {
+          unlockAchievement("view_contact");
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = "/curriculo.pdf";
+    link.download = "Curriculo-Moises-Neto.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    if (!isAchievementUnlocked("download_cv")) {
+      unlockAchievement("download_cv");
+    }
+  };
+
+  const handleLinkedinClick = () => {
+    if (!hasNavigatedLinkedin && !isAchievementUnlocked("click_linkedin")) {
+      unlockAchievement("click_linkedin");
+      setHasNavigatedLinkedin(true);
+      setTimeout(() => {
+        window.open(linkedin, "_blank");
+      }, 1500);
+    } else {
+      window.open(linkedin, "_blank");
+    }
+  };
+
+  const handleGithubClick = () => {
+    if (!hasNavigatedGithub && !isAchievementUnlocked("click_github")) {
+      unlockAchievement("click_github");
+      setHasNavigatedGithub(true);
+      setTimeout(() => {
+        window.open(github, "_blank");
+      }, 1500);
+    } else {
+      window.open(github, "_blank");
+    }
+  };
+
   return (
-    <section className={contactStyles.section}>
+    <section id="contact" className={contactStyles.section}>
       <div className={contactStyles.container}>
-        <div className={contactStyles.header}>
+        <motion.div
+          className={contactStyles.header}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <div className={contactStyles.icon}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
+            <Mail className="w-5 h-5" />
           </div>
           <h2 className={contactStyles.title}>Contato</h2>
-        </div>
+        </motion.div>
 
-        <div className={contactStyles.content}>
-          <div className={contactStyles.info}>
-            <div className={contactStyles.infoItem}>
-              <div className={contactStyles.infoIcon}>
-                <Mail className="w-full h-full" />
-              </div>
-              <div>
-                <p className={contactStyles.infoLabel}>Email</p>
-                <a href={`mailto:${email}`} className={contactStyles.infoLink}>
-                  {email}
-                </a>
-              </div>
-            </div>
-            <div className={contactStyles.infoItem}>
-              <div className={contactStyles.infoIcon}>
-                <Link className="w-full h-full" />
-              </div>
-              <div>
-                <p className={contactStyles.infoLabel}>LinkedIn</p>
-                <a
-                  href={linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={contactStyles.infoLink}
-                >
-                  linkedin.com/in/moisesnetouou
-                </a>
-              </div>
-            </div>
-            <div className={contactStyles.infoItem}>
-              <div className={contactStyles.infoIcon}>
-                <GitBranch className="w-full h-full" />
-              </div>
-              <div>
-                <p className={contactStyles.infoLabel}>GitHub</p>
-                <a
-                  href={github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={contactStyles.infoLink}
-                >
-                  github.com/moisesnetouou
-                </a>
-              </div>
-            </div>
-          </div>
+        <motion.div
+          className={contactStyles.content}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <motion.a
+            href={`mailto:${email}`}
+            className={contactStyles.primaryButton}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Send className="w-5 h-5" />
+            Enviar Mensagem
+          </motion.a>
 
-          <div className={contactStyles.cta}>
-            <h3 className={contactStyles.ctaTitle}>Vamos trabalhar juntos?</h3>
-            <p className={contactStyles.ctaText}>
-              Estou disponível para projetos freelance e oportunidades full-time.
-            </p>
-            <a href={`mailto:${email}`} className={contactStyles.ctaButton}>
-              <Send className="w-5 h-5" />
-              Enviar Mensagem
-            </a>
+          <div className={contactStyles.links}>
+            <motion.button
+              onClick={handleDownloadCV}
+              className={contactStyles.linkItem}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Download className={contactStyles.linkIcon} />
+              <span className={contactStyles.linkText}>Baixar Currículo</span>
+            </motion.button>
+
+            <motion.button
+              onClick={handleLinkedinClick}
+              className={contactStyles.linkItem}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <LinkedinIcon className={contactStyles.linkIcon} />
+              <span className={contactStyles.linkText}>LinkedIn</span>
+            </motion.button>
+
+            <motion.button
+              onClick={handleGithubClick}
+              className={contactStyles.linkItem}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <GithubIcon className={contactStyles.linkIcon} />
+              <span className={contactStyles.linkText}>GitHub</span>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

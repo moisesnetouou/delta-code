@@ -1,55 +1,54 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import { certificationsStyles } from "./certifications.styles";
 import type { CertificationsProps } from "./certifications.types";
 
-export default function Certifications({ certifications }: CertificationsProps) {
+export default function Certifications({
+  certifications,
+}: CertificationsProps) {
   return (
-    <section className={certificationsStyles.section}>
+    <section id="certifications" className={certificationsStyles.section}>
       <div className={certificationsStyles.container}>
-        <div className={certificationsStyles.header}>
+        <motion.div
+          className={certificationsStyles.header}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <div className={certificationsStyles.icon}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="8" r="6" />
-              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-            </svg>
+            <Award className="w-5 h-5" />
           </div>
           <h2 className={certificationsStyles.title}>Certificações</h2>
-        </div>
+        </motion.div>
 
         <div className={certificationsStyles.grid}>
-          {certifications.map((cert) => (
-            <div key={cert.id} className={certificationsStyles.card}>
-              <div className={certificationsStyles.cardHeader}>
-                <div className={certificationsStyles.cardIcon}>
-                  <Award className="w-full h-full" />
-                </div>
-                <h3 className={certificationsStyles.cardTitle}>{cert.title}</h3>
+          {certifications.map((cert, index) => (
+            <motion.a
+              key={cert.id}
+              href={cert.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={certificationsStyles.card}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className={certificationsStyles.iconWrapper}>
+                <Award className="w-6 h-6" />
               </div>
-              <p className={certificationsStyles.cardMeta}>
-                {cert.issuer} • {cert.date}
-              </p>
-              <a
-                href={cert.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={certificationsStyles.cardLink}
-              >
-                <ExternalLink className={certificationsStyles.cardLinkIcon} />
-                Verificar
-              </a>
-            </div>
+              <div className={certificationsStyles.content}>
+                <h3 className={certificationsStyles.cardTitle}>{cert.title}</h3>
+                <p className={certificationsStyles.issuer}>
+                  {cert.issuer} • {cert.date}
+                </p>
+              </div>
+              <ExternalLink className="w-4 h-4 text-accent-primary flex-shrink-0" />
+            </motion.a>
           ))}
         </div>
       </div>
