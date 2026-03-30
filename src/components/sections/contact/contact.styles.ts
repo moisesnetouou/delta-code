@@ -11,7 +11,7 @@ export const contactStyles = {
   linkItem: `
     flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-xl bg-surface/50 
     border border-foreground-muted/10 hover:border-accent-primary/40 
-    hover:bg-surface transition-all duration-300 group
+    hover:bg-surface transition-all duration-300 group cursor-pointer
   `,
   linkIcon:
     "w-4 h-4 md:w-5 md:h-5 text-foreground-muted group-hover:text-accent-primary transition-colors",

@@ -8,7 +8,7 @@ export const certificationsStyles = {
   card: `
     flex items-center gap-4 p-4 rounded-xl bg-surface/50 
     border border-foreground-muted/10 hover:border-accent-secondary/30 
-    transition-all duration-300 group
+    transition-all duration-300 group cursor-pointer
   `,
   iconWrapper: `
     w-12 h-12 rounded-xl bg-accent-secondary/10 flex items-center justify-center 

@@ -34,7 +34,7 @@ export default function Projects({ projects }: ProjectsProps) {
           {projects.map((project) => (
             <Card
               key={project.id}
-              className="bg-surface border-foreground-muted/10 hover:border-accent-secondary/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent-secondary/10"
+              className="bg-surface border-foreground-muted/10 hover:border-accent-secondary/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent-secondary/10 cursor-pointer"
             >
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
