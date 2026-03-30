@@ -3,8 +3,8 @@
 import { ExternalLink, GitBranch } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { projectsStyles } from "./projects.styles";
-import type { ProjectsProps } from "./projects.types";
+import { projectsStyles } from "./styles";
+import type { ProjectsProps } from "./types";
 
 export default function Projects({ projects }: ProjectsProps) {
   return (

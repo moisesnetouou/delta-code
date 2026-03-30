@@ -10,8 +10,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
-import { aboutStyles } from "./about.styles";
-import type { AboutProps } from "./about.types";
+import { aboutStyles } from "./styles";
+import type { AboutProps } from "./types";
 
 export default function About({
   summary,

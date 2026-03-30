@@ -5,8 +5,8 @@ import { Download, Mail, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
-import { contactStyles } from "./contact.styles";
-import type { ContactProps } from "./contact.types";
+import { contactStyles } from "./styles";
+import type { ContactProps } from "./types";
 
 export default function Contact({ email, linkedin, github }: ContactProps) {
   const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);

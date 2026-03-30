@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
-import { certificationsStyles } from "./certifications.styles";
-import type { CertificationsProps } from "./certifications.types";
+import { certificationsStyles } from "./styles";
+import type { CertificationsProps } from "./types";
 
 export default function Certifications({
   certifications,

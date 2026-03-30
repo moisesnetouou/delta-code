@@ -21,8 +21,8 @@ import {
 } from "@/data/skill-descriptions";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
 import { getIcon } from "@/lib/icons";
-import { skillsStyles } from "./skills.styles";
-import type { SkillsProps } from "./skills.types";
+import { skillsStyles } from "./styles";
+import type { SkillsProps } from "./types";
 
 type CategoryType =
   | "frontend"

@@ -12,7 +12,7 @@ import {
 } from "@/data/skill-descriptions";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
 import { getIcon } from "@/lib/icons";
-import type { TimelineProps } from "./timeline.types";
+import type { TimelineProps } from "./types";
 
 const techToCategory: Record<string, string> = {};
 skills.forEach((category) => {

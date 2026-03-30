@@ -5,8 +5,8 @@ import { ArrowDown, FileText } from "lucide-react";
 import { useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
-import { heroStyles } from "./hero.styles";
-import type { HeroProps } from "./hero.types";
+import { heroStyles } from "./styles";
+import type { HeroProps } from "./types";
 
 export default function Hero({
   name,

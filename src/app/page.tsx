@@ -1,8 +1,8 @@
-import About from "@/components/sections/about/about";
-import Contact from "@/components/sections/contact/contact";
-import Hero from "@/components/sections/hero/hero";
-import Skills from "@/components/sections/skills/skills";
-import Timeline from "@/components/sections/timeline/timeline";
+import About from "@/components/sections/about";
+import Contact from "@/components/sections/contact";
+import Hero from "@/components/sections/hero";
+import Skills from "@/components/sections/skills";
+import Timeline from "@/components/sections/timeline";
 import {
   certifications,
   education,

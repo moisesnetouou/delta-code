@@ -1,4 +1,4 @@
-import { sectionStyles } from "../about/about.styles";
+import { sectionStyles } from "../about/styles";
 
 export const projectsStyles = {
   ...sectionStyles,
