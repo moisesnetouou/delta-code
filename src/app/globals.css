@@ -4,8 +4,13 @@
 @theme {
   --color-background: #050508;
   --color-surface: #0a0a10;
+  --color-surface-2: #12121a;
+  --color-surface-3: #1a1a25;
   --color-foreground: #f0f0f5;
   --color-foreground-muted: #9090a0;
+  --color-foreground-soft: #b0b0b0;
+  --color-foreground-dim: #666666;
+  --color-border-subtle: #2a2a35;
   --color-accent-primary: #00d9ff;
   --color-accent-secondary: #8b5cf6;
   --color-success: #10b981;

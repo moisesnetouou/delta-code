@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://moisesneto.dev"),
+  metadataBase: new URL("https://delta-code-dev.vercel.app/"),
   title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
   description:
     "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots. Veja meu portfólio!",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://moisesneto.dev",
+    url: "https://delta-code-dev.vercel.app/",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
       "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots.",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     creator: "@moisesnetouou",
   },
   alternates: {
-    canonical: "https://moisesneto.dev",
+    canonical: "https://delta-code-dev.vercel.app/",
   },
 };
 

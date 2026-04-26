@@ -4,17 +4,14 @@ import { motion } from "framer-motion";
 import { ArrowDown, FileText } from "lucide-react";
 import { useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
+import { personalInfo } from "@/data/portfolio-data";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
 import { heroStyles } from "./styles";
-import type { HeroProps } from "./types";
 
-export default function Hero({
-  name,
-  title,
-  tagline,
-  linkedin,
-  github,
-}: HeroProps) {
+export default function Hero() {
+  const styles = heroStyles();
+  const { name, title, tagline, linkedin, github } = personalInfo;
+
   const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
   const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
 
@@ -56,32 +53,16 @@ export default function Hero({
   };
 
   return (
-    <section id="hero" className={heroStyles.container}>
-      <div className={heroStyles.backgroundGradient} />
-      <div className={heroStyles.backgroundGrid} />
+    <section id="hero" className={styles.container()}>
+      <div className={styles.backgroundGradient()} />
+      <div className={styles.backgroundGrid()} />
 
-      <div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-20 animate-pulse-slow"
-        style={{
-          top: "5%",
-          left: "0%",
-          background: "radial-gradient(circle, #00d9ff 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-      />
-      <div
-        className="absolute w-[500px] h-[500px] rounded-full opacity-15 animate-pulse-slower"
-        style={{
-          bottom: "10%",
-          right: "0%",
-          background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
+      <div className={styles.orbCyan()} />
+      <div className={styles.orbPurple()} />
 
-      <div className={heroStyles.content}>
+      <div className={styles.content()}>
         <motion.h1
-          className={heroStyles.name}
+          className={styles.name()}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -90,7 +71,7 @@ export default function Hero({
         </motion.h1>
 
         <motion.p
-          className={heroStyles.title}
+          className={styles.title()}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -100,7 +81,7 @@ export default function Hero({
 
         {tagline && (
           <motion.p
-            className={heroStyles.tagline}
+            className={styles.tagline()}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -110,53 +91,53 @@ export default function Hero({
         )}
 
         <motion.div
-          className={heroStyles.socialLinks}
+          className={styles.socialLinks()}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <motion.button
             onClick={handleLinkedinClick}
-            className={heroStyles.socialLink}
+            className={styles.socialLink()}
             aria-label="LinkedIn"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <LinkedinIcon className={heroStyles.socialIcon} />
+            <LinkedinIcon className={styles.socialIcon()} />
           </motion.button>
           <motion.button
             onClick={handleGithubClick}
-            className={heroStyles.socialLink}
+            className={styles.socialLink()}
             aria-label="GitHub"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <GithubIcon className={heroStyles.socialIcon} />
+            <GithubIcon className={styles.socialIcon()} />
           </motion.button>
           <motion.button
             onClick={handleDownloadCV}
-            className={heroStyles.socialLink}
+            className={styles.socialLink()}
             aria-label="Baixar Currículo"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <FileText className={heroStyles.socialIcon} />
+            <FileText className={styles.socialIcon()} />
           </motion.button>
         </motion.div>
       </div>
 
       <motion.div
-        className={heroStyles.scrollIndicator}
+        className={styles.scrollIndicator()}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
       >
-        <span className="text-xs uppercase tracking-widest">Scroll</span>
+        <span className={styles.scrollLabel()}>Scroll</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          <ArrowDown className={heroStyles.scrollIcon} />
+          <ArrowDown className={styles.scrollIcon()} />
         </motion.div>
       </motion.div>
     </section>

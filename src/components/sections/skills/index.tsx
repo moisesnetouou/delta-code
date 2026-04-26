@@ -106,6 +106,7 @@ interface SkillWithCategory {
 }
 
 export default function Skills({ skills }: SkillsProps) {
+  const styles = skillsStyles();
   const [selectedSkill, setSelectedSkill] = useState<SkillWithCategory | null>(
     null,
   );
@@ -137,19 +138,19 @@ export default function Skills({ skills }: SkillsProps) {
 
   return (
     <>
-      <section id="skills" className={skillsStyles.section}>
-        <div className={skillsStyles.container}>
+      <section id="skills" className={styles.section()}>
+        <div className={styles.container()}>
           <motion.div
-            className={skillsStyles.header}
+            className={styles.header()}
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className={skillsStyles.icon}>
+            <div className={styles.icon()}>
               <Layers className="w-5 h-5" />
             </div>
-            <h2 className={skillsStyles.title}>Habilidades</h2>
+            <h2 className={styles.title()}>Habilidades</h2>
           </motion.div>
 
           <div className="space-y-8">
@@ -168,19 +169,19 @@ export default function Skills({ skills }: SkillsProps) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: catIndex * 0.1 }}
                 >
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className={styles.categoryRow()}>
                     <span
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${style.bg} ${style.border} ${style.text}`}
+                      className={`${styles.categoryBadge()} ${style.bg} ${style.border} ${style.text}`}
                     >
                       {style.icon}
                       {config.label}
                     </span>
-                    <h3 className="text-sm font-medium text-foreground-muted">
+                    <h3 className={styles.categoryName()}>
                       {skillCategory.category}
                     </h3>
                   </div>
 
-                  <div className={skillsStyles.grid}>
+                  <div className={styles.grid()}>
                     {skillCategory.items.map((item, itemIndex) => {
                       const description = getSkillDescription(item);
                       return (
@@ -191,7 +192,7 @@ export default function Skills({ skills }: SkillsProps) {
                             handleSkillClick(item, skillCategory.category)
                           }
                           disabled={!description}
-                          className={skillsStyles.skillItem}
+                          className={styles.skillItem()}
                           initial={{ opacity: 0, scale: 0.9 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
@@ -202,10 +203,10 @@ export default function Skills({ skills }: SkillsProps) {
                           whileHover={description ? { scale: 1.05 } : {}}
                           whileTap={description ? { scale: 0.95 } : {}}
                         >
-                          <div className={styles.skillIcon}>
+                          <div className={styles.skillIcon()}>
                             {getIcon(item)}
                           </div>
-                          <span className={skillsStyles.skillName}>{item}</span>
+                          <span className={styles.skillName()}>{item}</span>
                         </motion.button>
                       );
                     })}
@@ -221,11 +222,11 @@ export default function Skills({ skills }: SkillsProps) {
         open={!!selectedSkill}
         onOpenChange={() => setSelectedSkill(null)}
       >
-        <DialogContent className="sm:max-w-[480px] max-h-[85vh] bg-[#0a0a0f] border border-[#2a2a35] text-white p-0 overflow-hidden">
+        <DialogContent className={styles.dialogContent()}>
           {selectedDescription && selectedTypeStyle && (
             <>
               <div
-                className={`h-2 bg-gradient-to-r ${
+                className={`${styles.dialogBar()} ${
                   selectedCategoryConfig?.type === "frontend"
                     ? "from-cyan-500 to-blue-500"
                     : selectedCategoryConfig?.type === "backend"
@@ -242,27 +243,27 @@ export default function Skills({ skills }: SkillsProps) {
                 }`}
               />
 
-              <div className="p-4 md:p-6 pt-6 md:pt-8">
-                <div className="flex items-center gap-2 mb-4">
+              <div className={styles.dialogBody()}>
+                <div className={styles.dialogCategoryRow()}>
                   <span
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${selectedTypeStyle.bg} ${selectedTypeStyle.border} ${selectedTypeStyle.text}`}
+                    className={`${styles.categoryBadge()} ${selectedTypeStyle.bg} ${selectedTypeStyle.border} ${selectedTypeStyle.text}`}
                   >
                     {selectedTypeStyle.icon}
                     {selectedCategoryConfig?.label}
                   </span>
                 </div>
 
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-2xl bg-[#12121a] border border-[#2a2a35] flex items-center justify-center">
-                    <div className="w-14 h-14 flex items-center justify-center">
+                <div className={styles.dialogIconRow()}>
+                  <div className={styles.dialogIconWrapper()}>
+                    <div className={styles.dialogIconInner()}>
                       {getIcon(selectedDescription.name)}
                     </div>
                   </div>
                   <div className="flex-1">
-                    <DialogTitle className="text-xl md:text-2xl font-bold text-white mb-1">
+                    <DialogTitle className={styles.dialogTitle()}>
                       {selectedDescription.name}
                     </DialogTitle>
-                    <p className="text-sm text-foreground-muted">
+                    <p className={styles.dialogSubtitle()}>
                       {selectedSkill?.category}
                     </p>
                   </div>
@@ -275,22 +276,20 @@ export default function Skills({ skills }: SkillsProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="space-y-4"
+                    className={styles.dialogSection()}
                   >
                     <div>
-                      <h4 className="text-xs font-semibold text-[#666] uppercase tracking-wider mb-2">
-                        O que é
-                      </h4>
-                      <p className="text-sm text-[#ccc] leading-relaxed">
+                      <h4 className={styles.dialogSectionLabel()}>O que é</h4>
+                      <p className={styles.dialogSectionText()}>
                         {selectedDescription.description}
                       </p>
                     </div>
 
                     <div>
-                      <h4 className="text-xs font-semibold text-[#666] uppercase tracking-wider mb-2">
+                      <h4 className={styles.dialogSectionLabel()}>
                         Caso de Uso
                       </h4>
-                      <p className="text-sm text-[#ccc] leading-relaxed">
+                      <p className={styles.dialogSectionText()}>
                         {selectedDescription.useCase}
                       </p>
                     </div>
@@ -304,7 +303,3 @@ export default function Skills({ skills }: SkillsProps) {
     </>
   );
 }
-
-const styles = {
-  skillIcon: "w-7 h-7 flex items-center justify-center",
-};

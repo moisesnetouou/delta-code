@@ -10,28 +10,25 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
-import { aboutStyles } from "./styles";
-import type { AboutProps } from "./types";
-
-export default function About({
-  summary,
-  location,
-  phone,
+import {
+  certifications,
   education,
   languages,
-  certifications,
-}: AboutProps) {
+  personalInfo,
+  summary,
+} from "@/data/portfolio-data";
+import { aboutStyles } from "./styles";
+
+export default function About() {
+  const styles = aboutStyles();
+  const { location, phone } = personalInfo;
   return (
-    <section id="about" className={aboutStyles.section}>
-      <div className={aboutStyles.backgroundGradient} />
-      <div className={aboutStyles.backgroundGrid} />
+    <section id="about" className={styles.section()}>
+      <div className={styles.backgroundGradient()} />
+      <div className={styles.backgroundGrid()} />
 
       <motion.div
-        className="absolute top-20 left-10 w-24 h-24 rounded-full opacity-15"
-        style={{
-          background: "radial-gradient(circle, #00d9ff 0%, transparent 70%)",
-          filter: "blur(30px)",
-        }}
+        className={styles.orbBlur()}
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.1, 0.2, 0.1],
@@ -43,65 +40,63 @@ export default function About({
         }}
       />
 
-      <div className={aboutStyles.container}>
+      <div className={styles.container()}>
         <motion.div
-          className={aboutStyles.header}
+          className={styles.header()}
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className={aboutStyles.icon}>
+          <div className={styles.icon()}>
             <Sparkles className="w-5 h-5" />
           </div>
-          <h2 className={aboutStyles.title}>Sobre</h2>
+          <h2 className={styles.title()}>Sobre</h2>
         </motion.div>
 
         <motion.div
-          className={aboutStyles.content}
+          className={styles.content()}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className={aboutStyles.bioSection}>
-            <div className={aboutStyles.avatarWrapper}>
+          <div className={styles.bioSection()}>
+            <div className={styles.avatarWrapper()}>
               <Image
                 src="/images/profile.jpg"
                 alt="Moisés Neto"
                 fill
-                className="object-cover object-top"
+                className={styles.avatarImage()}
               />
             </div>
 
-            <div className={aboutStyles.textSection}>
-              <p className={aboutStyles.bioTitle}>
+            <div className={styles.textSection()}>
+              <p className={styles.bioTitle()}>
                 Desenvolvedor Frontend com +5 anos de experiência
               </p>
-              <p className={aboutStyles.bioDescription}>{summary}</p>
+              <p className={styles.bioDescription()}>{summary}</p>
 
-              <div className={aboutStyles.infoSection}>
-                <div className={aboutStyles.infoItem}>
-                  <MapPin className={aboutStyles.infoIcon} />
+              <div className={styles.infoSection()}>
+                <div className={styles.infoItem()}>
+                  <MapPin className={styles.infoIcon()} />
                   <span>{location}</span>
                 </div>
-                <div className={aboutStyles.infoItem}>
-                  <Phone className={aboutStyles.infoIcon} />
+                <div className={styles.infoItem()}>
+                  <Phone className={styles.infoIcon()} />
                   <span>{phone}</span>
                 </div>
               </div>
 
               {education && (
-                <div className="mt-6 pt-6 border-t border-[#2a2a35]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <GraduationCap className="w-4 h-4 text-[#8b5cf6]" />
-                    <span className="text-sm font-medium text-white">
-                      Formação
-                    </span>
+                <div className={styles.block()}>
+                  <div className={styles.blockHeader()}>
+                    <GraduationCap className={styles.blockIcon()} />
+                    <span className={styles.blockLabel()}>Formação</span>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-sm text-white">{education.course}</p>
-                    <p className="text-xs text-foreground-muted">
+                  <div className={styles.eduList()}>
+                    <p className={styles.eduCourse()}>{education.course}</p>
+                    <p className={styles.eduMeta()}>
                       {education.institution} • {education.period}
                     </p>
                   </div>
@@ -109,21 +104,19 @@ export default function About({
               )}
 
               {languages && languages.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-[#2a2a35]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Globe className="w-4 h-4 text-[#8b5cf6]" />
-                    <span className="text-sm font-medium text-white">
-                      Idiomas
-                    </span>
+                <div className={styles.block()}>
+                  <div className={styles.blockHeader()}>
+                    <Globe className={styles.blockIcon()} />
+                    <span className={styles.blockLabel()}>Idiomas</span>
                   </div>
-                  <div className="flex flex-wrap gap-3">
+                  <div className={styles.langList()}>
                     {languages.map((lang) => (
-                      <span
-                        key={lang.name}
-                        className="text-sm text-foreground-muted"
-                      >
-                        <span className="text-white">{lang.name}</span>
-                        <span className="text-[#666]"> • {lang.level}</span>
+                      <span key={lang.name} className={styles.langItem()}>
+                        <span className={styles.langName()}>{lang.name}</span>
+                        <span className={styles.langLevel()}>
+                          {" "}
+                          • {lang.level}
+                        </span>
                       </span>
                     ))}
                   </div>
@@ -131,26 +124,22 @@ export default function About({
               )}
 
               {certifications && certifications.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-[#2a2a35]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Award className="w-4 h-4 text-[#8b5cf6]" />
-                    <span className="text-sm font-medium text-white">
-                      Certificações
-                    </span>
+                <div className={styles.block()}>
+                  <div className={styles.blockHeader()}>
+                    <Award className={styles.blockIcon()} />
+                    <span className={styles.blockLabel()}>Certificações</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className={styles.certList()}>
                     {certifications.map((cert) => (
                       <a
                         key={cert.id}
                         href={cert.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block p-2 rounded-lg bg-[#0a0a12] border border-[#2a2a35] hover:border-[#8b5cf6]/50 transition-colors"
+                        className={styles.certCard()}
                       >
-                        <p className="text-sm text-white font-medium">
-                          {cert.title}
-                        </p>
-                        <p className="text-xs text-foreground-muted">
+                        <p className={styles.certTitle()}>{cert.title}</p>
+                        <p className={styles.certMeta()}>
                           {cert.issuer} • {cert.date}
                         </p>
                       </a>

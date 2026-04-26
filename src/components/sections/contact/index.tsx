@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 import { Download, Mail, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
+import { personalInfo } from "@/data/portfolio-data";
 import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
 import { contactStyles } from "./styles";
-import type { ContactProps } from "./types";
 
-export default function Contact({ email, linkedin, github }: ContactProps) {
+export default function Contact() {
+  const styles = contactStyles();
+  const { email, linkedin, github } = personalInfo;
   const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
   const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
 
@@ -66,23 +68,23 @@ export default function Contact({ email, linkedin, github }: ContactProps) {
   };
 
   return (
-    <section id="contact" className={contactStyles.section}>
-      <div className={contactStyles.container}>
+    <section id="contact" className={styles.section()}>
+      <div className={styles.container()}>
         <motion.div
-          className={contactStyles.header}
+          className={styles.header()}
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className={contactStyles.icon}>
+          <div className={styles.icon()}>
             <Mail className="w-5 h-5" />
           </div>
-          <h2 className={contactStyles.title}>Contato</h2>
+          <h2 className={styles.title()}>Contato</h2>
         </motion.div>
 
         <motion.div
-          className={contactStyles.content}
+          className={styles.content()}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -90,7 +92,7 @@ export default function Contact({ email, linkedin, github }: ContactProps) {
         >
           <motion.a
             href={`mailto:${email}`}
-            className={contactStyles.primaryButton}
+            className={styles.primaryButton()}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -98,35 +100,35 @@ export default function Contact({ email, linkedin, github }: ContactProps) {
             Enviar Mensagem
           </motion.a>
 
-          <div className={contactStyles.links}>
+          <div className={styles.links()}>
             <motion.button
               onClick={handleDownloadCV}
-              className={contactStyles.linkItem}
+              className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Download className={contactStyles.linkIcon} />
-              <span className={contactStyles.linkText}>Baixar Currículo</span>
+              <Download className={styles.linkIcon()} />
+              <span className={styles.linkText()}>Baixar Currículo</span>
             </motion.button>
 
             <motion.button
               onClick={handleLinkedinClick}
-              className={contactStyles.linkItem}
+              className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <LinkedinIcon className={contactStyles.linkIcon} />
-              <span className={contactStyles.linkText}>LinkedIn</span>
+              <LinkedinIcon className={styles.linkIcon()} />
+              <span className={styles.linkText()}>LinkedIn</span>
             </motion.button>
 
             <motion.button
               onClick={handleGithubClick}
-              className={contactStyles.linkItem}
+              className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <GithubIcon className={contactStyles.linkIcon} />
-              <span className={contactStyles.linkText}>GitHub</span>
+              <GithubIcon className={styles.linkIcon()} />
+              <span className={styles.linkText()}>GitHub</span>
             </motion.button>
           </div>
         </motion.div>
