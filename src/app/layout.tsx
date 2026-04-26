@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { AchievementsWrapper } from "@/components/achievements/achievements-wrapper";
 import { BackToTop } from "@/components/ui/back-to-top";
+import { MotionProvider } from "@/components/ui/motion-provider";
 import { Navbar } from "@/components/ui/navbar";
 import { ToasterProvider } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,10 +21,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://moisesneto.dev"),
+  metadataBase: new URL("https://delta-code-dev.vercel.app/"),
   title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
   description:
-    "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots. Veja meu portfólio!",
+    "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
   keywords: [
     "Frontend Developer",
     "React",
@@ -53,10 +54,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://moisesneto.dev",
+    url: "https://delta-code-dev.vercel.app/",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
-      "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots.",
+      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
     siteName: "Moisés Neto",
     images: [
       {
@@ -71,12 +72,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
-      "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript.",
+      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável.",
     images: ["/og-image.png"],
     creator: "@moisesnetouou",
   },
   alternates: {
-    canonical: "https://moisesneto.dev",
+    canonical: "https://delta-code-dev.vercel.app/",
   },
 };
 
@@ -91,13 +92,15 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <TooltipProvider>
-          <Navbar />
-          {children}
-          <BackToTop />
-          <ToasterProvider />
-          <AchievementsWrapper />
-        </TooltipProvider>
+        <MotionProvider>
+          <TooltipProvider>
+            <Navbar />
+            {children}
+            <BackToTop />
+            <ToasterProvider />
+            <AchievementsWrapper />
+          </TooltipProvider>
+        </MotionProvider>
       </body>
     </html>
   );
