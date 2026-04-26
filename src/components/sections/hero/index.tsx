@@ -2,55 +2,16 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, FileText } from "lucide-react";
-import { useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
 import { personalInfo } from "@/data/portfolio-data";
-import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
+import { usePortfolioActions } from "@/hooks/use-portfolio-actions";
 import { heroStyles } from "./styles";
 
+const styles = heroStyles();
+
 export default function Hero() {
-  const styles = heroStyles();
-  const { name, title, tagline, linkedin, github } = personalInfo;
-
-  const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
-  const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
-
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/curriculo.pdf";
-    link.download = "Curriculo-Moises-Neto.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    if (!isAchievementUnlocked("download_cv")) {
-      unlockAchievement("download_cv");
-    }
-  };
-
-  const handleLinkedinClick = () => {
-    if (!hasNavigatedLinkedin && !isAchievementUnlocked("click_linkedin")) {
-      unlockAchievement("click_linkedin");
-      setHasNavigatedLinkedin(true);
-      setTimeout(() => {
-        window.open(linkedin, "_blank");
-      }, 1500);
-    } else {
-      window.open(linkedin, "_blank");
-    }
-  };
-
-  const handleGithubClick = () => {
-    if (!hasNavigatedGithub && !isAchievementUnlocked("click_github")) {
-      unlockAchievement("click_github");
-      setHasNavigatedGithub(true);
-      setTimeout(() => {
-        window.open(github, "_blank");
-      }, 1500);
-    } else {
-      window.open(github, "_blank");
-    }
-  };
+  const { name, title, tagline } = personalInfo;
+  const { downloadCV, openLinkedin, openGithub } = usePortfolioActions();
 
   return (
     <section id="hero" className={styles.container()}>
@@ -97,7 +58,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <motion.button
-            onClick={handleLinkedinClick}
+            onClick={openLinkedin}
             className={styles.socialLink()}
             aria-label="LinkedIn"
             whileHover={{ scale: 1.1 }}
@@ -106,7 +67,7 @@ export default function Hero() {
             <LinkedinIcon className={styles.socialIcon()} />
           </motion.button>
           <motion.button
-            onClick={handleGithubClick}
+            onClick={openGithub}
             className={styles.socialLink()}
             aria-label="GitHub"
             whileHover={{ scale: 1.1 }}
@@ -115,7 +76,7 @@ export default function Hero() {
             <GithubIcon className={styles.socialIcon()} />
           </motion.button>
           <motion.button
-            onClick={handleDownloadCV}
+            onClick={downloadCV}
             className={styles.socialLink()}
             aria-label="Baixar Currículo"
             whileHover={{ scale: 1.1 }}

@@ -12,13 +12,35 @@ export const personalInfo = {
 export const summary =
   "Desenvolvedor Frontend com +5 anos de experiência em arquitetura de aplicações, liderança técnica e construção de interfaces escaláveis. Especialista em testes automatizados, automação com IA e práticas modernas de DX (Developer Experience). Já resolvi demandas que passaram por outras pessoas e, mesmo não sendo diretamente do meu cargo, consegui entregar resultados: criei fluxo de chatbot integrando n8n para suprir limitações da plataforma, e automatizei análise de tickets da Blip usando CLI com prompts, Node.js e IA. Resolvi em menos de 3 dias algo que manualmente levaria semanas ou um mês, usando apenas $5 em tokens.";
 
-export const experiences = [
+export interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  companyUrl?: string;
+  location: string;
+  /** ISO YYYY-MM */
+  startDate: string;
+  /** ISO YYYY-MM, null = ongoing */
+  endDate: string | null;
+  /** Display label for the period (e.g. "Set 2025 - Atual") */
+  period: string;
+  description: string;
+  technologies: string[];
+  /** Order on mobile timeline (lower = earlier in list) */
+  mobileOrder: number;
+  /** ID of an experience this one overlapped with. Renders side-by-side on desktop, concurrent on the LEFT. */
+  concurrentWith?: string;
+}
+
+export const experiences: Experience[] = [
   {
     id: "1",
     role: "Frontend Engineer",
     company: "i_mais",
     companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
+    startDate: "2025-09",
+    endDate: null,
     period: "Set 2025 - Atual",
     description:
       "Liderança técnica de projetos frontend com React, Next.js e TypeScript. Definição de stack, padrões de arquitetura e garantias de qualidade. Automação de testes com estrutura própria baseada em Playwright MCP, criando testes para novas funcionalidades em minutos. Pipeline de testes (unitários, integração e E2E) via GitHub Actions. Integração com Sentry MCP para análise e resolução de bugs em tempo real. CLI com IA para análise automática de tickets, processando 300 tickets de uma vez e gerando relatórios consolidados. Revisão de PRs automatizada com Claude Code e skills customizadas. Colaboração com UX/UI para transformar protótipos em interfaces responsivas com TailwindCSS, Shadcn e Radix UI. Deploy contínuo com GitHub Actions (stage e production) com pipelines de tipagem, lint e testes.",
@@ -34,6 +56,7 @@ export const experiences = [
       "Claude Code",
       "Radix UI",
     ],
+    mobileOrder: 4,
   },
   {
     id: "2",
@@ -41,6 +64,8 @@ export const experiences = [
     company: "i_mais",
     companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
+    startDate: "2026-01",
+    endDate: "2026-04",
     period: "Jan 2026 - Abr 2026",
     description:
       "Liderança de time de 3 desenvolvedores (2 frontend + 1 backend) + 1 UX. Responsável por dailies, orientação técnica e decisões de produto. Coordenação de ambas as áreas (frontend e backend). Auxílio na lógica de produto e validação de soluções.",
@@ -51,6 +76,8 @@ export const experiences = [
       "Liderança Técnica",
       "Scrum",
     ],
+    mobileOrder: 3,
+    concurrentWith: "1",
   },
   {
     id: "3",
@@ -58,6 +85,8 @@ export const experiences = [
     company: "i_mais",
     companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
+    startDate: "2022-10",
+    endDate: "2025-09",
     period: "Out 2022 - Set 2025",
     description:
       "Supervisão e suporte técnico a desenvolvedores júnior e pleno. Decisões técnicas dos projetos sem necessidade de aprovação do tech lead. Documentação técnica de projetos frontend e fluxos de chatbot. Treinamento de novos devs sobre construção de chatbots e fluxos Blip. Projeto de maior impacto: Leads — que escalou significativamente. Estruturação de arquiteturas escaláveis. Implementação de testes automatizados com Vitest, Testing Library, Cypress e Playwright.",
@@ -71,6 +100,7 @@ export const experiences = [
       "Cypress",
       "Playwright",
     ],
+    mobileOrder: 2,
   },
   {
     id: "4",
@@ -78,6 +108,8 @@ export const experiences = [
     company: "i_mais",
     companyUrl: "https://imais.com.br/",
     location: "Manaus, Brasil",
+    startDate: "2021-07",
+    endDate: "2022-09",
     period: "Jul 2021 - Set 2022",
     description:
       "Desenvolvimento de aplicações web e blogs com React, PrismicCMS, HTML, CSS, JavaScript. Desenvolvimento de aplicativos mobile com React Native e Expo. Criação e manutenção de documentação de componentes com Storybook. Projeto e implementação do bot inicial da empresa. Entregou +8 projetos.",
@@ -92,48 +124,7 @@ export const experiences = [
       "Expo",
       "Storybook",
     ],
-  },
-];
-
-export const projects = [
-  {
-    id: "1",
-    title: "E-commerce Platform",
-    description:
-      "Plataforma completa de e-commerce com React e Node.js. Inclui sistema de pagamentos, inventário em tempo real e dashboard administrativo.",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Stripe",
-      "PostgreSQL",
-      "TailwindCSS",
-    ],
-    link: "https://github.com/moisesnetouou/ecommerce",
-    live: "https://ecommerce-demo.com",
-  },
-  {
-    id: "2",
-    title: "Task Management App",
-    description:
-      "Aplicação de gestão de tarefas com Kanban board, gamificação e integração com calendário. Focus em UX e performance.",
-    technologies: ["React", "Vite", "Zustand", "Firebase", "Framer Motion"],
-    link: "https://github.com/moisesnetouou/taskapp",
-  },
-  {
-    id: "3",
-    title: "Weather Dashboard",
-    description:
-      "Dashboard meteorológico com visualização de dados em tempo real, gráficos interativos e previsões de 7 dias.",
-    technologies: ["Next.js", "D3.js", "OpenWeather API", "Recharts"],
-    link: "https://github.com/moisesnetouou/weather",
-  },
-  {
-    id: "4",
-    title: "Portfolio Generator",
-    description:
-      "CLI tool que gera portfolios personalizáveis a partir de templates React. Inclui theme customization e deploy automático.",
-    technologies: ["Node.js", "React", "Ink", "Vercel API"],
-    link: "https://github.com/moisesnetouou/portfolio-generator",
+    mobileOrder: 1,
   },
 ];
 

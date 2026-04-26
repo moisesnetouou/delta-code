@@ -5,13 +5,14 @@ import { skillDescriptions } from "@/data/skill-descriptions";
 import { getIcon } from "@/lib/icons";
 import { timelineStyles } from "./styles";
 
+const styles = timelineStyles();
+
 interface TechBadgeProps {
   tech: string;
   onSkillClick: (tech: string) => void;
 }
 
 function TechBadge({ tech, onSkillClick }: TechBadgeProps) {
-  const styles = timelineStyles();
   const hasDescription = !!skillDescriptions[tech];
   const IconComponent = getIcon(tech);
 
@@ -53,7 +54,6 @@ export function TechBadgesList({
   onSkillClick,
   onShowMore,
 }: TechBadgesListProps) {
-  const styles = timelineStyles();
   const maxVisible = 4;
   const visible = technologies.slice(0, maxVisible);
   const remaining = technologies.length - maxVisible;

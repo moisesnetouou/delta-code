@@ -2,70 +2,19 @@
 
 import { motion } from "framer-motion";
 import { Download, Mail, Send } from "lucide-react";
-import { useEffect, useState } from "react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
 import { personalInfo } from "@/data/portfolio-data";
-import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
+import { usePortfolioActions } from "@/hooks/use-portfolio-actions";
+import { useScrollAchievement } from "@/hooks/use-scroll-achievement";
 import { contactStyles } from "./styles";
 
+const styles = contactStyles();
+
 export default function Contact() {
-  const styles = contactStyles();
-  const { email, linkedin, github } = personalInfo;
-  const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
-  const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
+  const { email } = personalInfo;
+  const { downloadCV, openLinkedin, openGithub } = usePortfolioActions();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = document.getElementById("contact");
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.bottom <= window.innerHeight + 100;
-        if (isVisible && !isAchievementUnlocked("view_contact")) {
-          unlockAchievement("view_contact");
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/curriculo.pdf";
-    link.download = "Curriculo-Moises-Neto.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    if (!isAchievementUnlocked("download_cv")) {
-      unlockAchievement("download_cv");
-    }
-  };
-
-  const handleLinkedinClick = () => {
-    if (!hasNavigatedLinkedin && !isAchievementUnlocked("click_linkedin")) {
-      unlockAchievement("click_linkedin");
-      setHasNavigatedLinkedin(true);
-      setTimeout(() => {
-        window.open(linkedin, "_blank");
-      }, 1500);
-    } else {
-      window.open(linkedin, "_blank");
-    }
-  };
-
-  const handleGithubClick = () => {
-    if (!hasNavigatedGithub && !isAchievementUnlocked("click_github")) {
-      unlockAchievement("click_github");
-      setHasNavigatedGithub(true);
-      setTimeout(() => {
-        window.open(github, "_blank");
-      }, 1500);
-    } else {
-      window.open(github, "_blank");
-    }
-  };
+  useScrollAchievement("contact", "view_contact");
 
   return (
     <section id="contact" className={styles.section()}>
@@ -102,7 +51,7 @@ export default function Contact() {
 
           <div className={styles.links()}>
             <motion.button
-              onClick={handleDownloadCV}
+              onClick={downloadCV}
               className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -112,7 +61,7 @@ export default function Contact() {
             </motion.button>
 
             <motion.button
-              onClick={handleLinkedinClick}
+              onClick={openLinkedin}
               className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -122,7 +71,7 @@ export default function Contact() {
             </motion.button>
 
             <motion.button
-              onClick={handleGithubClick}
+              onClick={openGithub}
               className={styles.linkItem()}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

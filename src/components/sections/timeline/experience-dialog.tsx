@@ -6,6 +6,9 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { experienceDetails } from "@/data/experience-details";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
+
+const styles = timelineStyles();
+
 import type { Experience } from "./types";
 
 interface ExperienceDialogProps {
@@ -17,7 +20,6 @@ export function ExperienceDialog({
   experience,
   onClose,
 }: ExperienceDialogProps) {
-  const styles = timelineStyles();
   const details = experience ? experienceDetails[experience.id] : null;
 
   return (

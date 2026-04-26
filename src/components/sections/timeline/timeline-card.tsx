@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
+
+const styles = timelineStyles();
+
 import { TechBadgesList } from "./tech-badges";
 import type { TimelineCardProps } from "./types";
 
@@ -15,7 +18,6 @@ export function TimelineCard({
   onShowMoreSkills,
   onSkillClick,
 }: TimelineCardProps) {
-  const styles = timelineStyles();
   const isMobile = variant === "mobile";
   const cardClass = isMobile ? styles.cardSm() : styles.card();
   const roleClass = isMobile ? styles.cardRoleSm() : styles.cardRole();

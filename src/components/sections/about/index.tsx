@@ -19,8 +19,9 @@ import {
 } from "@/data/portfolio-data";
 import { aboutStyles } from "./styles";
 
+const styles = aboutStyles();
+
 export default function About() {
-  const styles = aboutStyles();
   const { location, phone } = personalInfo;
   return (
     <section id="about" className={styles.section()}>

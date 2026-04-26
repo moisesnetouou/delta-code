@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { AchievementsWrapper } from "@/components/achievements/achievements-wrapper";
 import { BackToTop } from "@/components/ui/back-to-top";
+import { MotionProvider } from "@/components/ui/motion-provider";
 import { Navbar } from "@/components/ui/navbar";
 import { ToasterProvider } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -91,13 +92,15 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <TooltipProvider>
-          <Navbar />
-          {children}
-          <BackToTop />
-          <ToasterProvider />
-          <AchievementsWrapper />
-        </TooltipProvider>
+        <MotionProvider>
+          <TooltipProvider>
+            <Navbar />
+            {children}
+            <BackToTop />
+            <ToasterProvider />
+            <AchievementsWrapper />
+          </TooltipProvider>
+        </MotionProvider>
       </body>
     </html>
   );

@@ -104,7 +104,7 @@ export function AchievementsManager({
         .filter((a) => a.id !== "platinum")
         .map((a) => a.id);
       const regularCount = currentUnlocked.filter((id) =>
-        validIds.includes(id),
+        (validIds as string[]).includes(id),
       ).length;
 
       if (!hasPlatinum && regularCount >= 8) {

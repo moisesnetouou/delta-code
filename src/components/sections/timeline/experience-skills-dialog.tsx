@@ -5,6 +5,9 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { skillDescriptions } from "@/data/skill-descriptions";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
+
+const styles = timelineStyles();
+
 import type { Experience } from "./types";
 
 interface ExperienceSkillsDialogProps {
@@ -18,7 +21,6 @@ export function ExperienceSkillsDialog({
   onClose,
   onSelectSkill,
 }: ExperienceSkillsDialogProps) {
-  const styles = timelineStyles();
   return (
     <Dialog open={!!experience} onOpenChange={onClose}>
       <DialogContent className={styles.dialogContentSkill()}>
