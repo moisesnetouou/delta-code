@@ -31,8 +31,8 @@ export function usePortfolioActions() {
 
   const downloadCV = () => {
     const link = document.createElement("a");
-    link.href = "/curriculo.pdf";
-    link.download = "Curriculo-Moises-Neto.pdf";
+    link.href = "/moises-neto-curriculo.pdf";
+    link.download = "moises-neto-curriculo.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
