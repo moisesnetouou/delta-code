@@ -28,6 +28,8 @@ interface TimelineRow {
   right: Experience;
   /** Concurrent experience rendered on the left side of the row. */
   left?: Experience;
+  /** Index among solo (non-pair) rows; used for left/right alternation. */
+  soloIndex?: number;
 }
 
 function getExperienceStartDate(exp: Experience): Date {
@@ -66,11 +68,21 @@ function buildRows(experiences: Experience[]): TimelineRow[] {
     consumed.add(exp.id);
   }
 
-  return rows.sort(
+  rows.sort(
     (a, b) =>
       getExperienceStartDate(a.right).getTime() -
       getExperienceStartDate(b.right).getTime(),
   );
+
+  let soloCounter = 0;
+  for (const row of rows) {
+    if (!row.left) {
+      row.soloIndex = soloCounter;
+      soloCounter += 1;
+    }
+  }
+
+  return rows;
 }
 
 export default function Timeline({ experiences }: TimelineProps) {
@@ -109,8 +121,6 @@ export default function Timeline({ experiences }: TimelineProps) {
       unlockAchievement("open_experience");
     }
   };
-
-  let soloIndex = 0;
 
   return (
     <>
@@ -172,9 +182,8 @@ export default function Timeline({ experiences }: TimelineProps) {
                 );
               }
 
-              const isLeftSide = soloIndex % 2 === 0;
+              const isLeftSide = (row.soloIndex ?? 0) % 2 === 0;
               const alignment = isLeftSide ? "right" : "left";
-              soloIndex += 1;
 
               return (
                 <motion.div
@@ -242,10 +251,7 @@ export default function Timeline({ experiences }: TimelineProps) {
       <ExperienceSkillsDialog
         experience={selectedExperienceForSkills}
         onClose={() => setSelectedExperienceForSkills(null)}
-        onSelectSkill={(tech) => {
-          const category = techToCategory[tech] || DEFAULT_CATEGORY;
-          setSelectedSkill({ name: tech, category });
-        }}
+        onSelectSkill={handleSkillClick}
       />
     </>
   );

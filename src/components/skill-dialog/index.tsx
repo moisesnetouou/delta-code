@@ -37,7 +37,7 @@ export function SkillDialog({
   const typeStyle = category ? categoryStyles[category.type] : null;
 
   return (
-    <Dialog open={!!skill} onOpenChange={onClose}>
+    <Dialog open={!!skill} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.content()}>
         {description && typeStyle && category && (
           <>

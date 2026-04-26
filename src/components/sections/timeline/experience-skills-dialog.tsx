@@ -22,7 +22,7 @@ export function ExperienceSkillsDialog({
   onSelectSkill,
 }: ExperienceSkillsDialogProps) {
   return (
-    <Dialog open={!!experience} onOpenChange={onClose}>
+    <Dialog open={!!experience} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.dialogContentSkill()}>
         {experience && (
           <>

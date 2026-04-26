@@ -8,16 +8,6 @@ export const timelineStyles = tv({
     title: "text-3xl md:text-4xl font-bold text-foreground",
     subtitle: "text-foreground-muted mt-2",
 
-    timelineLine:
-      "absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500",
-
-    itemContainer: "relative flex justify-between items-center mb-12 last:mb-0",
-    itemContainerLeft: "flex-row-reverse",
-
-    itemContent: "w-[45%]",
-    itemConnector:
-      "absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 border-4 border-background z-10",
-
     card: "bg-surface border border-border-subtle rounded-xl p-5 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer",
     cardSm:
       "bg-surface border border-border-subtle rounded-xl p-4 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer",
@@ -75,20 +65,6 @@ export const timelineStyles = tv({
     dialogDotPurple: "w-1.5 h-1.5 rounded-full bg-purple-400",
     dialogTech:
       "px-2 py-1 text-xs rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300",
-
-    skillDialogBody: "p-6 pt-8",
-    skillDialogCategoryRow: "flex items-center gap-2 mb-4",
-    skillDialogIconRow: "flex items-start gap-4 mb-6",
-    skillDialogIconWrapper:
-      "p-4 rounded-2xl bg-surface-2 border border-border-subtle flex items-center justify-center",
-    skillDialogIconInner: "w-14 h-14 flex items-center justify-center",
-    skillDialogSubtitle: "text-sm text-foreground-muted",
-    skillDialogContent: "space-y-4",
-    skillDialogSectionLabel:
-      "text-xs font-semibold text-foreground-dim uppercase tracking-wider mb-2",
-    skillDialogSectionText: "text-sm text-foreground-soft leading-relaxed",
-    categoryBadge:
-      "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border",
 
     expDialogBody: "p-4 md:p-6 pt-6 md:pt-8",
     expDialogCompany: "text-accent-primary font-medium mb-6",

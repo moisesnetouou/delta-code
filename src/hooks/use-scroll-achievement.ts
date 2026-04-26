@@ -14,9 +14,11 @@ export function useScrollAchievement(
   achievementId: AchievementId,
 ) {
   useEffect(() => {
-    if (isAchievementUnlocked(achievementId)) return;
-
     const handleScroll = () => {
+      if (isAchievementUnlocked(achievementId)) {
+        window.removeEventListener("scroll", handleScroll);
+        return;
+      }
       const section = document.getElementById(sectionId);
       if (!section) return;
       const rect = section.getBoundingClientRect();

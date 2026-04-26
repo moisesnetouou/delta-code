@@ -17,20 +17,5 @@ export const skillsStyles = tv({
     categoryBadge:
       "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border",
     categoryName: "text-sm font-medium text-foreground-muted",
-    dialogContent:
-      "sm:max-w-[480px] max-h-[85vh] bg-surface border border-border-subtle text-white p-0 overflow-hidden",
-    dialogBar: "h-2 bg-gradient-to-r",
-    dialogBody: "p-4 md:p-6 pt-6 md:pt-8",
-    dialogCategoryRow: "flex items-center gap-2 mb-4",
-    dialogIconRow: "flex items-start gap-4 mb-6",
-    dialogIconWrapper:
-      "p-4 rounded-2xl bg-surface-2 border border-border-subtle flex items-center justify-center",
-    dialogIconInner: "w-14 h-14 flex items-center justify-center",
-    dialogTitle: "text-xl md:text-2xl font-bold text-white mb-1",
-    dialogSubtitle: "text-sm text-foreground-muted",
-    dialogSection: "space-y-4",
-    dialogSectionLabel:
-      "text-xs font-semibold text-foreground-dim uppercase tracking-wider mb-2",
-    dialogSectionText: "text-sm text-foreground-soft leading-relaxed",
   },
 });

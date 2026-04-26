@@ -23,7 +23,7 @@ export function ExperienceDialog({
   const details = experience ? experienceDetails[experience.id] : null;
 
   return (
-    <Dialog open={!!experience} onOpenChange={onClose}>
+    <Dialog open={!!experience} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.dialogContent()}>
         {experience && details && (
           <>
