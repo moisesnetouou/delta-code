@@ -138,6 +138,7 @@ export const skills = [
       "JavaScript",
       "HTML/CSS",
       "TailwindCSS",
+      "Vite",
       "Zustand",
       "React Query",
       "Zod",
@@ -146,7 +147,12 @@ export const skills = [
       "Radix UI",
       "Styled Components",
       "Stitches",
+      "Storybook",
     ],
+  },
+  {
+    category: "Mobile",
+    items: ["React Native", "Expo", "NativeWind"],
   },
   {
     category: "Prototipação & Design",

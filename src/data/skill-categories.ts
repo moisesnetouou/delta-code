@@ -1,6 +1,7 @@
 export type CategoryType =
   | "frontend"
   | "backend"
+  | "mobile"
   | "testes"
   | "automacao"
   | "bots"
@@ -15,6 +16,7 @@ export interface CategoryConfig {
 
 export const categoryConfig: Record<string, CategoryConfig> = {
   "Frontend & Frameworks": { type: "frontend", label: "Front" },
+  Mobile: { type: "mobile", label: "Mobile" },
   "Prototipação & Design": { type: "soft", label: "Design" },
   "CMS & Headless": { type: "cms", label: "CMS" },
   "Testes & Qualidade": { type: "testes", label: "Test" },
@@ -46,6 +48,12 @@ export const categoryStyles: Record<CategoryType, CategoryStyle> = {
     border: "border-purple-500/30",
     text: "text-purple-400",
     gradient: "from-purple-500 to-pink-500",
+  },
+  mobile: {
+    bg: "bg-indigo-500/10",
+    border: "border-indigo-500/30",
+    text: "text-indigo-400",
+    gradient: "from-indigo-500 to-blue-500",
   },
   testes: {
     bg: "bg-green-500/10",

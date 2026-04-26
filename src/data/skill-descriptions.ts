@@ -5,6 +5,41 @@ export interface SkillDescription {
 }
 
 export const skillDescriptions: Record<string, SkillDescription> = {
+  "React Native": {
+    name: "React Native",
+    description:
+      "Framework para construção de aplicações mobile nativas (iOS/Android) usando React. Renderiza componentes nativos a partir de código JavaScript/TypeScript.",
+    useCase:
+      "Apps mobile cross-platform, MVPs com time frontend React, projetos que reaproveitam lógica web",
+  },
+  Expo: {
+    name: "Expo",
+    description:
+      "Plataforma e toolchain para React Native. Facilita build, deploy, OTA updates, acesso a APIs nativas (camera, push, etc.) sem ejetar.",
+    useCase:
+      "Apps que querem velocidade de desenvolvimento, distribuição via TestFlight/Play Store sem setup nativo manual",
+  },
+  NativeWind: {
+    name: "NativeWind",
+    description:
+      "Tailwind CSS para React Native. Permite estilizar componentes nativos com classes utilitárias do Tailwind, mantendo DX consistente com web.",
+    useCase:
+      "Equipes que já dominam Tailwind, apps que compartilham design tokens entre web e mobile",
+  },
+  Storybook: {
+    name: "Storybook",
+    description:
+      "Ferramenta para desenvolvimento e documentação isolada de componentes UI. Renderiza cada componente em diferentes estados/variantes.",
+    useCase:
+      "Design systems, bibliotecas de componentes, validação visual e a11y antes de integrar à aplicação",
+  },
+  Vite: {
+    name: "Vite",
+    description:
+      "Build tool moderno para front-end. Dev server instantâneo via ESM nativo, HMR rápido, build otimizado com Rollup.",
+    useCase:
+      "SPAs React/Vue/Svelte, libraries, projetos que precisam de DX rápida sem peso do Webpack",
+  },
   React: {
     name: "React",
     description:

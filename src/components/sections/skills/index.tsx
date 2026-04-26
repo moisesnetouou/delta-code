@@ -8,6 +8,7 @@ import {
   Layers,
   MessageCircle,
   Palette,
+  Smartphone,
   Sparkles,
   Users,
   Wrench,
@@ -31,6 +32,7 @@ const styles = skillsStyles();
 const categoryIcons: Record<CategoryType, ReactNode> = {
   frontend: <Palette className="w-3 h-3" />,
   backend: <Cog className="w-3 h-3" />,
+  mobile: <Smartphone className="w-3 h-3" />,
   testes: <Bug className="w-3 h-3" />,
   automacao: <Sparkles className="w-3 h-3" />,
   bots: <MessageCircle className="w-3 h-3" />,
