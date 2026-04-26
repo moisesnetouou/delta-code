@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { experienceDetails } from "@/data/experience-details";
+import { skillDescriptions } from "@/data/skill-descriptions";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
 
@@ -14,11 +15,13 @@ import type { Experience } from "./types";
 interface ExperienceDialogProps {
   experience: Experience | null;
   onClose: () => void;
+  onSkillClick: (tech: string) => void;
 }
 
 export function ExperienceDialog({
   experience,
   onClose,
+  onSkillClick,
 }: ExperienceDialogProps) {
   const details = experience ? experienceDetails[experience.id] : null;
 
@@ -90,11 +93,26 @@ export function ExperienceDialog({
                       Tecnologias
                     </h4>
                     <div className={styles.cardTech()}>
-                      {experience.technologies.map((tech) => (
-                        <span key={tech} className={styles.dialogTech()}>
-                          {tech}
-                        </span>
-                      ))}
+                      {experience.technologies.map((tech) => {
+                        const hasDescription = !!skillDescriptions[tech];
+                        if (hasDescription) {
+                          return (
+                            <button
+                              key={tech}
+                              type="button"
+                              onClick={() => onSkillClick(tech)}
+                              className={styles.techBadgeClickable()}
+                            >
+                              {tech}
+                            </button>
+                          );
+                        }
+                        return (
+                          <span key={tech} className={styles.dialogTech()}>
+                            {tech}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </motion.div>

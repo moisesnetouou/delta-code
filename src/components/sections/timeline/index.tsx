@@ -241,6 +241,7 @@ export default function Timeline({ experiences }: TimelineProps) {
       <ExperienceDialog
         experience={selectedExperience}
         onClose={() => setSelectedExperience(null)}
+        onSkillClick={handleSkillClick}
       />
 
       <SkillDialog

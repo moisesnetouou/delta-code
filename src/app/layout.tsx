@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://delta-code-dev.vercel.app/"),
   title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
   description:
-    "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots. Veja meu portfólio!",
+    "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
   keywords: [
     "Frontend Developer",
     "React",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     url: "https://delta-code-dev.vercel.app/",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
-      "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript. Especializado em automação, IA e construção de chatbots.",
+      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
     siteName: "Moisés Neto",
     images: [
       {
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
-      "Frontend Developer com +5 anos de experiência em React, Next.js e TypeScript.",
+      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável.",
     images: ["/og-image.png"],
     creator: "@moisesnetouou",
   },

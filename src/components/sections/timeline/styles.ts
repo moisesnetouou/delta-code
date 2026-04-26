@@ -45,7 +45,7 @@ export const timelineStyles = tv({
     dialogContent:
       "sm:max-w-[520px] max-h-[85vh] bg-surface border border-border-subtle text-white p-0 overflow-hidden",
     dialogContentSkill:
-      "sm:max-w-[480px] bg-surface border border-border-subtle text-white p-0 overflow-hidden",
+      "sm:max-w-[480px] max-h-[85vh] bg-surface border border-border-subtle text-white p-0 overflow-hidden",
     dialogBar: "h-2 bg-gradient-to-r from-cyan-500 to-purple-500 flex-shrink-0",
     dialogBody:
       "p-4 md:p-6 pt-6 md:pt-8 overflow-y-auto max-h-[calc(80vh-8px)]",
@@ -66,7 +66,10 @@ export const timelineStyles = tv({
     dialogTech:
       "px-2 py-1 text-xs rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300",
 
-    expDialogBody: "p-4 md:p-6 pt-6 md:pt-8",
+    expDialogBody:
+      "p-4 md:p-6 pt-6 md:pt-8 overflow-y-auto max-h-[calc(85vh-8px)]",
+    techBadgeClickable:
+      "px-2 py-1 text-xs rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-colors cursor-pointer",
     expDialogCompany: "text-accent-primary font-medium mb-6",
     expGrid: "grid grid-cols-2 gap-2",
     expCard:

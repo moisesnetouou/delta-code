@@ -76,7 +76,13 @@ export default function About() {
               <p className={styles.bioTitle()}>
                 Desenvolvedor Frontend com +5 anos de experiência
               </p>
-              <p className={styles.bioDescription()}>{summary}</p>
+              <div className={styles.bioParagraphs()}>
+                {summary.map((paragraph) => (
+                  <p key={paragraph} className={styles.bioDescription()}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
 
               <div className={styles.infoSection()}>
                 <div className={styles.infoItem()}>

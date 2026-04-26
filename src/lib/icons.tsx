@@ -137,7 +137,7 @@ const iconMap: Record<string, React.ReactNode> = {
   "Testes E2E": L(TestTube, "#a855f7"),
 
   // Automação & IA
-  "Claude Code": <SiClaude size={SIZE} color="#d97706" />,
+  Claude: <SiClaude size={SIZE} color="#d97706" />,
   OpenCode: L(Terminal, "#2563eb"),
   "Playwright MCP": <PlaywrightPlain size={SIZE} color="#2ead5f" />,
   "Sentry MCP": <SiSentry size={SIZE} color="#7c2eaa" />,

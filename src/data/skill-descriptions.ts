@@ -64,8 +64,7 @@ export const skillDescriptions: Record<string, SkillDescription> = {
     name: "JavaScript",
     description:
       "Linguagem de programação principal para desenvolvimento web. Fundamento de toda a web moderna.",
-    useCase:
-      "Desenvolvimento web, automação, scripts, applications server-side",
+    useCase: "Desenvolvimento web, automação, scripts, aplicações server-side",
   },
   "HTML/CSS": {
     name: "HTML/CSS",
@@ -82,14 +81,14 @@ export const skillDescriptions: Record<string, SkillDescription> = {
   Zustand: {
     name: "Zustand",
     description:
-      "Biblioteca de gerenciamento de estado simples e minimalista para React. API pequena mas poderosa.",
-    useCase: "Estado global em aplicações React médias/pequenas",
+      "Estado global pra React em ~1KB. Sem provider, sem boilerplate, só hook e setState.",
+    useCase: "Estado global em aplicações React médias e pequenas",
   },
   "React Query": {
     name: "React Query",
     description:
-      "Biblioteca para gerenciamento de estado de servidor (fetching, caching, sincronização).",
-    useCase: "Aplicações que consomem APIs REST/GraphQL frequentemente",
+      "Camada de cache para dados de servidor. Cuida de fetch, refetch, invalidação e sincronização entre abas.",
+    useCase: "Aplicações que consomem APIs REST ou GraphQL frequentemente",
   },
   Zod: {
     name: "Zod",
@@ -115,23 +114,11 @@ export const skillDescriptions: Record<string, SkillDescription> = {
       "Primitivas de acessibilidade sem estilo. Base para construir componentes acessíveis.",
     useCase: "Criação de design systems customizados",
   },
-  "styled-components": {
-    name: "styled-components",
-    description:
-      "Biblioteca que permite escrever CSS no JavaScript usando template literals. Estilos dinâmicos baseados em props.",
-    useCase: "Componentes estilizados com CSS-in-JS, theming",
-  },
   "Styled Components": {
     name: "styled-components",
     description:
       "Biblioteca que permite escrever CSS no JavaScript usando template literals. Estilos dinâmicos baseados em props.",
     useCase: "Componentes estilizados com CSS-in-JS, theming",
-  },
-  "stitches.dev": {
-    name: "stitches.dev",
-    description:
-      "Biblioteca de CSS-in-JS com zero-runtime. Define estilos em objetos JavaScript com type-safety e theming nativo.",
-    useCase: "Performance máxima com CSS-in-JS, design systems performáticos",
   },
   Stitches: {
     name: "stitches.dev",
@@ -187,11 +174,12 @@ export const skillDescriptions: Record<string, SkillDescription> = {
       "Testes que simulam o usuário real. Cobrem toda a aplicação do início ao fim.",
     useCase: "Validação de fluxos críticos, regression testing, smoke tests",
   },
-  "Claude Code": {
-    name: "Claude Code",
+  Claude: {
+    name: "Claude",
     description:
-      "CLI de IA da Anthropic para automação de desenvolvimento. Executa tarefas, escreve código, analiza projetos.",
-    useCase: "Automação de tarefas repetitivas, refactoring, code review",
+      "Conjunto de ferramentas de IA da Anthropic que uso no fluxo completo de desenvolvimento. Claude Code dentro do terminal lê o repositório, propõe diffs, roda comandos e abre Pull Requests. Claude Design ajuda na criação e refino de estilos e identidade visual. Servidores MCP (Sentry, Playwright e outros) extendem o agente para tarefas como triagem de bugs e geração de testes. Skills customizadas e prompts próprios deixam tudo isso adaptado ao projeto.",
+    useCase:
+      "Pair programming com IA, automação de code review, geração de testes, criação e refino de UI, triagem de bugs em produção",
   },
   OpenCode: {
     name: "OpenCode",
@@ -288,7 +276,7 @@ export const skillDescriptions: Record<string, SkillDescription> = {
     name: "Jira",
     description:
       "Ferramenta de gestão de projetos da Atlassian. Muito usada para agile/Scrum.",
-    useCase: "跟踪 tarefas, sprints, roadmaps",
+    useCase: "Gestão de tarefas, sprints e roadmaps",
   },
   Vercel: {
     name: "Vercel",
@@ -317,7 +305,7 @@ export const skillDescriptions: Record<string, SkillDescription> = {
   "Liderança Técnica": {
     name: "Liderança Técnica",
     description:
-      "Responsabilidade por decisões técnicas de arquitetura, padrões e qualidade de código.",
+      "Decisões de stack, arquitetura e qualidade, equilibrando velocidade do time com dívida técnica controlada.",
     useCase: "Tech leads, arquitetos, mentoria de times",
   },
   Mentoria: {
@@ -389,7 +377,7 @@ export const skillDescriptions: Record<string, SkillDescription> = {
     description:
       "Plataforma de chatbot para marketing no WhatsApp, Instagram e Facebook. Focada em automação de marketing e vendas.",
     useCase:
-      "Marketing conversacional, automação de vendas, funis deMessenger/Instagram",
+      "Marketing conversacional, automação de vendas, funis de Messenger e Instagram",
   },
   BotConversas: {
     name: "BotConversas",

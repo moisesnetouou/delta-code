@@ -25,6 +25,7 @@ export const aboutStyles = tv({
       "text-lg md:text-xl lg:text-2xl text-foreground font-medium leading-relaxed",
     bioDescription:
       "text-sm md:text-base text-foreground-muted leading-relaxed",
+    bioParagraphs: "space-y-3 md:space-y-4",
 
     infoSection: "flex flex-wrap gap-4 md:gap-6 pt-2",
     infoItem: "flex items-center gap-2 text-sm text-foreground-muted",
