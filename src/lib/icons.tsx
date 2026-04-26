@@ -103,7 +103,7 @@ const iconMap: Record<string, React.ReactNode> = {
     </svg>
   ),
   Zustand: (
-    <span aria-label="Zustand" style={{ fontSize: SIZE - 4 }}>
+    <span style={{ fontSize: SIZE - 4 }}>
       🐻
     </span>
   ),

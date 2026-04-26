@@ -1,5 +1,6 @@
 "use client";
 
+import Clarity from "@microsoft/clarity";
 import { useState } from "react";
 import { personalInfo } from "@/data/portfolio-data";
 import {
@@ -36,6 +37,9 @@ export function usePortfolioActions() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    try {
+      Clarity.event("cv_downloaded");
+    } catch {}
     if (!isAchievementUnlocked("download_cv")) unlockAchievement("download_cv");
   };
 

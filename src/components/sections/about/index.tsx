@@ -6,7 +6,6 @@ import {
   Globe,
   GraduationCap,
   MapPin,
-  Phone,
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
@@ -22,7 +21,7 @@ import { aboutStyles } from "./styles";
 const styles = aboutStyles();
 
 export default function About() {
-  const { location, phone } = personalInfo;
+  const { location } = personalInfo;
   return (
     <section id="about" className={styles.section()}>
       <div className={styles.backgroundGradient()} />
@@ -88,10 +87,6 @@ export default function About() {
                 <div className={styles.infoItem()}>
                   <MapPin className={styles.infoIcon()} />
                   <span>{location}</span>
-                </div>
-                <div className={styles.infoItem()}>
-                  <Phone className={styles.infoIcon()} />
-                  <span>{phone}</span>
                 </div>
               </div>
 

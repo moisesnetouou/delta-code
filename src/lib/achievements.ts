@@ -1,5 +1,6 @@
 "use client";
 
+import Clarity from "@microsoft/clarity";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const COOKIE_NAME = "delta-achievements";
@@ -133,6 +134,9 @@ export function unlockAchievement(
       maxAge: 60 * 60 * 24 * 365,
     });
     cache = newState;
+    try {
+      Clarity.event(`achievement_unlocked:${achievementId}`);
+    } catch {}
   } catch (e) {
     console.error("Error setting achievements cookie:", e);
   }

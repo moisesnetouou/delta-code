@@ -4,7 +4,6 @@ export const personalInfo = {
   tagline:
     "Frontend Engineer focado em qualidade, consistência e entregas no prazo. React, Next.js, automação com IA.",
   email: "moisesnetored@gmail.com",
-  phone: "(92) 99508-5478",
   location: "Manaus, Brasil",
   linkedin: "https://linkedin.com/in/moisesnetouou",
   github: "https://github.com/moisesnetouou",
