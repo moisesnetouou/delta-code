@@ -14,15 +14,21 @@ import {
   Wrench,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { type SelectedSkill, SkillDialog } from "@/components/skill-dialog";
+import { coreStack } from "@/data/portfolio-data";
 import {
   type CategoryType,
   categoryConfig,
   categoryStyles,
+  DEFAULT_CATEGORY,
 } from "@/data/skill-categories";
-import { skillDescriptions } from "@/data/skill-descriptions";
-import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
+import { useLanguage } from "@/i18n/language-context";
+import {
+  isAchievementUnlocked,
+  recordSkillView,
+  unlockAchievement,
+} from "@/lib/achievements";
 import { getIcon } from "@/lib/icons";
 import { skillsStyles } from "./styles";
 import type { SkillsProps } from "./types";
@@ -41,25 +47,35 @@ const categoryIcons: Record<CategoryType, ReactNode> = {
   soft: <Users className="w-3 h-3" />,
 };
 
-const FALLBACK_CATEGORY: { type: CategoryType; label: string } = {
-  type: "frontend",
-  label: "Other",
-};
+const FALLBACK_CATEGORY_TYPE: CategoryType = "frontend";
 
 export default function Skills({ skills }: SkillsProps) {
+  const { t } = useLanguage();
   const [selectedSkill, setSelectedSkill] = useState<SelectedSkill | null>(
     null,
   );
 
+  const techToCategory = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const skillCategory of skills) {
+      for (const item of skillCategory.items) {
+        map[item] = skillCategory.category;
+      }
+    }
+    return map;
+  }, [skills]);
+
   const handleSkillClick = (name: string, category: string) => {
-    if (!skillDescriptions[name]) return;
+    if (!t.skills.descriptions[name as keyof typeof t.skills.descriptions])
+      return;
     setSelectedSkill({ name, category });
     if (!isAchievementUnlocked("open_skill")) unlockAchievement("open_skill");
+    recordSkillView(name);
   };
 
   const selectedCategoryIcon = selectedSkill
     ? categoryIcons[
-        (categoryConfig[selectedSkill.category] ?? FALLBACK_CATEGORY).type
+        categoryConfig[selectedSkill.category]?.type ?? FALLBACK_CATEGORY_TYPE
       ]
     : null;
 
@@ -77,15 +93,62 @@ export default function Skills({ skills }: SkillsProps) {
             <div className={styles.icon()}>
               <Layers className="w-5 h-5" />
             </div>
-            <h2 className={styles.title()}>Habilidades</h2>
+            <h2 className={styles.title()}>{t.skills.heading}</h2>
           </motion.div>
+
+          {coreStack && coreStack.length > 0 && (
+            <motion.div
+              className={styles.coreSection()}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <h3 className={styles.coreHeading()}>{t.skills.coreHeading}</h3>
+              <div className={styles.coreGrid()}>
+                {coreStack.map((item, index) => {
+                  const skillDict =
+                    t.skills.descriptions[
+                      item as keyof typeof t.skills.descriptions
+                    ];
+                  const category = techToCategory[item] ?? DEFAULT_CATEGORY;
+                  return (
+                    <motion.button
+                      key={item}
+                      type="button"
+                      onClick={() => handleSkillClick(item, category)}
+                      className={styles.coreBadge()}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className={styles.coreIcon()}>{getIcon(item)}</div>
+                      <span className={styles.coreName()}>
+                        {skillDict?.name ?? item}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
 
           <div className="space-y-8">
             {skills.map((skillCategory, catIndex) => {
-              const config =
-                categoryConfig[skillCategory.category] ?? FALLBACK_CATEGORY;
-              const style = categoryStyles[config.type];
-              const icon = categoryIcons[config.type];
+              const type =
+                categoryConfig[skillCategory.category]?.type ??
+                FALLBACK_CATEGORY_TYPE;
+              const categoryDict = t.skills.categories[
+                skillCategory.category as keyof typeof t.skills.categories
+              ] ?? {
+                name: skillCategory.category,
+                badge: skillCategory.category,
+              };
+              const style = categoryStyles[type];
+              const icon = categoryIcons[type];
 
               return (
                 <motion.div
@@ -100,16 +163,20 @@ export default function Skills({ skills }: SkillsProps) {
                       className={`${styles.categoryBadge()} ${style.bg} ${style.border} ${style.text}`}
                     >
                       {icon}
-                      {config.label}
+                      {categoryDict.badge}
                     </span>
                     <h3 className={styles.categoryName()}>
-                      {skillCategory.category}
+                      {categoryDict.name}
                     </h3>
                   </div>
 
                   <div className={styles.grid()}>
                     {skillCategory.items.map((item, itemIndex) => {
-                      const hasDescription = !!skillDescriptions[item];
+                      const skillDict =
+                        t.skills.descriptions[
+                          item as keyof typeof t.skills.descriptions
+                        ];
+                      const hasDescription = !!skillDict;
                       return (
                         <motion.button
                           key={item}
@@ -132,7 +199,9 @@ export default function Skills({ skills }: SkillsProps) {
                           <div className={styles.skillIcon()}>
                             {getIcon(item)}
                           </div>
-                          <span className={styles.skillName()}>{item}</span>
+                          <span className={styles.skillName()}>
+                            {skillDict?.name ?? item}
+                          </span>
                         </motion.button>
                       );
                     })}

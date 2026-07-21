@@ -7,86 +7,40 @@ const COOKIE_NAME = "delta-achievements";
 
 export type AchievementId =
   | "welcome"
-  | "view_contact"
   | "view_journey"
+  | "view_contact"
   | "open_experience"
   | "open_skill"
+  | "curious"
   | "click_linkedin"
   | "click_github"
   | "download_cv"
   | "return_visitor"
   | "platinum";
 
+/**
+ * Structural achievement metadata. Title/description are localized and live in
+ * the i18n dictionary (`t.achievements.items[id]`); only id/icon/flags live here.
+ */
 export interface Achievement {
   id: AchievementId;
-  title: string;
-  description: string;
   icon: string;
   isPlatinum?: boolean;
   requiredAchievements?: AchievementId[];
 }
 
 export const achievementsList: Achievement[] = [
-  {
-    id: "welcome",
-    title: "Bem-vindo",
-    description: "Você visitou meu portfólio",
-    icon: "👋",
-  },
-  {
-    id: "view_contact",
-    title: "Fechamento",
-    description: "Chegou ao final do portfólio",
-    icon: "🏁",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "open_experience",
-    title: "Detalhista",
-    description: "Viu detalhes de uma experiência",
-    icon: "🔍",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "open_skill",
-    title: "Aprendizado",
-    description: "Viu detalhes de uma skill",
-    icon: "📚",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "click_linkedin",
-    title: "Networking",
-    description: "Visitou meu LinkedIn",
-    icon: "💼",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "click_github",
-    title: "Código Aberto",
-    description: "Visitou meu GitHub",
-    icon: "💻",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "download_cv",
-    title: "Currículo Obtido",
-    description: "Você baixou meu currículo",
-    icon: "📄",
-    requiredAchievements: ["welcome"],
-  },
-  {
-    id: "return_visitor",
-    title: "Retorno Bem-sucedido",
-    description: "Revisitou meu portfólio",
-    icon: "🔄",
-  },
-  {
-    id: "platinum",
-    title: "Conquista Secreta",
-    description: "Você explorou todo o portfólio!",
-    icon: "💎",
-  },
+  { id: "welcome", icon: "👋" },
+  { id: "view_journey", icon: "🧭", requiredAchievements: ["welcome"] },
+  { id: "view_contact", icon: "🏁", requiredAchievements: ["welcome"] },
+  { id: "open_experience", icon: "🔍", requiredAchievements: ["welcome"] },
+  { id: "open_skill", icon: "📚", requiredAchievements: ["welcome"] },
+  { id: "curious", icon: "🤓", requiredAchievements: ["welcome"] },
+  { id: "click_linkedin", icon: "💼", requiredAchievements: ["welcome"] },
+  { id: "click_github", icon: "💻", requiredAchievements: ["welcome"] },
+  { id: "download_cv", icon: "📄", requiredAchievements: ["welcome"] },
+  { id: "return_visitor", icon: "🔄" },
+  { id: "platinum", icon: "💎", isPlatinum: true },
 ];
 
 export interface AchievementsState {
@@ -144,15 +98,20 @@ export function unlockAchievement(
   return newState;
 }
 
+/**
+ * Platinum requires every non-platinum achievement that a thorough single
+ * visit can reach (return_visitor is a bonus, not required).
+ */
 const PLATINUM_REQUIREMENTS: AchievementId[] = [
   "welcome",
+  "view_journey",
   "view_contact",
   "open_experience",
   "open_skill",
+  "curious",
   "click_linkedin",
   "click_github",
   "download_cv",
-  "return_visitor",
 ];
 
 export function canUnlockPlatinum(): boolean {
@@ -169,6 +128,7 @@ export function resetAchievements(): void {
   try {
     deleteCookie(COOKIE_NAME);
     cache = { unlocked: [] };
+    openedSkills.clear();
   } catch (e) {
     console.error("Error deleting achievements cookie:", e);
   }
@@ -178,13 +138,37 @@ export function isAchievementUnlocked(achievementId: AchievementId): boolean {
   return getAchievements().unlocked.includes(achievementId);
 }
 
+/**
+ * Tracks distinct skills opened in the session to unlock the "curious"
+ * achievement (open 3 different skill dialogs).
+ */
+const CURIOUS_THRESHOLD = 3;
+const openedSkills = new Set<string>();
+
+export function recordSkillView(skillKey: string): void {
+  if (typeof window === "undefined") return;
+  openedSkills.add(skillKey);
+  if (
+    openedSkills.size >= CURIOUS_THRESHOLD &&
+    !isAchievementUnlocked("curious")
+  ) {
+    unlockAchievement("curious");
+  }
+}
+
 export function getProgress(): {
   current: number;
   total: number;
   percentage: number;
 } {
-  const unlockedCount = getAchievements().unlocked.length;
-  const totalCount = achievementsList.filter((a) => !a.isPlatinum).length;
+  // Progress tracks the platinum requirements (the achievements a thorough
+  // visit can reach). return_visitor stays a bonus outside the bar, so 100%
+  // lines up with unlocking the secret platinum.
+  const unlocked = getAchievements().unlocked;
+  const unlockedCount = PLATINUM_REQUIREMENTS.filter((id) =>
+    unlocked.includes(id),
+  ).length;
+  const totalCount = PLATINUM_REQUIREMENTS.length;
   return {
     current: unlockedCount,
     total: totalCount,

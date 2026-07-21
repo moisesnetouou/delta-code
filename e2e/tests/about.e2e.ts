@@ -21,13 +21,13 @@ test.describe("About — bio e dados pessoais", () => {
       aboutSection.getByText(/Frontend Engineer com \+5 anos/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/Já entreguei resultados fora do meu escopo/i),
+      aboutSection.getByText(/Uso IA como alavanca de entrega/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/aplicação inteira do zero/i),
+      aboutSection.getByText(/Construo produtos do zero/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/O que guia meu trabalho hoje/i),
+      aboutSection.getByText(/O que guia meu trabalho/i),
     ).toBeVisible();
   });
 

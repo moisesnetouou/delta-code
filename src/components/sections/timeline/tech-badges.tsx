@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { skillDescriptions } from "@/data/skill-descriptions";
+import { useLanguage } from "@/i18n/language-context";
 import { getIcon } from "@/lib/icons";
 import { timelineStyles } from "./styles";
 
@@ -13,7 +13,9 @@ interface TechBadgeProps {
 }
 
 function TechBadge({ tech, onSkillClick }: TechBadgeProps) {
-  const hasDescription = !!skillDescriptions[tech];
+  const { t } = useLanguage();
+  const hasDescription =
+    !!t.skills.descriptions[tech as keyof typeof t.skills.descriptions];
   const IconComponent = getIcon(tech);
 
   if (hasDescription) {
@@ -54,6 +56,7 @@ export function TechBadgesList({
   onSkillClick,
   onShowMore,
 }: TechBadgesListProps) {
+  const { t } = useLanguage();
   const maxVisible = 4;
   const visible = technologies.slice(0, maxVisible);
   const remaining = technologies.length - maxVisible;
@@ -74,7 +77,7 @@ export function TechBadgesList({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          +{remaining}
+          {t.timeline.moreTemplate.replace("{count}", String(remaining))}
         </motion.button>
       )}
     </div>

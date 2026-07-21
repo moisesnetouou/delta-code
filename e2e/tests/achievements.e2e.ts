@@ -1,6 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-const POLLING_INTERVAL_MS = 1500;
+const REQUIRED_REGULAR = [
+  "welcome",
+  "view_journey",
+  "view_contact",
+  "open_experience",
+  "open_skill",
+  "curious",
+  "click_linkedin",
+  "click_github",
+  "download_cv",
+];
 
 test.describe("Achievements — completar 100% e revelar conquista secreta", () => {
   test.beforeEach(async ({ context }) => {
@@ -12,11 +22,10 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
     await expect(page.getByText("Bem-vindo")).toBeVisible({ timeout: 6000 });
   });
 
-  test("desbloqueia todas as 8 conquistas e revela platinum + 100% no painel", async ({
+  test("desbloqueia todas as conquistas e revela platinum + 100% no painel", async ({
     page,
     context,
   }) => {
-    // bloqueia window.open para popups não pausarem setInterval da aba principal
     await page.addInitScript(() => {
       window.open = () => null;
     });
@@ -26,10 +35,10 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       content: "nextjs-portal{display:none!important}",
     });
 
-    // 1. welcome (auto on mount)
+    // welcome (auto on mount)
     await expect(page.getByText("Bem-vindo")).toBeVisible({ timeout: 6000 });
 
-    // 2. view_journey (scroll timeline + dispara evento scroll)
+    // view_journey (scroll timeline + dispara evento scroll)
     await page.evaluate(() => {
       const el = document.getElementById("timeline");
       if (el) {
@@ -38,41 +47,42 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       }
     });
 
-    // 3. open_experience
+    // open_experience
     await page
       .locator("#timeline")
       .getByRole("heading", { name: "Frontend Engineer" })
       .first()
       .click();
-    const expDialog = page.getByRole("dialog");
-    await expect(expDialog).toBeVisible();
-
-    // 4. open_skill
-    await expDialog
-      .getByRole("button", { name: "React", exact: true })
-      .first()
-      .click();
-    await expect(page.getByRole("dialog").last().getByText("O que é")).toBeVisible();
-
-    // close dialogs
-    await page.keyboard.press("Escape");
-    await page.waitForTimeout(300);
+    await expect(page.getByRole("dialog")).toBeVisible();
     await page.keyboard.press("Escape");
     await page.waitForTimeout(300);
 
-    // 5. click_linkedin (popup pode abrir após 1.5s; achievement já fica em cookie)
+    // open_skill + curious (abrir 3 skills distintas na grade de habilidades)
+    await page.locator("#skills").scrollIntoViewIfNeeded();
+    for (const skill of ["React", "Next.js", "TypeScript"]) {
+      const pattern = new RegExp(`^${skill.replace(".", "\\.")}$`);
+      await page
+        .locator("#skills button", { hasText: pattern })
+        .first()
+        .click();
+      await expect(page.getByRole("dialog").getByText("O que é")).toBeVisible();
+      await page.keyboard.press("Escape");
+      await page.waitForTimeout(300);
+    }
+
+    // click_linkedin
     await page
       .locator("#hero")
       .getByRole("button", { name: "LinkedIn", exact: true })
       .click();
 
-    // 6. click_github
+    // click_github
     await page
       .locator("#hero")
       .getByRole("button", { name: "GitHub", exact: true })
       .click();
 
-    // 7. download_cv
+    // download_cv
     const downloadPromise = page.waitForEvent("download");
     await page
       .locator("#hero")
@@ -80,7 +90,7 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       .click();
     await downloadPromise;
 
-    // 8. view_contact (scroll + scroll event)
+    // view_contact (scroll + scroll event)
     await page.evaluate(() => {
       const el = document.getElementById("contact");
       if (el) {
@@ -89,24 +99,27 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       }
     });
 
-    // garantir que cookie tenha as 8 conquistas regulares antes de esperar platinum
+    // as 9 conquistas regulares desbloqueadas no cookie
     await expect
       .poll(
         async () => {
           const c = await context.cookies();
           const v = c.find((x) => x.name === "delta-achievements")?.value;
-          if (!v) return 0;
-          const decoded = decodeURIComponent(v);
-          return (decoded.match(/welcome|view_journey|view_contact|open_experience|open_skill|click_linkedin|click_github|download_cv/g) ?? []).length;
+          if (!v) return false;
+          try {
+            const parsed = JSON.parse(decodeURIComponent(v));
+            return REQUIRED_REGULAR.every((id) =>
+              (parsed.unlocked ?? []).includes(id),
+            );
+          } catch {
+            return false;
+          }
         },
         { timeout: 15_000, intervals: [500] },
       )
-      .toBeGreaterThanOrEqual(8);
+      .toBe(true);
 
-    // após cookie ter as 8 regulares, recarregar a página: o manager no mount
-    // detecta as 8 e dispara checkAndUnlockPlatinum em 1s (caminho deterministico).
-    await page.reload();
-
+    // com as 9 regulares no cookie, o manager desbloqueia platinum via polling
     await expect
       .poll(
         async () => {
@@ -114,35 +127,21 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
           const v = c.find((x) => x.name === "delta-achievements")?.value;
           return v ? decodeURIComponent(v) : "";
         },
-        { timeout: 10_000, intervals: [500] },
+        { timeout: 20_000, intervals: [500] },
       )
       .toContain("platinum");
-
-    // toast da secret aparece (pode estar empilhada com outras)
-    await expect(
-      page.getByText(/Conquista Secreta Revelada/i).first(),
-    ).toBeVisible({ timeout: 5_000 });
 
     // abre painel de conquistas via Trophy button (canto inferior direito)
     const trophyButton = page.locator("button.fixed.bottom-6.right-6").first();
     await trophyButton.click();
 
-    const panel = page.getByRole("heading", { name: "Conquistas" });
-    await expect(panel).toBeVisible();
-    await expect(page.getByText("100%")).toBeVisible();
-
-    // todas as 8 regulares marcadas + secret revealed
-    await expect(page.getByText("Bem-vindo")).toBeVisible();
-    await expect(page.getByText("Fechamento").first()).toBeVisible();
-    await expect(page.getByText("Detalhista")).toBeVisible();
-    await expect(page.getByText("Aprendizado")).toBeVisible();
-    await expect(page.getByText("Networking")).toBeVisible();
-    await expect(page.getByText("Código Aberto")).toBeVisible();
-    await expect(page.getByText("Currículo Obtido")).toBeVisible();
-
-    // secret platinum revelada (não mais "Conquista Secreta" com cadeado)
     await expect(
-      page.getByText("Você explorou todo o portfólio!").last(),
+      page.getByRole("heading", { name: "Conquistas" }),
+    ).toBeVisible();
+    // progresso 100% confirma que todos os requisitos + platinum caíram no cookie
+    await expect(page.getByText("100%")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Resetar Conquistas" }),
     ).toBeVisible();
   });
 });

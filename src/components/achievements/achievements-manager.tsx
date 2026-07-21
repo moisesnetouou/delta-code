@@ -3,23 +3,32 @@
 import { Trophy, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/language-context";
 import {
-  type Achievement,
+  type AchievementId,
   achievementsList,
+  canUnlockPlatinum,
   getAchievements,
+  getProgress,
   resetAchievements,
   unlockAchievement,
 } from "@/lib/achievements";
-
-const TOTAL_ACHIEVEMENTS = 9;
 
 interface AchievementsManagerProps {
   onAchievementsChange?: (unlocked: string[]) => void;
 }
 
+const ICONS: Record<string, string> = Object.fromEntries(
+  achievementsList.map((a) => [a.id, a.icon]),
+);
+
 export function AchievementsManager({
   onAchievementsChange,
 }: AchievementsManagerProps) {
+  const { t } = useLanguage();
+  const tRef = useRef(t);
+  tRef.current = t;
+
   const [isOpen, setIsOpen] = useState(false);
   const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>(
     [],
@@ -37,25 +46,28 @@ export function AchievementsManager({
     return achievements;
   }, []);
 
-  const showAchievementToast = useCallback((achievement: Achievement) => {
-    if (shownToastIds.current.has(achievement.id)) return;
-    shownToastIds.current.add(achievement.id);
+  const showAchievementToast = useCallback((id: AchievementId) => {
+    if (shownToastIds.current.has(id)) return;
+    shownToastIds.current.add(id);
+
+    const item = tRef.current.achievements.items[id];
+    const icon = ICONS[id];
 
     toast.custom(
-      (t) => (
+      (toastId) => (
         <div className="flex items-center justify-between gap-4 p-4 bg-[#1a1a24] border border-[#00d9ff]/30 rounded-xl shadow-lg shadow-[#00d9ff]/10 min-w-[280px]">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{achievement.icon}</span>
+            <span className="text-3xl">{icon}</span>
             <div className="flex flex-col">
               <p className="font-semibold text-[#00d9ff] text-sm">
-                🏆 Nova Conquista!
+                🏆 {tRef.current.achievements.newAchievement}
               </p>
-              <p className="text-sm text-[#c0c0c8]">{achievement.title}</p>
+              <p className="text-sm text-[#c0c0c8]">{item.title}</p>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => toast.dismiss(t)}
+            onClick={() => toast.dismiss(toastId)}
             className="text-[#6b6b78] hover:text-[#f0f0f5] p-1 rounded-lg hover:bg-[#2a2a35] transition-colors"
           >
             <X className="w-4 h-4" />
@@ -70,23 +82,23 @@ export function AchievementsManager({
     if (shownToastIds.current.has("platinum")) return;
     shownToastIds.current.add("platinum");
 
+    const platinum = tRef.current.achievements.items.platinum;
+
     toast.custom(
-      (t) => (
+      (toastId) => (
         <div className="flex items-center justify-between gap-4 p-4 bg-gradient-to-r from-[#8b5cf6]/20 to-[#00d9ff]/20 border border-[#8b5cf6]/50 rounded-xl shadow-lg shadow-[#8b5cf6]/20 min-w-[280px]">
           <div className="flex items-center gap-3">
             <span className="text-3xl">💎</span>
             <div className="flex flex-col">
               <p className="font-semibold text-[#8b5cf6] text-sm">
-                💎 Conquista Secreta Revelada!
+                💎 {tRef.current.achievements.secretRevealed}
               </p>
-              <p className="text-sm text-[#c0c0c8]">
-                Você explorou todo o portfólio!
-              </p>
+              <p className="text-sm text-[#c0c0c8]">{platinum.description}</p>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => toast.dismiss(t)}
+            onClick={() => toast.dismiss(toastId)}
             className="text-[#6b6b78] hover:text-[#f0f0f5] p-1 rounded-lg hover:bg-[#2a2a35] transition-colors"
           >
             <X className="w-4 h-4" />
@@ -99,25 +111,13 @@ export function AchievementsManager({
 
   const checkAndUnlockPlatinum = useCallback(
     (currentUnlocked: string[]) => {
-      const hasPlatinum = currentUnlocked.includes("platinum");
-      const validIds = achievementsList
-        .filter((a) => a.id !== "platinum")
-        .map((a) => a.id);
-      const regularCount = currentUnlocked.filter((id) =>
-        (validIds as string[]).includes(id),
-      ).length;
-
-      if (!hasPlatinum && regularCount >= 8) {
+      if (!currentUnlocked.includes("platinum") && canUnlockPlatinum()) {
         const newState = unlockAchievement("platinum");
         setUnlockedAchievements(newState.unlocked);
-
-        if (onAchievementsChange) {
-          onAchievementsChange(newState.unlocked);
-        }
+        onAchievementsChange?.(newState.unlocked);
 
         setRecentlyUnlocked("platinum");
         setTimeout(() => setRecentlyUnlocked(null), 3000);
-
         setTimeout(() => showPlatinumToast(), 300);
       }
     },
@@ -136,41 +136,16 @@ export function AchievementsManager({
     if (!hasWelcome) {
       const newState = unlockAchievement("welcome");
       setUnlockedAchievements(newState.unlocked);
-
-      if (onAchievementsChange) {
-        onAchievementsChange(newState.unlocked);
-      }
-
-      setTimeout(() => {
-        const achievement = achievementsList.find((a) => a.id === "welcome");
-        if (achievement) {
-          showAchievementToast(achievement);
-        }
-      }, 500);
+      onAchievementsChange?.(newState.unlocked);
+      setTimeout(() => showAchievementToast("welcome"), 500);
     } else if (!hasReturn && isFirstVisit === false) {
       const newState = unlockAchievement("return_visitor");
       setUnlockedAchievements(newState.unlocked);
-
-      if (onAchievementsChange) {
-        onAchievementsChange(newState.unlocked);
-      }
-
-      setTimeout(() => {
-        const achievement = achievementsList.find(
-          (a) => a.id === "return_visitor",
-        );
-        if (achievement) {
-          showAchievementToast(achievement);
-        }
-      }, 500);
-
-      setTimeout(() => {
-        checkAndUnlockPlatinum(newState.unlocked);
-      }, 1000);
+      onAchievementsChange?.(newState.unlocked);
+      setTimeout(() => showAchievementToast("return_visitor"), 500);
+      setTimeout(() => checkAndUnlockPlatinum(newState.unlocked), 1000);
     } else {
-      setTimeout(() => {
-        checkAndUnlockPlatinum(achievements.unlocked);
-      }, 1000);
+      setTimeout(() => checkAndUnlockPlatinum(achievements.unlocked), 1000);
     }
   }, [
     loadAchievements,
@@ -185,10 +160,7 @@ export function AchievementsManager({
 
       if (currentAchievements.unlocked.length !== unlockedAchievements.length) {
         setUnlockedAchievements(currentAchievements.unlocked);
-
-        if (onAchievementsChange) {
-          onAchievementsChange(currentAchievements.unlocked);
-        }
+        onAchievementsChange?.(currentAchievements.unlocked);
 
         const newAchievements = currentAchievements.unlocked.filter(
           (a) => !unlockedAchievements.includes(a),
@@ -196,18 +168,17 @@ export function AchievementsManager({
 
         newAchievements.forEach((id, index) => {
           if (id !== "platinum") {
-            const achievement = achievementsList.find((a) => a.id === id);
-            if (achievement) {
-              setTimeout(() => {
-                showAchievementToast(achievement);
-              }, index * 800);
-            }
+            setTimeout(
+              () => showAchievementToast(id as AchievementId),
+              index * 800,
+            );
           }
         });
 
-        setTimeout(() => {
-          checkAndUnlockPlatinum(currentAchievements.unlocked);
-        }, newAchievements.length * 800);
+        setTimeout(
+          () => checkAndUnlockPlatinum(currentAchievements.unlocked),
+          newAchievements.length * 800,
+        );
       }
     }, 1000);
 
@@ -223,26 +194,10 @@ export function AchievementsManager({
     resetAchievements();
     setUnlockedAchievements([]);
     shownToastIds.current.clear();
-    if (onAchievementsChange) {
-      onAchievementsChange([]);
-    }
+    onAchievementsChange?.([]);
   };
 
-  const validAchievements = unlockedAchievements.filter((id) =>
-    achievementsList.some((a) => a.id === id),
-  );
-  const progress = Math.min(
-    100,
-    Math.round((validAchievements.length / TOTAL_ACHIEVEMENTS) * 100),
-  );
-
-  const getSecretDescription = () => {
-    const hasPlatinum = unlockedAchievements.includes("platinum");
-    if (hasPlatinum) {
-      return "Você explorou todo o portfólio!";
-    }
-    return "???";
-  };
+  const progress = getProgress().percentage;
 
   if (!hasChecked) return null;
 
@@ -251,6 +206,7 @@ export function AchievementsManager({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
+        aria-label={t.achievements.panelTitle}
         className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-[#0a0a0f] border border-[#00d9ff]/30 hover:border-[#00d9ff]/60 hover:bg-[#00d9ff]/10 transition-all duration-300 shadow-lg shadow-[#00d9ff]/10 group"
       >
         <Trophy className="w-6 h-6 text-[#00d9ff] group-hover:scale-110 transition-transform" />
@@ -262,7 +218,7 @@ export function AchievementsManager({
             type="button"
             className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-default"
             onClick={() => setIsOpen(false)}
-            aria-label="Fechar conquistas"
+            aria-label={t.common.close}
           />
 
           <div className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#050508] border-l border-[#1a1a24] p-6 overflow-y-auto shadow-2xl shadow-black/50">
@@ -271,7 +227,9 @@ export function AchievementsManager({
                 <div className="p-2 rounded-lg bg-gradient-to-br from-[#00d9ff]/20 to-[#8b5cf6]/20 border border-[#00d9ff]/30">
                   <Trophy className="w-6 h-6 text-[#00d9ff]" />
                 </div>
-                <h2 className="text-xl font-bold text-[#f0f0f5]">Conquistas</h2>
+                <h2 className="text-xl font-bold text-[#f0f0f5]">
+                  {t.achievements.panelTitle}
+                </h2>
               </div>
               <button
                 type="button"
@@ -284,7 +242,7 @@ export function AchievementsManager({
 
             <div className="mb-6 p-3 bg-[#1a1a24] rounded-lg border border-[#2a2a35]">
               <div className="flex justify-between text-sm text-[#c0c0c8] mb-2">
-                <span>Progresso</span>
+                <span>{t.achievements.progress}</span>
                 <span>{progress}%</span>
               </div>
               <div className="w-full h-2 bg-[#2a2a35] rounded-full overflow-hidden">
@@ -300,8 +258,9 @@ export function AchievementsManager({
                 const isUnlocked = unlockedAchievements.includes(
                   achievement.id,
                 );
-                const isPlatinum = achievement.id === "platinum";
+                const isPlatinum = achievement.isPlatinum === true;
                 const isRecentlyUnlocked = recentlyUnlocked === achievement.id;
+                const item = t.achievements.items[achievement.id];
 
                 if (isPlatinum && !isUnlocked) {
                   return (
@@ -312,7 +271,10 @@ export function AchievementsManager({
                       <span className="text-2xl">🔒</span>
                       <div className="flex-1">
                         <p className="font-medium text-[#6b6b78]">
-                          Conquista Secreta
+                          {t.achievements.secretLockedTitle}
+                        </p>
+                        <p className="text-xs text-[#6b6b78]">
+                          {t.achievements.secretLockedDescription}
                         </p>
                       </div>
                     </div>
@@ -330,9 +292,7 @@ export function AchievementsManager({
                         : "bg-[#1a1a24] border-[#2a2a35] opacity-50"
                     } ${isRecentlyUnlocked ? "animate-pulse" : ""}`}
                   >
-                    <span className="text-2xl">
-                      {isPlatinum ? "💎" : achievement.icon}
-                    </span>
+                    <span className="text-2xl">{achievement.icon}</span>
                     <div className="flex-1">
                       <p
                         className={`font-medium ${
@@ -343,12 +303,10 @@ export function AchievementsManager({
                             : "text-[#6b6b78]"
                         }`}
                       >
-                        {isPlatinum ? "Conquista Secreta" : achievement.title}
+                        {item.title}
                       </p>
                       <p className="text-xs text-[#6b6b78]">
-                        {isPlatinum
-                          ? getSecretDescription()
-                          : achievement.description}
+                        {item.description}
                       </p>
                     </div>
                     {isUnlocked && (
@@ -359,12 +317,27 @@ export function AchievementsManager({
               })}
             </div>
 
+            {progress === 100 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="mb-3 block w-full rounded-lg bg-gradient-to-r from-[#00d9ff] to-[#8b5cf6] py-2 text-center text-sm font-semibold text-[#050508] transition-opacity hover:opacity-90"
+              >
+                {t.achievements.ctaText}
+              </button>
+            )}
+
             <button
               type="button"
               onClick={handleReset}
               className="w-full py-2 text-sm text-[#ef4444] border border-[#ef4444]/30 rounded-lg hover:bg-[#ef4444]/10 transition-colors"
             >
-              Resetar Conquistas
+              {t.achievements.reset}
             </button>
           </div>
         </div>

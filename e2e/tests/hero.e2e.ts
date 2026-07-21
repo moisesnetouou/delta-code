@@ -11,10 +11,13 @@ test.describe("Hero — apresentação inicial", () => {
       hero.getByRole("heading", { name: "Moisés Neto" }),
     ).toBeVisible();
     await expect(
-      hero.getByText("Frontend Engineer • React • Next.js"),
+      hero.getByText("Frontend Engineer", { exact: true }).first(),
     ).toBeVisible();
     await expect(
-      hero.getByText(/qualidade, consistência e entregas no prazo/i),
+      hero.getByText(/Construo interfaces escaláveis com arquitetura sólida/i),
+    ).toBeVisible();
+    await expect(
+      hero.getByText(/Disponível · Remoto · PT\/EN/i),
     ).toBeVisible();
   });
 

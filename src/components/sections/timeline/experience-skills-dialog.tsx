@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { skillDescriptions } from "@/data/skill-descriptions";
+import { useLanguage } from "@/i18n/language-context";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
 
@@ -21,25 +21,34 @@ export function ExperienceSkillsDialog({
   onClose,
   onSelectSkill,
 }: ExperienceSkillsDialogProps) {
+  const { t } = useLanguage();
+  const experienceText = experience
+    ? t.timeline.experiences[
+        experience.id as keyof typeof t.timeline.experiences
+      ]
+    : null;
   return (
     <Dialog open={!!experience} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.dialogContentSkill()}>
-        {experience && (
+        {experience && experienceText && (
           <>
             <div className="h-2 bg-gradient-to-r from-cyan-500 to-purple-500" />
 
             <div className={styles.expDialogBody()}>
               <DialogTitle className={styles.dialogTitle()}>
-                Tecnologias
+                {t.timeline.technologiesLabel}
               </DialogTitle>
               <p className={styles.expDialogCompany()}>
-                {experience.role} @{" "}
+                {experienceText.role} @{" "}
                 {renderCompany(experience.company, experience.companyUrl)}
               </p>
 
               <div className={styles.expGrid()}>
                 {experience.technologies.map((tech) => {
-                  const hasDescription = !!skillDescriptions[tech];
+                  const hasDescription =
+                    !!t.skills.descriptions[
+                      tech as keyof typeof t.skills.descriptions
+                    ];
                   if (hasDescription) {
                     return (
                       <motion.button
@@ -51,7 +60,7 @@ export function ExperienceSkillsDialog({
                       >
                         <span className={styles.expCardTitle()}>{tech}</span>
                         <span className={styles.expCardSubtitle()}>
-                          Clique para ver detalhes
+                          {t.timeline.clickForDetails}
                         </span>
                       </motion.button>
                     );
@@ -66,9 +75,7 @@ export function ExperienceSkillsDialog({
                 })}
               </div>
 
-              <p className={styles.expHint()}>
-                Clique em uma tecnologia para ver mais detalhes
-              </p>
+              <p className={styles.expHint()}>{t.timeline.techDialogHint}</p>
             </div>
           </>
         )}

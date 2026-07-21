@@ -3,8 +3,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/i18n/language-context";
 
 export function BackToTop() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export function BackToTop() {
           exit={{ opacity: 0, y: 20 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          aria-label="Voltar ao topo"
+          aria-label={t.common.backToTop}
         >
           <ChevronUp className="w-5 h-5 text-[#00d9ff]" />
         </motion.button>

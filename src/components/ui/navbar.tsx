@@ -3,30 +3,42 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/i18n/language-context";
+import { LanguageToggle } from "./language-toggle";
 
-const navItems = [
-  { id: "about", label: "Sobre" },
-  { id: "timeline", label: "Jornada" },
-  { id: "skills", label: "Habilidades" },
-  { id: "contact", label: "Contato" },
-];
+const sectionIds = [
+  "about",
+  "how-i-work",
+  "timeline",
+  "skills",
+  "contact",
+] as const;
 
 export function Navbar() {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const navItems = [
+    { id: "about", label: t.nav.about },
+    { id: "how-i-work", label: t.nav.howIWork },
+    { id: "timeline", label: t.nav.journey },
+    { id: "skills", label: t.nav.skills },
+    { id: "contact", label: t.nav.contact },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = navItems.map((item) => document.getElementById(item.id));
+      const sections = sectionIds.map((id) => document.getElementById(id));
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
+          setActiveSection(sectionIds[i]);
           break;
         }
       }
@@ -81,11 +93,13 @@ export function Navbar() {
                   {item.label}
                 </button>
               ))}
+              <LanguageToggle className="ml-2" />
             </div>
 
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
+              aria-label={t.nav.openMenu}
               className="md:hidden p-2 text-white hover:text-[#00d9ff] transition-colors"
             >
               <Menu className="w-6 h-6" />
@@ -106,7 +120,7 @@ export function Navbar() {
               type="button"
               className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-default"
               onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Fechar menu"
+              aria-label={t.nav.closeMenu}
             />
             <motion.div
               className="absolute right-0 top-0 bottom-0 w-72 bg-[#050508] border-l border-[#2a2a35] p-6"
@@ -122,6 +136,7 @@ export function Navbar() {
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label={t.nav.closeMenu}
                   className="p-2 text-[#999] hover:text-white transition-colors"
                 >
                   <X className="w-5 h-5" />
@@ -145,6 +160,10 @@ export function Navbar() {
                     {item.label}
                   </motion.button>
                 ))}
+              </div>
+
+              <div className="mt-6 flex justify-start">
+                <LanguageToggle />
               </div>
             </motion.div>
           </motion.div>

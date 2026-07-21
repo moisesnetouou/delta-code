@@ -102,11 +102,7 @@ const iconMap: Record<string, React.ReactNode> = {
       />
     </svg>
   ),
-  Zustand: (
-    <span style={{ fontSize: SIZE - 4 }}>
-      🐻
-    </span>
-  ),
+  Zustand: <span style={{ fontSize: SIZE - 4 }}>🐻</span>,
   "React Query": <SiReactquery size={SIZE} color="#ff4154" />,
   Zod: <SiZod size={SIZE} color="#3068b7" />,
   "Chakra UI": <SiChakraui size={SIZE} color="#319795" />,

@@ -1,27 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Award,
-  Globe,
-  GraduationCap,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { Award, Globe, GraduationCap, MapPin, Sparkles } from "lucide-react";
 import Image from "next/image";
-import {
-  certifications,
-  education,
-  languages,
-  personalInfo,
-  summary,
-} from "@/data/portfolio-data";
+import { certifications, education } from "@/data/portfolio-data";
+import { useLanguage } from "@/i18n/language-context";
 import { aboutStyles } from "./styles";
 
 const styles = aboutStyles();
 
 export default function About() {
-  const { location } = personalInfo;
+  const { t } = useLanguage();
+  const {
+    heading,
+    bioTitle,
+    summary,
+    location,
+    educationLabel,
+    languagesLabel,
+    certificationsLabel,
+    course,
+    languages,
+  } = t.about;
   return (
     <section id="about" className={styles.section()}>
       <div className={styles.backgroundGradient()} />
@@ -51,7 +51,7 @@ export default function About() {
           <div className={styles.icon()}>
             <Sparkles className="w-5 h-5" />
           </div>
-          <h2 className={styles.title()}>Sobre</h2>
+          <h2 className={styles.title()}>{heading}</h2>
         </motion.div>
 
         <motion.div
@@ -72,9 +72,7 @@ export default function About() {
             </div>
 
             <div className={styles.textSection()}>
-              <p className={styles.bioTitle()}>
-                Desenvolvedor Frontend com +5 anos de experiência
-              </p>
+              <p className={styles.bioTitle()}>{bioTitle}</p>
               <div className={styles.bioParagraphs()}>
                 {summary.map((paragraph) => (
                   <p key={paragraph} className={styles.bioDescription()}>
@@ -94,10 +92,12 @@ export default function About() {
                 <div className={styles.block()}>
                   <div className={styles.blockHeader()}>
                     <GraduationCap className={styles.blockIcon()} />
-                    <span className={styles.blockLabel()}>Formação</span>
+                    <span className={styles.blockLabel()}>
+                      {educationLabel}
+                    </span>
                   </div>
                   <div className={styles.eduList()}>
-                    <p className={styles.eduCourse()}>{education.course}</p>
+                    <p className={styles.eduCourse()}>{course}</p>
                     <p className={styles.eduMeta()}>
                       {education.institution} • {education.period}
                     </p>
@@ -109,7 +109,9 @@ export default function About() {
                 <div className={styles.block()}>
                   <div className={styles.blockHeader()}>
                     <Globe className={styles.blockIcon()} />
-                    <span className={styles.blockLabel()}>Idiomas</span>
+                    <span className={styles.blockLabel()}>
+                      {languagesLabel}
+                    </span>
                   </div>
                   <div className={styles.langList()}>
                     {languages.map((lang) => (
@@ -129,7 +131,9 @@ export default function About() {
                 <div className={styles.block()}>
                   <div className={styles.blockHeader()}>
                     <Award className={styles.blockIcon()} />
-                    <span className={styles.blockLabel()}>Certificações</span>
+                    <span className={styles.blockLabel()}>
+                      {certificationsLabel}
+                    </span>
                   </div>
                   <div className={styles.certList()}>
                     {certifications.map((cert) => (

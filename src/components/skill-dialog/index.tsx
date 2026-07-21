@@ -4,10 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { categoryConfig, categoryStyles } from "@/data/skill-categories";
-import {
-  type SkillDescription,
-  skillDescriptions,
-} from "@/data/skill-descriptions";
+import { useLanguage } from "@/i18n/language-context";
 import { getIcon } from "@/lib/icons";
 import { skillDialogStyles } from "./styles";
 
@@ -30,8 +27,13 @@ export function SkillDialog({
   onClose,
   categoryIcon,
 }: SkillDialogProps) {
-  const description: SkillDescription | null = skill
-    ? skillDescriptions[skill.name] || null
+  const { t } = useLanguage();
+  const description = skill
+    ? t.skills.descriptions[skill.name as keyof typeof t.skills.descriptions] ||
+      null
+    : null;
+  const categoryDict = skill
+    ? t.skills.categories[skill.category as keyof typeof t.skills.categories]
     : null;
   const category = skill ? categoryConfig[skill.category] : null;
   const typeStyle = category ? categoryStyles[category.type] : null;
@@ -39,7 +41,7 @@ export function SkillDialog({
   return (
     <Dialog open={!!skill} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.content()}>
-        {description && typeStyle && category && (
+        {description && typeStyle && category && categoryDict && (
           <>
             <div className={`${styles.bar()} ${typeStyle.gradient}`} />
 
@@ -49,7 +51,7 @@ export function SkillDialog({
                   className={`${styles.categoryBadge()} ${typeStyle.bg} ${typeStyle.border} ${typeStyle.text}`}
                 >
                   {categoryIcon}
-                  {category.label}
+                  {categoryDict.badge}
                 </span>
               </div>
 
@@ -63,7 +65,7 @@ export function SkillDialog({
                   <DialogTitle className={styles.title()}>
                     {description.name}
                   </DialogTitle>
-                  <p className={styles.subtitle()}>{skill?.category}</p>
+                  <p className={styles.subtitle()}>{categoryDict.name}</p>
                 </div>
               </div>
 
@@ -77,14 +79,18 @@ export function SkillDialog({
                   className={styles.sections()}
                 >
                   <div>
-                    <h4 className={styles.sectionLabel()}>O que é</h4>
+                    <h4 className={styles.sectionLabel()}>
+                      {t.skills.whatIsLabel}
+                    </h4>
                     <p className={styles.sectionText()}>
                       {description.description}
                     </p>
                   </div>
 
                   <div>
-                    <h4 className={styles.sectionLabel()}>Caso de Uso</h4>
+                    <h4 className={styles.sectionLabel()}>
+                      {t.skills.useCaseLabel}
+                    </h4>
                     <p className={styles.sectionText()}>
                       {description.useCase}
                     </p>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
+import { useLanguage } from "@/i18n/language-context";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
 
@@ -18,6 +19,11 @@ export function TimelineCard({
   onShowMoreSkills,
   onSkillClick,
 }: TimelineCardProps) {
+  const { t } = useLanguage();
+  const experienceText =
+    t.timeline.experiences[
+      experience.id as keyof typeof t.timeline.experiences
+    ];
   const isMobile = variant === "mobile";
   const cardClass = isMobile ? styles.cardSm() : styles.card();
   const roleClass = isMobile ? styles.cardRoleSm() : styles.cardRole();
@@ -35,21 +41,21 @@ export function TimelineCard({
       whileTap={isMobile ? { scale: 0.99 } : undefined}
       onClick={() => onClick(experience)}
     >
-      <h3 className={roleClass}>{experience.role}</h3>
+      <h3 className={roleClass}>{experienceText?.role}</h3>
       <p className={styles.cardCompany()}>
         {renderCompany(experience.company, experience.companyUrl)}
       </p>
       <div className={`${metaClass} ${metaJustify}`}>
         <span className={styles.cardMetaItem()}>
           <Calendar className={iconSize} />
-          {experience.period}
+          {experienceText?.period}
         </span>
         <span className={styles.cardMetaItem()}>
           <MapPin className={iconSize} />
-          {experience.location}
+          {experienceText?.location}
         </span>
       </div>
-      <p className={descClass}>{experience.description}</p>
+      <p className={descClass}>{experienceText?.description}</p>
       <TechBadgesList
         technologies={experience.technologies}
         justify={alignment === "right" && !isMobile ? "end" : "start"}

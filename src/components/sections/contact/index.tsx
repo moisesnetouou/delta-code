@@ -6,11 +6,13 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/social-icons";
 import { personalInfo } from "@/data/portfolio-data";
 import { usePortfolioActions } from "@/hooks/use-portfolio-actions";
 import { useScrollAchievement } from "@/hooks/use-scroll-achievement";
+import { useLanguage } from "@/i18n/language-context";
 import { contactStyles } from "./styles";
 
 const styles = contactStyles();
 
 export default function Contact() {
+  const { t } = useLanguage();
   const { email } = personalInfo;
   const { downloadCV, openLinkedin, openGithub } = usePortfolioActions();
 
@@ -29,7 +31,7 @@ export default function Contact() {
           <div className={styles.icon()}>
             <Mail className="w-5 h-5" />
           </div>
-          <h2 className={styles.title()}>Contato</h2>
+          <h2 className={styles.title()}>{t.contact.heading}</h2>
         </motion.div>
 
         <motion.div
@@ -46,7 +48,7 @@ export default function Contact() {
             whileTap={{ scale: 0.95 }}
           >
             <Send className="w-5 h-5" />
-            Enviar Mensagem
+            {t.contact.sendMessage}
           </motion.a>
 
           <div className={styles.links()}>
@@ -57,7 +59,7 @@ export default function Contact() {
               whileTap={{ scale: 0.98 }}
             >
               <Download className={styles.linkIcon()} />
-              <span className={styles.linkText()}>Baixar Currículo</span>
+              <span className={styles.linkText()}>{t.contact.downloadCv}</span>
             </motion.button>
 
             <motion.button
@@ -67,7 +69,7 @@ export default function Contact() {
               whileTap={{ scale: 0.98 }}
             >
               <LinkedinIcon className={styles.linkIcon()} />
-              <span className={styles.linkText()}>LinkedIn</span>
+              <span className={styles.linkText()}>{t.contact.linkedin}</span>
             </motion.button>
 
             <motion.button
@@ -77,7 +79,7 @@ export default function Contact() {
               whileTap={{ scale: 0.98 }}
             >
               <GithubIcon className={styles.linkIcon()} />
-              <span className={styles.linkText()}>GitHub</span>
+              <span className={styles.linkText()}>{t.contact.github}</span>
             </motion.button>
           </div>
         </motion.div>

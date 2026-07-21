@@ -7,6 +7,7 @@ import { MotionProvider } from "@/components/ui/motion-provider";
 import { Navbar } from "@/components/ui/navbar";
 import { ToasterProvider } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LanguageProvider } from "@/i18n/language-context";
 import "./globals.css";
 
 const inter = Inter({
@@ -79,6 +80,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://delta-code-dev.vercel.app/",
+    languages: {
+      "pt-BR": "https://delta-code-dev.vercel.app/",
+      en: "https://delta-code-dev.vercel.app/",
+    },
   },
 };
 
@@ -93,16 +98,18 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <MotionProvider>
-          <ClarityProvider />
-          <TooltipProvider>
-            <Navbar />
-            {children}
-            <BackToTop />
-            <ToasterProvider />
-            <AchievementsWrapper />
-          </TooltipProvider>
-        </MotionProvider>
+        <LanguageProvider>
+          <MotionProvider>
+            <ClarityProvider />
+            <TooltipProvider>
+              <Navbar />
+              {children}
+              <BackToTop />
+              <ToasterProvider />
+              <AchievementsWrapper />
+            </TooltipProvider>
+          </MotionProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

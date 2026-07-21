@@ -3,8 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { experienceDetails } from "@/data/experience-details";
-import { skillDescriptions } from "@/data/skill-descriptions";
+import { useLanguage } from "@/i18n/language-context";
 import { renderCompany } from "./render-company";
 import { timelineStyles } from "./styles";
 
@@ -23,18 +22,26 @@ export function ExperienceDialog({
   onClose,
   onSkillClick,
 }: ExperienceDialogProps) {
-  const details = experience ? experienceDetails[experience.id] : null;
+  const { t } = useLanguage();
+  const experienceText = experience
+    ? t.timeline.experiences[
+        experience.id as keyof typeof t.timeline.experiences
+      ]
+    : null;
+  const details = experience
+    ? t.timeline.details[experience.id as keyof typeof t.timeline.details]
+    : null;
 
   return (
     <Dialog open={!!experience} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className={styles.dialogContent()}>
-        {experience && details && (
+        {experience && details && experienceText && (
           <>
             <div className={styles.dialogBar()} />
 
             <div className={styles.dialogBody()}>
               <DialogTitle className={styles.dialogTitle()}>
-                {experience.role}
+                {experienceText.role}
               </DialogTitle>
               <p className={styles.dialogCompany()}>
                 {renderCompany(experience.company, experience.companyUrl)}
@@ -43,11 +50,11 @@ export function ExperienceDialog({
               <div className={styles.dialogMetaRow()}>
                 <span className={styles.dialogMetaItem()}>
                   <Calendar className="w-4 h-4" />
-                  {experience.period}
+                  {experienceText.period}
                 </span>
                 <span className={styles.dialogMetaItem()}>
                   <MapPin className="w-4 h-4" />
-                  {experience.location}
+                  {experienceText.location}
                 </span>
               </div>
 
@@ -63,7 +70,7 @@ export function ExperienceDialog({
                   <div>
                     <h4 className={styles.dialogSectionLabel()}>
                       <span className={styles.dialogDotCyan()} />
-                      Responsabilidades
+                      {t.timeline.responsibilitiesLabel}
                     </h4>
                     <ul className={styles.dialogList()}>
                       {details.responsibilities.map((resp) => (
@@ -77,7 +84,7 @@ export function ExperienceDialog({
                   <div className={styles.dialogDivider()}>
                     <h4 className={styles.dialogSectionLabel()}>
                       <span className={styles.dialogDotPurple()} />
-                      Impacto
+                      {t.timeline.impactLabel}
                     </h4>
                     <ul className={styles.dialogList()}>
                       {details.impact.map((imp) => (
@@ -90,11 +97,14 @@ export function ExperienceDialog({
 
                   <div className={styles.dialogDivider()}>
                     <h4 className={styles.dialogSectionLabelPlain()}>
-                      Tecnologias
+                      {t.timeline.technologiesLabel}
                     </h4>
                     <div className={styles.cardTech()}>
                       {experience.technologies.map((tech) => {
-                        const hasDescription = !!skillDescriptions[tech];
+                        const hasDescription =
+                          !!t.skills.descriptions[
+                            tech as keyof typeof t.skills.descriptions
+                          ];
                         if (hasDescription) {
                           return (
                             <button

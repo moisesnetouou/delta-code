@@ -1,22 +1,35 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
+
+const SECTION_LABELS = ["Sobre", "Jornada", "Habilidades", "Contato"];
+
+async function openMobileMenuIfPresent(page: Page) {
+  const openMenu = page.getByRole("button", { name: "Abrir menu" });
+  if (await openMenu.isVisible().catch(() => false)) {
+    await openMenu.click();
+  }
+}
 
 test.describe("Navegação — navbar e âncoras", () => {
   test("navbar contém links para todas as seções", async ({ page }) => {
     await page.goto("/");
+    await openMobileMenuIfPresent(page);
 
-    const nav = page.getByRole("navigation").first();
-    await expect(nav.getByText("Sobre", { exact: true })).toBeVisible();
-    await expect(nav.getByText("Jornada", { exact: true })).toBeVisible();
-    await expect(nav.getByText("Habilidades", { exact: true })).toBeVisible();
-    await expect(nav.getByText("Contato", { exact: true })).toBeVisible();
+    for (const label of SECTION_LABELS) {
+      await expect(
+        page
+          .getByRole("button", { name: label, exact: true })
+          .filter({ visible: true }),
+      ).toBeVisible();
+    }
   });
 
   test("clicar em link da navbar rola até a seção alvo", async ({ page }) => {
     await page.goto("/");
-    const nav = page.getByRole("navigation").first();
 
-    await nav
+    await openMobileMenuIfPresent(page);
+    await page
       .getByRole("button", { name: "Habilidades", exact: true })
+      .filter({ visible: true })
       .click();
     await page.waitForFunction(
       () => {
@@ -28,7 +41,12 @@ test.describe("Navegação — navbar e âncoras", () => {
       { timeout: 8000 },
     );
 
-    await nav.getByRole("button", { name: "Contato", exact: true }).click();
+    // no mobile o clique fecha o drawer; reabrir antes do próximo item
+    await openMobileMenuIfPresent(page);
+    await page
+      .getByRole("button", { name: "Contato", exact: true })
+      .filter({ visible: true })
+      .click();
     await page.waitForFunction(
       () => {
         const el = document.getElementById("contact");

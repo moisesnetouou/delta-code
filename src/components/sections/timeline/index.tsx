@@ -5,9 +5,13 @@ import { useMemo, useState } from "react";
 import { type SelectedSkill, SkillDialog } from "@/components/skill-dialog";
 import { type Experience, skills } from "@/data/portfolio-data";
 import { DEFAULT_CATEGORY } from "@/data/skill-categories";
-import { skillDescriptions } from "@/data/skill-descriptions";
 import { useScrollAchievement } from "@/hooks/use-scroll-achievement";
-import { isAchievementUnlocked, unlockAchievement } from "@/lib/achievements";
+import { useLanguage } from "@/i18n/language-context";
+import {
+  isAchievementUnlocked,
+  recordSkillView,
+  unlockAchievement,
+} from "@/lib/achievements";
 import { ExperienceDialog } from "./experience-dialog";
 import { ExperienceSkillsDialog } from "./experience-skills-dialog";
 import { timelineStyles } from "./styles";
@@ -86,6 +90,7 @@ function buildRows(experiences: Experience[]): TimelineRow[] {
 }
 
 export default function Timeline({ experiences }: TimelineProps) {
+  const { t } = useLanguage();
   const [selectedSkill, setSelectedSkill] = useState<SelectedSkill | null>(
     null,
   );
@@ -109,10 +114,12 @@ export default function Timeline({ experiences }: TimelineProps) {
   const desktopRows = useMemo(() => buildRows(experiences), [experiences]);
 
   const handleSkillClick = (tech: string) => {
-    if (!skillDescriptions[tech]) return;
+    if (!t.skills.descriptions[tech as keyof typeof t.skills.descriptions])
+      return;
     const category = techToCategory[tech] || DEFAULT_CATEGORY;
     setSelectedSkill({ name: tech, category });
     if (!isAchievementUnlocked("open_skill")) unlockAchievement("open_skill");
+    recordSkillView(tech);
   };
 
   const handleExperienceClick = (exp: Experience) => {
@@ -133,9 +140,12 @@ export default function Timeline({ experiences }: TimelineProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className={styles.title()}>Minha Jornada</h2>
+            <h2 className={styles.title()}>{t.timeline.heading}</h2>
             <p className={styles.subtitle()}>
-              {yearsOfExperience}+ anos de experiência construindo soluções
+              {t.timeline.subtitleTemplate.replace(
+                "{years}",
+                String(yearsOfExperience),
+              )}
             </p>
           </motion.div>
 
