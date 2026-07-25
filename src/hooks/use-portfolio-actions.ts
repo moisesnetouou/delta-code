@@ -1,7 +1,6 @@
 "use client";
 
 import Clarity from "@microsoft/clarity";
-import { useState } from "react";
 import { personalInfo } from "@/data/portfolio-data";
 import {
   type AchievementId,
@@ -9,27 +8,14 @@ import {
   unlockAchievement,
 } from "@/lib/achievements";
 
-const NAVIGATE_DELAY_MS = 1500;
-
-function openWithUnlockGate(
-  url: string,
-  achievement: AchievementId,
-  hasNavigated: boolean,
-  setHasNavigated: (v: boolean) => void,
-) {
-  if (!hasNavigated && !isAchievementUnlocked(achievement)) {
-    unlockAchievement(achievement);
-    setHasNavigated(true);
-    setTimeout(() => window.open(url, "_blank"), NAVIGATE_DELAY_MS);
-    return;
-  }
-  window.open(url, "_blank");
+function openExternal(url: string, achievement: AchievementId) {
+  // Open synchronously inside the click gesture, otherwise browsers block the
+  // popup (a delayed window.open breaks the user-activation chain).
+  window.open(url, "_blank", "noopener,noreferrer");
+  if (!isAchievementUnlocked(achievement)) unlockAchievement(achievement);
 }
 
 export function usePortfolioActions() {
-  const [hasNavigatedLinkedin, setHasNavigatedLinkedin] = useState(false);
-  const [hasNavigatedGithub, setHasNavigatedGithub] = useState(false);
-
   const downloadCV = () => {
     const link = document.createElement("a");
     link.href = "/moises-neto-curriculo.pdf";
@@ -44,20 +30,9 @@ export function usePortfolioActions() {
   };
 
   const openLinkedin = () =>
-    openWithUnlockGate(
-      personalInfo.linkedin,
-      "click_linkedin",
-      hasNavigatedLinkedin,
-      setHasNavigatedLinkedin,
-    );
+    openExternal(personalInfo.linkedin, "click_linkedin");
 
-  const openGithub = () =>
-    openWithUnlockGate(
-      personalInfo.github,
-      "click_github",
-      hasNavigatedGithub,
-      setHasNavigatedGithub,
-    );
+  const openGithub = () => openExternal(personalInfo.github, "click_github");
 
   return { downloadCV, openLinkedin, openGithub };
 }

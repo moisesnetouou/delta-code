@@ -15,6 +15,14 @@ const REQUIRED_REGULAR = [
 test.describe("Achievements — completar 100% e revelar conquista secreta", () => {
   test.beforeEach(async ({ context }) => {
     await context.clearCookies();
+    // dispensa o banner de consentimento para ele não cobrir elementos no mobile
+    await context.addCookies([
+      {
+        name: "delta-consent",
+        value: "rejected",
+        url: "http://localhost:3000",
+      },
+    ]);
   });
 
   test("desbloqueia welcome ao carregar a página", async ({ page }) => {

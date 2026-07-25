@@ -12,6 +12,8 @@ Personal portfolio site for Moisés Neto (Frontend Engineer). Public URL: <https
 - **Animations:** `framer-motion`
 - **Notifications:** `sonner`
 - **Cookies:** `cookies-next`
+- **i18n:** custom lightweight dictionary in `src/i18n` (PT/EN), client toggle + cookie (`delta-locale`). No routing per locale.
+- **Analytics:** Microsoft Clarity (`@microsoft/clarity`), gated behind a cookie-consent banner (`delta-consent`) — loads only after "Accept".
 - **Lint/format:** Biome 2.4 (no Prettier, no ESLint)
 - **Testing:** Playwright e2e implemented (`e2e/tests/*.e2e.ts`). Unit (Vitest) not yet wired — see the `testing` skill.
 
@@ -35,29 +37,31 @@ Personal portfolio site for Moisés Neto (Frontend Engineer). Public URL: <https
 
 ```
 src/
-├── app/                    # Next.js App Router (layout, page, /obrigado)
+├── app/                    # App Router: layout, page, robots.ts, sitemap.ts, opengraph-image.tsx
 ├── components/
-│   ├── achievements/       # Gamification overlay (AchievementsWrapper)
-│   ├── sections/           # Page sections, each as folder:
+│   ├── achievements/       # Gamification overlay (AchievementsWrapper + manager)
+│   ├── sections/           # Page sections (order: hero → about → how-i-work → timeline → skills → contact)
 │   │   ├── hero/           #   index.tsx | styles.ts | types.ts
 │   │   ├── about/
-│   │   ├── skills/
-│   │   ├── experience/
+│   │   ├── how-i-work/
 │   │   ├── timeline/
-│   │   ├── projects/
-│   │   ├── certifications/
+│   │   ├── skills/
 │   │   └── contact/
-│   └── ui/                 # Reusable primitives (button, card, dialog, navbar, tooltip, sonner, badge, back-to-top, social-icons)
-├── data/                   # Static portfolio content
-│   ├── portfolio-data.ts
-│   ├── experience-details.ts
-│   └── skill-descriptions.ts
-├── lib/                    # Utilities
-│   ├── utils.ts            # cn() helper
-│   ├── icons.tsx
-│   └── achievements.ts
+│   ├── skill-dialog/       # Shared skill-detail dialog
+│   └── ui/                 # Reusable primitives (navbar, dialog, back-to-top, language-toggle, cookie-consent, clarity-provider, sonner, ...)
+├── data/                   # Structural portfolio data (non-translatable)
+│   ├── portfolio-data.ts   #   personalInfo, experiences (ids/dates/tech), skills, certifications, education, coreStack
+│   └── skill-categories.ts #   category type + color styles
+├── i18n/                   # PT/EN dictionaries + LanguageProvider
+│   ├── pt.ts | en.ts       #   pt.ts is the source of truth; en.ts must match its shape
+│   ├── dictionary.ts       #   `Content` interface + `dictionaries` map
+│   ├── language-context.tsx#   LanguageProvider + useLanguage()
+│   └── types.ts            #   Locale, cookie name
+├── lib/                    # utils.ts (cn), icons.tsx, achievements.ts
 └── types/                  # Shared TS types
 ```
+
+Note: certifications render inside About; there is no standalone Projects/Certifications/Experience section (the timeline IS the experience list).
 
 ## Conventions
 
@@ -82,13 +86,17 @@ Use `@/` alias (configured in `tsconfig.json`) → maps to `src/`.
 - Global cursor-pointer applied to all interactive elements (set in `globals.css`)
 - Fonts: Inter (sans) + JetBrains Mono (mono), loaded via `next/font/google`
 
-### Data
+### Data & i18n
 
-Portfolio content (experiences, skills, projects, certifications) lives in `src/data/*.ts` — edit there, not in section components.
+- **Structural** data (ids, dates, tech arrays, urls, skill keys, certifications, `coreStack`) lives in `src/data/*.ts`.
+- **Translatable** copy (all user-facing text: hero, summary, experience role/description, skill descriptions, section labels, achievements, consent) lives in the i18n dictionary. Edit `src/i18n/pt.ts` (source of truth) and keep `src/i18n/en.ts` in the same shape. `dictionary.ts` (`Content`) is enforced by TypeScript.
+- Components read copy via `useLanguage().t`, never hardcode PT/EN strings in JSX.
 
 ### SEO/Metadata
 
-Centralized in `src/app/layout.tsx`. Locale `pt_BR`, canonical `https://delta-code-dev.vercel.app/`.
+- Centralized in `src/app/layout.tsx` (locale `pt_BR`, canonical). JSON-LD (`Person`) injected there.
+- `app/robots.ts`, `app/sitemap.ts`, and `app/opengraph-image.tsx` (generated OG image) use the App Router file conventions — do not add a manual `/og-image.png`.
+- Security headers (CSP, X-Frame-Options, etc.) are set in `next.config.ts` (`headers()`); CSP must keep allowing `*.clarity.ms` if analytics stays.
 
 ### Testing
 
@@ -118,7 +126,7 @@ Full conventions (naming, LGPD-safe fixtures, mocking boundaries, e2e setup) liv
 
 - No backend/API routes currently.
 - No DB / auth.
-- No i18n — site is `pt-BR` only.
+- i18n is PT/EN via a client toggle only — no per-locale routes (`/en`), so the EN variant isn't separately indexable (conscious tradeoff).
 
 ## Git Flow
 

@@ -33,7 +33,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
-    setCookie(LOCALE_COOKIE, next, { maxAge: 60 * 60 * 24 * 365 });
+    setCookie(LOCALE_COOKIE, next, {
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+      secure: window.location.protocol === "https:",
+    });
     document.documentElement.lang = next === "pt" ? "pt-BR" : "en";
   }, []);
 

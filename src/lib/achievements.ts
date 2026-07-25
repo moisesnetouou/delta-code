@@ -4,6 +4,19 @@ import Clarity from "@microsoft/clarity";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const COOKIE_NAME = "delta-achievements";
+const OPENED_SKILLS_COOKIE = "delta-opened-skills";
+
+/** Fired on the window whenever achievement state changes in this tab. */
+export const ACHIEVEMENT_EVENT = "delta-achievement";
+
+const COOKIE_OPTS = {
+  maxAge: 60 * 60 * 24 * 365,
+  sameSite: "lax",
+  // secure only on https (prod). Avoids WebKit rejecting the cookie when the
+  // production build is served over http (e.g. e2e on localhost).
+  secure:
+    typeof window !== "undefined" && window.location.protocol === "https:",
+} as const;
 
 export type AchievementId =
   | "welcome"
@@ -60,11 +73,22 @@ function readCookie(): AchievementsState {
   return { unlocked: [] };
 }
 
+function emitChange(): void {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(ACHIEVEMENT_EVENT));
+  }
+}
+
 export function getAchievements(): AchievementsState {
   if (typeof window === "undefined") return { unlocked: [] };
   if (cache) return cache;
   cache = readCookie();
   return cache;
+}
+
+/** Drops the in-memory cache so the next read reflects an external (cross-tab) write. */
+export function refreshAchievementsCache(): void {
+  cache = null;
 }
 
 export function unlockAchievement(
@@ -84,13 +108,12 @@ export function unlockAchievement(
   };
 
   try {
-    setCookie(COOKIE_NAME, JSON.stringify(newState), {
-      maxAge: 60 * 60 * 24 * 365,
-    });
+    setCookie(COOKIE_NAME, JSON.stringify(newState), COOKIE_OPTS);
     cache = newState;
     try {
       Clarity.event(`achievement_unlocked:${achievementId}`);
     } catch {}
+    emitChange();
   } catch (e) {
     console.error("Error setting achievements cookie:", e);
   }
@@ -127,8 +150,9 @@ export function resetAchievements(): void {
   if (typeof window === "undefined") return;
   try {
     deleteCookie(COOKIE_NAME);
+    deleteCookie(OPENED_SKILLS_COOKIE);
     cache = { unlocked: [] };
-    openedSkills.clear();
+    emitChange();
   } catch (e) {
     console.error("Error deleting achievements cookie:", e);
   }
@@ -139,19 +163,33 @@ export function isAchievementUnlocked(achievementId: AchievementId): boolean {
 }
 
 /**
- * Tracks distinct skills opened in the session to unlock the "curious"
- * achievement (open 3 different skill dialogs).
+ * Tracks distinct skills opened to unlock the "curious" achievement (open 3
+ * different skill dialogs). Persisted in a cookie so it survives reloads.
  */
 const CURIOUS_THRESHOLD = 3;
-const openedSkills = new Set<string>();
+const OPENED_SKILLS_CAP = 20;
+
+function readOpenedSkills(): string[] {
+  try {
+    const value = getCookie(OPENED_SKILLS_COOKIE);
+    if (value) return JSON.parse(value as string);
+  } catch {}
+  return [];
+}
 
 export function recordSkillView(skillKey: string): void {
   if (typeof window === "undefined") return;
-  openedSkills.add(skillKey);
-  if (
-    openedSkills.size >= CURIOUS_THRESHOLD &&
-    !isAchievementUnlocked("curious")
-  ) {
+  const opened = readOpenedSkills();
+  if (opened.includes(skillKey)) return;
+
+  const next = [...opened, skillKey].slice(-OPENED_SKILLS_CAP);
+  try {
+    setCookie(OPENED_SKILLS_COOKIE, JSON.stringify(next), COOKIE_OPTS);
+  } catch (e) {
+    console.error("Error setting opened-skills cookie:", e);
+  }
+
+  if (next.length >= CURIOUS_THRESHOLD && !isAchievementUnlocked("curious")) {
     unlockAchievement("curious");
   }
 }

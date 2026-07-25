@@ -709,4 +709,11 @@ export const pt = {
     close: "Fechar",
     backToTop: "Voltar ao topo",
   },
+
+  consent: {
+    message:
+      "Este site usa cookies para entender como as pessoas usam a página.",
+    accept: "Aceitar",
+    reject: "Recusar",
+  },
 };

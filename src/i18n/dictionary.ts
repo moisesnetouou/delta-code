@@ -1,3 +1,4 @@
+import type { AchievementId } from "@/lib/achievements";
 import { en } from "./en";
 import { pt } from "./pt";
 import type { Locale } from "./types";
@@ -89,11 +90,16 @@ export interface Content {
     secretLockedTitle: string;
     secretLockedDescription: string;
     ctaText: string;
-    items: Record<string, { title: string; description: string }>;
+    items: Record<AchievementId, { title: string; description: string }>;
   };
   common: {
     close: string;
     backToTop: string;
+  };
+  consent: {
+    message: string;
+    accept: string;
+    reject: string;
   };
 }
 

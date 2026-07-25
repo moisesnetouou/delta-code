@@ -3,12 +3,39 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { AchievementsWrapper } from "@/components/achievements/achievements-wrapper";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { ClarityProvider } from "@/components/ui/clarity-provider";
+import { CookieConsent } from "@/components/ui/cookie-consent";
 import { MotionProvider } from "@/components/ui/motion-provider";
 import { Navbar } from "@/components/ui/navbar";
 import { ToasterProvider } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { personalInfo } from "@/data/portfolio-data";
 import { LanguageProvider } from "@/i18n/language-context";
 import "./globals.css";
+
+const SITE_URL = "https://delta-code-dev.vercel.app/";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Moisés Neto",
+  jobTitle: "Frontend Engineer",
+  url: SITE_URL,
+  sameAs: [personalInfo.linkedin, personalInfo.github],
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "Automação com IA",
+    "Testes automatizados",
+    "Arquitetura frontend",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Manaus",
+    addressCountry: "BR",
+  },
+};
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,29 +88,16 @@ export const metadata: Metadata = {
     description:
       "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
     siteName: "Moisés Neto",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Moisés Neto - Frontend Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
     description:
       "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável.",
-    images: ["/og-image.png"],
     creator: "@moisesnetouou",
   },
   alternates: {
     canonical: "https://delta-code-dev.vercel.app/",
-    languages: {
-      "pt-BR": "https://delta-code-dev.vercel.app/",
-      en: "https://delta-code-dev.vercel.app/",
-    },
   },
 };
 
@@ -98,6 +112,11 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <script
+          type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static JSON-LD, no user input
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <LanguageProvider>
           <MotionProvider>
             <ClarityProvider />
@@ -107,6 +126,7 @@ export default function RootLayout({
               <BackToTop />
               <ToasterProvider />
               <AchievementsWrapper />
+              <CookieConsent />
             </TooltipProvider>
           </MotionProvider>
         </LanguageProvider>

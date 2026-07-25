@@ -5,11 +5,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/language-context";
 import {
+  ACHIEVEMENT_EVENT,
   type AchievementId,
   achievementsList,
   canUnlockPlatinum,
   getAchievements,
   getProgress,
+  refreshAchievementsCache,
   resetAchievements,
   unlockAchievement,
 } from "@/lib/achievements";
@@ -36,6 +38,7 @@ export function AchievementsManager({
   const [hasChecked, setHasChecked] = useState(false);
   const [recentlyUnlocked, setRecentlyUnlocked] = useState<string | null>(null);
   const shownToastIds = useRef<Set<string>>(new Set());
+  const unlockedRef = useRef<string[]>([]);
 
   const loadAchievements = useCallback(() => {
     const achievements = getAchievements();
@@ -124,8 +127,37 @@ export function AchievementsManager({
     [onAchievementsChange, showPlatinumToast],
   );
 
+  const syncFromStore = useCallback(() => {
+    const current = getAchievements();
+    const prev = unlockedRef.current;
+    if (current.unlocked.length === prev.length) return;
+
+    const newIds = current.unlocked.filter((id) => !prev.includes(id));
+    unlockedRef.current = current.unlocked;
+    setUnlockedAchievements(current.unlocked);
+    onAchievementsChange?.(current.unlocked);
+
+    newIds.forEach((id, index) => {
+      if (id !== "platinum") {
+        setTimeout(
+          () => showAchievementToast(id as AchievementId),
+          index * 800,
+        );
+      }
+    });
+    setTimeout(
+      () => checkAndUnlockPlatinum(current.unlocked),
+      newIds.length * 800,
+    );
+  }, [onAchievementsChange, showAchievementToast, checkAndUnlockPlatinum]);
+
+  useEffect(() => {
+    unlockedRef.current = unlockedAchievements;
+  }, [unlockedAchievements]);
+
   useEffect(() => {
     const achievements = loadAchievements();
+    unlockedRef.current = achievements.unlocked;
     setUnlockedAchievements(achievements.unlocked);
     setHasChecked(true);
 
@@ -134,61 +166,29 @@ export function AchievementsManager({
     const hasReturn = achievements.unlocked.includes("return_visitor");
 
     if (!hasWelcome) {
-      const newState = unlockAchievement("welcome");
-      setUnlockedAchievements(newState.unlocked);
-      onAchievementsChange?.(newState.unlocked);
-      setTimeout(() => showAchievementToast("welcome"), 500);
+      unlockAchievement("welcome");
     } else if (!hasReturn && isFirstVisit === false) {
-      const newState = unlockAchievement("return_visitor");
-      setUnlockedAchievements(newState.unlocked);
-      onAchievementsChange?.(newState.unlocked);
-      setTimeout(() => showAchievementToast("return_visitor"), 500);
-      setTimeout(() => checkAndUnlockPlatinum(newState.unlocked), 1000);
-    } else {
-      setTimeout(() => checkAndUnlockPlatinum(achievements.unlocked), 1000);
+      unlockAchievement("return_visitor");
     }
-  }, [
-    loadAchievements,
-    onAchievementsChange,
-    showAchievementToast,
-    checkAndUnlockPlatinum,
-  ]);
+
+    syncFromStore();
+    setTimeout(() => checkAndUnlockPlatinum(getAchievements().unlocked), 1000);
+  }, [loadAchievements, syncFromStore, checkAndUnlockPlatinum]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const currentAchievements = getAchievements();
-
-      if (currentAchievements.unlocked.length !== unlockedAchievements.length) {
-        setUnlockedAchievements(currentAchievements.unlocked);
-        onAchievementsChange?.(currentAchievements.unlocked);
-
-        const newAchievements = currentAchievements.unlocked.filter(
-          (a) => !unlockedAchievements.includes(a),
-        );
-
-        newAchievements.forEach((id, index) => {
-          if (id !== "platinum") {
-            setTimeout(
-              () => showAchievementToast(id as AchievementId),
-              index * 800,
-            );
-          }
-        });
-
-        setTimeout(
-          () => checkAndUnlockPlatinum(currentAchievements.unlocked),
-          newAchievements.length * 800,
-        );
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [
-    unlockedAchievements,
-    onAchievementsChange,
-    showAchievementToast,
-    checkAndUnlockPlatinum,
-  ]);
+    const onExternal = () => {
+      refreshAchievementsCache();
+      syncFromStore();
+    };
+    window.addEventListener(ACHIEVEMENT_EVENT, syncFromStore);
+    window.addEventListener("focus", onExternal);
+    document.addEventListener("visibilitychange", onExternal);
+    return () => {
+      window.removeEventListener(ACHIEVEMENT_EVENT, syncFromStore);
+      window.removeEventListener("focus", onExternal);
+      document.removeEventListener("visibilitychange", onExternal);
+    };
+  }, [syncFromStore]);
 
   const handleReset = () => {
     resetAchievements();

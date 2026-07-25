@@ -701,4 +701,10 @@ export const en = {
     close: "Close",
     backToTop: "Back to top",
   },
+
+  consent: {
+    message: "This site uses cookies to understand how people use the page.",
+    accept: "Accept",
+    reject: "Decline",
+  },
 };
