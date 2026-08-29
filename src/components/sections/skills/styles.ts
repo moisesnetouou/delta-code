@@ -13,14 +13,14 @@ export const skillsStyles = tv({
       "text-sm font-medium uppercase tracking-wide text-foreground-muted mb-4",
     coreGrid: "flex flex-wrap gap-3 md:gap-4",
     coreBadge:
-      "flex items-center gap-2.5 px-4 py-3 md:px-5 md:py-3.5 rounded-xl bg-surface border border-accent-primary/20 hover:border-accent-primary/50 hover:bg-surface/80 hover:scale-[1.03] active:scale-[0.97] transition-[background-color,border-color,transform] duration-200 cursor-pointer group",
+      "flex items-center gap-2.5 px-4 py-3 md:px-5 md:py-3.5 rounded-xl bg-surface border border-accent-primary/20 hover:border-accent-primary/50 hover:bg-surface/80 transition-colors duration-200 cursor-pointer group",
     coreIcon: "w-6 h-6 md:w-8 md:h-8 flex items-center justify-center",
     coreName:
       "text-sm md:text-base font-medium text-foreground group-hover:text-accent-primary transition-colors",
 
     grid: "grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3",
     skillItem:
-      "flex flex-col items-center justify-center gap-1.5 md:gap-2 p-3 md:p-4 rounded-xl bg-surface/50 border border-foreground-muted/10 enabled:hover:border-accent-primary/40 enabled:hover:bg-surface enabled:hover:scale-[1.03] enabled:active:scale-[0.97] transition-[background-color,border-color,transform] duration-200 cursor-pointer group min-h-[80px] md:min-h-[100px]",
+      "flex flex-col items-center justify-center gap-1.5 md:gap-2 p-3 md:p-4 rounded-xl bg-surface/50 border border-foreground-muted/10 enabled:hover:border-accent-primary/40 enabled:hover:bg-surface transition-colors duration-200 cursor-pointer group min-h-[80px] md:min-h-[100px]",
     skillIcon: "w-5 h-5 md:w-7 md:h-7 flex items-center justify-center",
     skillName:
       "text-xs md:text-xs text-center text-foreground-muted group-hover:text-white transition-colors line-clamp-2",

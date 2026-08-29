@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Bug,
   ClipboardList,
@@ -85,27 +84,15 @@ export default function Skills({ skills }: SkillsProps) {
     <>
       <section id="skills" className={styles.section()}>
         <div className={styles.container()}>
-          <motion.div
-            className={styles.header()}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className={styles.header()}>
             <div className={styles.icon()}>
               <Layers className="w-5 h-5" />
             </div>
             <h2 className={styles.title()}>{t.skills.heading}</h2>
-          </motion.div>
+          </div>
 
           {coreStack && coreStack.length > 0 && (
-            <motion.div
-              className={styles.coreSection()}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+            <div className={styles.coreSection()}>
               <h3 className={styles.coreHeading()}>{t.skills.coreHeading}</h3>
               <div className={styles.coreGrid()}>
                 {coreStack.map((item) => {
@@ -129,11 +116,11 @@ export default function Skills({ skills }: SkillsProps) {
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           )}
 
           <div className="space-y-8">
-            {skills.map((skillCategory, catIndex) => {
+            {skills.map((skillCategory) => {
               const type =
                 categoryConfig[skillCategory.category]?.type ??
                 FALLBACK_CATEGORY_TYPE;
@@ -147,13 +134,7 @@ export default function Skills({ skills }: SkillsProps) {
               const icon = categoryIcons[type];
 
               return (
-                <motion.div
-                  key={skillCategory.category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-                >
+                <div key={skillCategory.category}>
                   <div className={styles.categoryRow()}>
                     <span
                       className={`${styles.categoryBadge()} ${style.bg} ${style.border} ${style.text}`}
@@ -194,7 +175,7 @@ export default function Skills({ skills }: SkillsProps) {
                       );
                     })}
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
