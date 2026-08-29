@@ -6,14 +6,11 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 const COOKIE_NAME = "delta-achievements";
 const OPENED_SKILLS_COOKIE = "delta-opened-skills";
 
-/** Fired on the window whenever achievement state changes in this tab. */
 export const ACHIEVEMENT_EVENT = "delta-achievement";
 
 const COOKIE_OPTS = {
   maxAge: 60 * 60 * 24 * 365,
   sameSite: "lax",
-  // secure only on https (prod). Avoids WebKit rejecting the cookie when the
-  // production build is served over http (e.g. e2e on localhost).
   secure:
     typeof window !== "undefined" && window.location.protocol === "https:",
 } as const;
@@ -199,9 +196,6 @@ export function getProgress(): {
   total: number;
   percentage: number;
 } {
-  // Progress tracks the platinum requirements (the achievements a thorough
-  // visit can reach). return_visitor stays a bonus outside the bar, so 100%
-  // lines up with unlocking the secret platinum.
   const unlocked = getAchievements().unlocked;
   const unlockedCount = PLATINUM_REQUIREMENTS.filter((id) =>
     unlocked.includes(id),

@@ -1,13 +1,12 @@
 export const en = {
   hero: {
-    title: "Frontend Engineer • React • Next.js",
-    roles: ["Frontend Engineer", "Tech Lead", "Software Engineer"],
+    roles: ["Software Engineer", "Tech Lead", "Frontend Engineer"],
     tagline:
-      "Frontend Engineer specialized in React and Next.js. I build scalable interfaces with solid architecture, automated tests, and a product focus, accelerating every stage with AI.",
+      "Software Engineer with 5+ years in React, Next.js and TypeScript, working from requirement to production: interface, API, tests, deploy and observability. The architecture and the decisions are mine; I use AI to execute faster, not to decide for me.",
     highlights: [
       "5+ years of experience",
-      "React · Next.js · TypeScript",
-      "Technical leadership",
+      "React · Next.js · Node.js",
+      "From requirement to production",
       "Automated tests & CI/CD",
     ],
     availability: "Available · Remote · PT/EN",
@@ -19,18 +18,12 @@ export const en = {
     about: "About",
     howIWork: "How I Work",
     journey: "Journey",
+    projects: "Projects",
     skills: "Skills",
     contact: "Contact",
     openMenu: "Open menu",
     closeMenu: "Close menu",
   },
-
-  metrics: [
-    { value: "+5", label: "years building products" },
-    { value: "70%", label: "less deploy time" },
-    { value: "10×", label: "faster PR review" },
-    { value: "4th day", label: "from idea to production" },
-  ],
 
   howIWork: {
     heading: "How I Work",
@@ -61,22 +54,52 @@ export const en = {
 
   about: {
     heading: "About",
-    bioTitle: "Frontend Engineer with 5+ years of experience",
+    bioTitle: "Software Engineer with 5+ years, from requirement to production",
     summary: [
-      "Frontend Engineer with 5+ years building scalable interfaces in React, Next.js, and TypeScript. I work on architecture, technical leadership, and day-to-day AI automation, always focused on the product and the experience of the people who use it.",
-      "I use AI as a delivery lever: I built a custom CLI that analyzes large volumes of support tickets in a single run for a few dollars in tokens, created webhooks with n8n to enable integrations the original platform didn't expose, and automated testing, PR review, and bug triage. I solve in days what would manually take weeks.",
-      "I build products from scratch, from concept to production: I put together requirements documents (functional and non-functional requirements (FR/NFR)) to align backend, frontend, and UI, design the interface with the user experience in mind, and use AI at every stage (design, code, tests, and review). On one project, the application went into production by the 4th day.",
-      "I've delivered complete systems on my own, such as a CRM with an editable content layer (built like a headless CMS) and an observability platform to track flows in production, with daily metrics, identifying where users get stuck, and exporting data for AI-generated reports.",
-      "What guides my work: planning before code, meeting deadlines without compromising quality, and consistency. Automated tests, clear standards, and careful review going hand in hand with speed.",
+      "Software Engineer with 5+ years in React, Next.js and TypeScript, working from requirement to production: interface, API, tests, deploy and observability. The architecture and the technical decisions are mine; I use AI to execute faster, not to decide for me.",
+      "I have started from a business need, written the specification, built both the interface and the backend, and shipped the application on a server I provisioned myself. I joined the company to build interfaces and today I own the full product cycle.",
+      "As interim tech lead I ran a cross-functional team, mentored two developers closely and left practices that outlived the interim period, such as standardized PR review. Before that, as a mid-level developer, I had autonomy over stack and architecture, mentored juniors and wrote the component documentation that became the internal reference.",
+      "After five years building product inside the same operation, I am looking to apply that experience to a different kind of business and customer, on teams where software is the core product.",
     ],
     location: "Manaus, Brazil",
     educationLabel: "Education",
     languagesLabel: "Languages",
     certificationsLabel: "Certifications",
+    highlightsLabel: "Highlights & Impact",
+    highlights: [
+      {
+        label: "Security",
+        description:
+          "I found private keys headed for the frontend bundle and moved all communication into an own API with server-side authentication.",
+      },
+      {
+        label: "Cost",
+        description:
+          "I built the in-house observability tool that replaced a paid monitoring extension, removing a recurring cost.",
+      },
+      {
+        label: "Revenue",
+        description:
+          "I created a channel inside the chatbot that feeds the lead base continuously, with visual tracking of the volume generated and direct delivery to the sales team.",
+      },
+      {
+        label: "Speed",
+        description:
+          "I cut deploy time by roughly 70% and front-to-back integration from days to minutes.",
+      },
+      {
+        label: "Quality",
+        description:
+          "A test suite that sustains continuous publishing across the main products, with around 3,000 tests running in the pipelines.",
+      },
+    ],
     course: "Computer Science",
     languages: [
       { name: "Portuguese", level: "Native" },
-      { name: "English", level: "Intermediate" },
+      {
+        name: "English",
+        level: "Intermediate reading and writing, basic conversation",
+      },
     ],
   },
 
@@ -86,102 +109,226 @@ export const en = {
     responsibilitiesLabel: "Responsibilities",
     impactLabel: "Impact",
     technologiesLabel: "Technologies",
+    progressionLabel: "Progression",
     clickForDetails: "Click to see details",
     techDialogHint: "Click a technology to see more details",
     moreTemplate: "+{count}",
     experiences: {
       "1": {
-        role: "Frontend Engineer",
-        period: "Sep 2025 - Present",
-        location: "Manaus, Brazil",
+        role: "Software Engineer",
+        period: "Jul 2021 - Present",
+        location: "Manaus and remote",
         description:
-          "I lead the technical direction of frontend projects in React, Next.js, and TypeScript: I define the stack, architecture standards, and the quality rules the team follows. I built a custom test automation framework based on Playwright MCP, where every new feature gets end-to-end tests within minutes, and the full test suite (unit, integration, and end-to-end) runs automatically on GitHub Actions on every Pull Request. I integrated Sentry MCP to identify and fix bugs in real time and developed a custom AI CLI capable of analyzing large volumes of support tickets in a single run, for under $5 in tokens, generating reports that replaced weeks of manual work. I automated Pull Request review with Claude Code, put together requirements documents (FR/NFR) to align backend, frontend, and UI, and deliver products from scratch using AI at every stage, from design (Claude Design) to production. Every deploy runs continuously in staging and production, always going through type checking, code standardization, and tests before going live.",
-      },
-      "2": {
-        role: "Interim Tech Lead",
-        period: "Jan 2026 - Apr 2026",
-        location: "Manaus, Brazil",
-        description:
-          "I acted as Tech Lead for a five-person, cross-functional team (2 frontend, 1 backend, and 1 UX) during a transition period. I ran dailies, planning sessions, and technical decisions, coordinated alignment between frontend and backend, and directly supported product decisions, validating solutions and designing the logic before each implementation. Even though it was a temporary role, the team kept its sprint cadence and adopted permanent workflow improvements, such as Husky for pre-commit quality checks and standardized PR review, practices that continued after the interim period.",
-      },
-      "3": {
-        role: "Mid-level Frontend Developer",
-        period: "Oct 2022 - Sep 2025",
-        location: "Manaus, Brazil",
-        description:
-          "I worked with technical autonomy on frontend projects and conversational automation (Blip platform), making stack and architecture decisions without relying on the tech lead. I supported and mentored junior and mid-level developers, trained new devs on these tools, and maintained reference technical documentation. I led the structuring of scalable architectures and implemented the automated testing foundation with Vitest, Testing Library, Cypress, and Playwright. It was during this period that my perspective matured: I started seeing the work not just through the lens of code, but also from the product side and its impact on the experience of the people who use it.",
-      },
-      "4": {
-        role: "Junior Frontend Developer",
-        period: "Jul 2021 - Sep 2022",
-        location: "Manaus, Brazil",
-        description:
-          "My first position as a developer: I worked on web applications and blogs in React with Prismic, HTML, CSS, and JavaScript, as well as mobile apps with React Native and Expo. I created and maintained component documentation in Storybook and built the first conversational automation solutions I worked on from scratch, creating patterns that were reused later. I delivered more than eight projects during this period, across web, mobile, and bots, and helped kick off the stack transition to React.",
+          "I joined to build interfaces and today I own the full product cycle: I define the stack, the architecture standards and the quality criteria, and I work full-stack whenever the product calls for it.",
+        progression: [
+          { role: "Junior Frontend", period: "2021" },
+          { role: "Mid-level Frontend", period: "2022" },
+          { role: "Interim Tech Lead", period: "Jan - Apr 2026" },
+          { role: "Software Engineer", period: "Present" },
+        ],
       },
     },
     details: {
       "1": {
         responsibilities: [
-          "Define the stack, architecture standards, and quality gates for frontend projects",
-          "Built the test pipeline (unit, integration, and E2E with Vitest and Playwright) integrated with GitHub Actions in staging and production",
-          "Put together requirements documents (FR/NFR) to align backend, frontend, and UI",
-          "Built a custom AI CLI for batch analysis of support tickets",
-          "Set up Sentry MCP integration for real-time bug triage",
-          "Coded custom code review skills with Claude Code",
-          "Translate UX prototypes into responsive UIs (TailwindCSS, Shadcn, Radix)",
+          "Technical leadership of React, Next.js and TypeScript projects, defining stack, architecture standards and quality criteria",
+          "Full-stack work whenever the product calls for it: Node.js APIs, authentication, Redis caching, server provisioning and deploy",
+          "Requirements gathering and product definition before the code, covering business rules, integrations and cross-team impact",
+          "Quality and business-rule validation of deliveries, with tests on critical flows and structured feedback to backend and frontend before publishing",
+          "Security in the development routine: credentials moved to the server, protection headers and CSP in production, session hardening, logs free of personal data and vulnerable dependency management",
+          "Type-check, lint and test pipelines on GitHub Actions, with E2E test automation and production error triage",
+          "Deploy documentation, onboarding guides and application migration planning",
         ],
         impact: [
-          "Product built from scratch in production by the 4th day: designed the UI with the user experience in mind, converted the design into code with Claude, and refined the visuals with Claude Design, applying standards and tests via prompts and custom skills",
-          "Faster delivery with AI working at every stage (design, code, tests, and review), without compromising quality",
-          "70% shorter deploy time with pipelines covering type checking, code standardization, and tests",
-          "Large volumes of support tickets analyzed in a single run for under $5 in tokens, replacing weeks of manual work",
-          "Pull Requests reviewed 10x faster with Claude Code and custom skills",
-          "Complete systems delivered from scratch, such as a CRM with an editable content layer (built like a headless CMS) and an observability platform with daily metrics and data export for AI-generated reports",
-          "New end-to-end tests created in minutes via Playwright MCP",
+          "A mock data layer that cut front-to-back integration from days down to swapping the API address",
+          "Around 3,000 tests running in the pipelines, sustaining continuous publishing across the main products",
+          "Roughly 70% reduction in deploy time",
+          "An in-house observability tool that replaced a paid monitoring extension",
+          "A lead channel inside the chatbot, delivering continuously to the sales team",
+          "Leading a cross-functional team as interim tech lead, with practices that outlived the interim period",
         ],
       },
-      "2": {
-        responsibilities: [
-          "Led a five-person, cross-functional team (2 frontend, 1 backend, and 1 UX)",
-          "Ran dailies, planning sessions, and technical decisions during the transition",
-          "Coordinated alignment between frontend and backend",
-          "Supported product decisions, validating solutions and designing the logic before implementation",
+    },
+  },
+
+  projects: {
+    heading: "Projects",
+    subtitle: "Systems I built at work, and what I build on my own",
+    ongoing: "present",
+    duration: {
+      month: "{count} month",
+      months: "{count} months",
+      year: "{count} year",
+      years: "{count} years",
+    },
+    moreTemplate: "+{count}",
+    viewCase: "Read the case study",
+    viewDetails: "See details",
+    viewLive: "Visit the site",
+    viewRepo: "View the code",
+    backToPortfolio: "Back to the portfolio",
+    stackHint: "Click any item to see what it is and where I use it",
+    notFound: "Project not found",
+    groups: {
+      professional: "At work",
+      personal: "Personal project",
+    },
+    labels: {
+      problem: "The problem",
+      stack: "Stack",
+      architecture: "Architecture",
+      period: "Period",
+      role: "Role",
+      repo: "Code",
+      highlights: "What I did",
+    },
+    eyebrows: {
+      problem: "01 / Context",
+      stack: "02 / Tooling",
+      architecture: "03 / How it works",
+    },
+    status: {
+      live: "Live",
+      wip: "In progress",
+      archived: "Archived",
+    },
+    items: {
+      observabilidade: {
+        title: "Observability platform",
+        tagline:
+          "An in-house dashboard that replaced a paid monitoring extension",
+        summary:
+          "Brings conversations, queues and contacts into a single search, and visually tracks the leads the chatbot generates.",
+        role: "Product, frontend, API and infrastructure",
+        overview: [
+          "While preparing the deploy I noticed the private keys were going out with the frontend bundle. I moved every endpoint into an own API, with server-side authentication and validation, and provisioned the machine from scratch.",
         ],
-        impact: [
-          "Team adopted Husky and automated PR review, with a standardized workflow that continued after the interim period",
-          "Sprints delivered on time throughout the transition",
-          "Frontend and backend aligned without cross-team rework",
+        highlights: [
+          "Private keys headed for the bundle, moved into an API with server-side authentication",
+          "Redis cache modeled per query type, serving refined data without repeating external calls",
+          "Server provisioned from scratch with Nginx, PM2, Docker and Redis",
         ],
       },
-      "3": {
-        responsibilities: [
-          "Worked with technical autonomy on frontend projects and conversational automation",
-          "Made stack and architecture decisions without relying on the tech lead",
-          "Maintained reference technical documentation for the projects",
-          "Trained new devs on conversational automation tools",
-          "Structured scalable architectures across projects",
-          "Implemented the automated testing foundation with Vitest, Testing Library, Cypress, and Playwright",
+      denuncias: {
+        title: "Anonymous reporting channel",
+        tagline:
+          "Anonymity and data protection as requirements, not a footer notice",
+        summary:
+          "Experience, interface and integration of a channel where privacy and role-based access came before the code.",
+        role: "Product spec, experience and frontend",
+        overview: [
+          "I planned the project from the start: I wrote the technical specification from the document I handed the team, gathered references and put sketches together before opening the editor. With Claude Design I went from sketch to a concrete screen quickly, and from there it was a cycle of refinement and testing until the result held up. Having the spec ready beforehand is what let the work advance in parallel with the backend.",
         ],
-        impact: [
-          "Matured as a developer, learning to see product and experience, not just code",
-          "Technical documentation adopted as the team's reference",
-          "Recurring 1:1 mentoring and code reviews with the junior team",
-          "Automated testing foundation adopted across projects",
+        highlights: [
+          "The internal panel never identifies the reporter",
+          "Protocol shown exactly once and the credential never shown again",
+          "Always-generic lookup errors, so enumeration is not possible",
         ],
       },
-      "4": {
-        responsibilities: [
-          "Built web applications and blogs in React with Prismic, HTML, CSS, and JavaScript",
-          "Built mobile apps with React Native and Expo",
-          "Created and maintained component documentation in Storybook",
-          "Built the first conversational automation solutions I worked on from scratch",
+      crm: {
+        title: "CRM with editable content",
+        tagline: "A content layer built like a headless CMS",
+        summary:
+          "From requirements to the first production version within days, with a layer that lets copy and blocks change without a new deploy.",
+        role: "Requirements, interface and frontend",
+        overview: [
+          "I proposed and implemented an editable content layer built like a headless CMS, wired to a landing page that renders dynamic content per edit.",
         ],
-        impact: [
-          "First conversational automation solutions built from scratch, with patterns reused later",
-          "8+ web, mobile, and bot projects delivered in ~14 months",
-          "Storybook component documentation adopted as the team's reference",
-          "First job as a developer, laying the foundation for growth in subsequent roles",
+        highlights: [
+          "First version in production within days",
+          "Copy and blocks editable without shipping a new deploy",
+          "Born with test coverage, instead of getting tests bolted on later",
         ],
+      },
+      leads: {
+        title: "Leads and referral platform",
+        tagline: "Link tracking, a referral program and sales performance",
+        summary:
+          "I shipped the redesign to production and built the modules that followed: QR Code tracking, referrals with a public landing page, teams and a heatmap.",
+        role: "Frontend, tests and CI",
+        overview: [
+          "In the tracking module I found the origin code was being lost on certain messaging platforms, a behavior the requirements never mentioned. I tested alternatives until I worked around it and documented the fix for the backend to apply.",
+        ],
+        highlights: [
+          "Origin code lost outside the requirements: worked around and documented",
+          "Link tracking with QR Code and export",
+          "Went from zero automated tests to a full suite running in CI",
+        ],
+      },
+      "automacao-atendimento": {
+        title: "Automated support and telemetry",
+        tagline: "Conversational flows plus the database that was missing",
+        summary:
+          "Automated support flows and the telemetry that started measuring what used to be plain counting.",
+        role: "Flow architecture and telemetry",
+        overview: [
+          "I standardized the event records and created the support database that did not exist, since the contracted platform only offered counting. It now accumulates over 500 flow records a day, generated by users themselves as they move through support.",
+        ],
+        highlights: [
+          "A telemetry base built from scratch, where before there was only counting",
+          "Over 500 flow records a day, feeding decisions on data instead of guesswork",
+          "Separate bots unified into one",
+        ],
+      },
+      "automacoes-python": {
+        title: "Python automations with AI",
+        tagline:
+          "Audio transcription, an indexed base and routines that run themselves",
+        summary:
+          "Scripts that take repetitive work out of the way: audio turning into text, content indexed for AI lookup, and batch analysis.",
+        role: "Internal tooling, from the script to the report",
+        overview: [
+          "Speech-to-text transcription with a speech model, content indexed as embeddings for semantic search, and batch analysis that assesses topic, outcome and improvement points, with individual and consolidated reports.",
+        ],
+        highlights: [
+          "Audio turned into searchable text, with no manual step in between",
+          "Content indexed as embeddings, so the AI answers about the actual base instead of nothing",
+          "One run analyzed 271 records for under $5 in tokens, work that used to take days",
+        ],
+      },
+      deltalog: {
+        title: "deltalog",
+        tagline: "A technical blog with a file-based CMS and no database",
+        summary:
+          "Next.js 16 with Keystatic and Markdoc: content lives in files versioned in Git, with no database. Publishing opens a pull request, and the site ships static on Vercel.",
+        role: "Personal project, end to end: product, architecture, code and deploy",
+        overview: [
+          "A blog planned from functional and non-functional requirements written before the first line of code, a process that became the first published post.",
+          "With the constraint of having no CMS cost, I adopted Keystatic using GitHub as the content management layer and structured the project to support that versioned format.",
+        ],
+        highlights: [
+          "Content as files versioned in Git, with no database",
+          "Publishing opens a pull request on a content branch",
+          "Static site on Vercel, with favicon and share cards generated from code",
+        ],
+      },
+    },
+    caseStudies: {
+      deltalog: {
+        intro:
+          "Content versioned in Git, publishing through pull requests, static output. The CMS edits files in the repository itself.",
+        repoNote: "Private repository, because drafts are versioned files",
+        problem: [
+          "I wanted a place of my own to record technical decisions while the context was still fresh: why I picked a tool, what broke along the way, what I would do differently. A hosted blog solves publishing and creates two problems in its place. The content ends up living in a database that is not mine, and every post depends on an editor I do not control.",
+          "What I write there is what I lived through: a problem that came up in my own work, the decision I made, the result I measured. Content like that ages along with the project, so it has to be versioned the same way code is: reviewable in a diff, with history, and revertible. Hence the foundational decision every other one rests on: content as files in the repository, a CMS on top of them, zero database.",
+        ],
+        architectureIntro:
+          "App Router with almost everything static. Two file-backed collections, read in Server Components, with no client data layer.",
+        architecture: [
+          "Posts as .mdoc and tools as .yaml, versioned in Git and edited through Keystatic in GitHub mode, which opens a pull request on its own branch.",
+          "A single module-scoped reader holds every listing rule: draft filtering, reading time, pagination and related posts.",
+          "Search and filters are a GET form plus links. The whole page works with JavaScript disabled.",
+          "The admin route and the CMS API return 404 whenever no GitHub App is configured.",
+          "Favicon, apple icon and share cards are generated from code. No binary image is versioned.",
+        ],
+        screenshotCaptions: [
+          "Table of contents and anchors come from the same slug, built in the heading transform",
+          "The whole filter runs over GET: the page works with JavaScript disabled",
+          "Tools as entities, not tags: each one gets a page and a citation count",
+        ],
+        thumbnailAlt: "deltalog home page",
+        ctaTitle: "The best way to see it is to browse the site",
+        ctaDescription: "The blog is live, with the first post published.",
       },
     },
   },
@@ -207,9 +354,111 @@ export const en = {
       Backend: { name: "Backend", badge: "Back" },
       "Testes & Qualidade": { name: "Testing & Quality", badge: "Test" },
       "Ferramentas & Infra": { name: "Tools & Infra", badge: "Infra" },
+      "Engenharia de Produto": {
+        name: "Product Engineering",
+        badge: "Product",
+      },
       "Soft Skills": { name: "Soft Skills", badge: "Soft" },
     },
     descriptions: {
+      "Definição de Produto": {
+        name: "Product definition",
+        description:
+          "Deciding what the system does and what it deliberately does not, before any screen or endpoint exists. Business rules, integrations and cross-team impact belong here, not halfway through implementation.",
+        useCase:
+          "Aligning backend, frontend and UI on the same decision, instead of finding the mismatch once the code is already written",
+      },
+      "Controle de Acesso por Perfil": {
+        name: "Role-based access control",
+        description:
+          "Who sees what, defined by role and enforced on the server. The interface hides what the role should not see, but the API is what actually blocks it.",
+        useCase:
+          "An internal panel where each role sees only its own slice, without the API response carrying data the screen was going to hide",
+      },
+      Python: {
+        name: "Python",
+        description:
+          "The language I reach for in automation and anything involving data and AI: routine scripts, batch processing and model integration.",
+        useCase:
+          "Audio transcription, content indexing for semantic search, and batch analysis that ends in a report",
+      },
+      Whisper: {
+        name: "Whisper",
+        description:
+          "A speech recognition model that turns audio into text, holding up well against noise and accents.",
+        useCase:
+          "Audio turned into searchable text, ready to be indexed or analyzed with no manual step",
+      },
+      Embeddings: {
+        name: "Embeddings",
+        description:
+          "A numeric representation of text that puts similar meanings close together. It is what makes searching by meaning possible instead of by exact word.",
+        useCase:
+          "An indexed base so the AI answers about real content instead of hallucinating what it does not have",
+      },
+      "Busca Semântica": {
+        name: "Semantic search",
+        description:
+          "Search by proximity of meaning over an embedding-indexed base, rather than literal term matching.",
+        useCase:
+          "Finding the right record when the person asking does not use the exact words in the content",
+      },
+      Redis: {
+        name: "Redis",
+        description:
+          "In-memory store used as cache and key-value database. Serves ready answers in microseconds and takes load off external APIs and the relational database.",
+        useCase:
+          "Cache modeled per query type, with the key derived from each request's slice, so expensive calls are not repeated",
+      },
+      Nginx: {
+        name: "Nginx",
+        description:
+          "Web server and reverse proxy. Terminates TLS, serves static files and routes requests to the application processes.",
+        useCase:
+          "Front door of a server provisioned from scratch, with HTTPS and a proxy to the Node process",
+      },
+      PM2: {
+        name: "PM2",
+        description:
+          "Process manager for Node in production. Keeps the app up, restarts it on failure and centralizes logs.",
+        useCase:
+          "Keeping a Node API running on an own server, with automatic restart and centralized logging",
+      },
+      "Requisitos (RF/RNF)": {
+        name: "Requirements (FR/NFR)",
+        description:
+          "A functional requirement describes what the system does; a non-functional one describes the constraints. Writing both before the code exposes the decision nobody has made yet.",
+        useCase:
+          "Specification before implementation, so frontend and backend advance in parallel instead of one waiting on the other",
+      },
+      Keystatic: {
+        name: "Keystatic",
+        description:
+          "A CMS that edits files in the repository itself instead of writing to a database. In GitHub mode every publish becomes a commit and a pull request on the content branch.",
+        useCase:
+          "Blogs and content sites that need history, diff review and revertibility, without running a database or an external service",
+      },
+      Markdoc: {
+        name: "Markdoc",
+        description:
+          "A Markdown-based content language with a typed AST, custom tags and validation. Unlike MDX, it does not execute components inside the content.",
+        useCase:
+          "Content that needs custom blocks with an explicit contract, plus metadata derived from the AST such as reading time and table of contents",
+      },
+      Shiki: {
+        name: "Shiki",
+        description:
+          "A syntax highlighter that uses VS Code grammars and resolves coloring at build time or on the server, shipping ready-made HTML.",
+        useCase:
+          "Code blocks on a static site without shipping a highlighter to the client, with a custom theme matched to the project palette",
+      },
+      Biome: {
+        name: "Biome",
+        description:
+          "Linter and formatter in a single binary, written in Rust. Replaces ESLint and Prettier, includes import sorting and runs in a fraction of the time.",
+        useCase:
+          "Projects that want fast lint and format from one config, with no conflict between lint rules and formatting rules",
+      },
       "React Native": {
         name: "React Native",
         description:

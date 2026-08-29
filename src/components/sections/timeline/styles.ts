@@ -8,18 +8,20 @@ export const timelineStyles = tv({
     title: "text-3xl md:text-4xl font-bold text-foreground",
     subtitle: "text-foreground-muted mt-2",
 
-    card: "bg-surface border border-border-subtle rounded-xl p-5 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer",
+    card: "bg-surface border border-border-subtle rounded-xl p-5 md:p-6 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer",
     cardSm:
       "bg-surface border border-border-subtle rounded-xl p-4 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer",
-    cardRole: "text-lg font-bold text-white mb-1",
+    cardRole: "text-lg md:text-xl font-bold text-white mb-1",
     cardRoleSm: "text-base font-bold text-white mb-1",
     cardCompany: "text-accent-primary font-medium mb-2",
     cardMetaRow: "flex items-center gap-3 text-sm text-foreground-muted mb-3",
     cardMetaRowSm: "flex items-center gap-3 text-xs text-foreground-muted mb-3",
     cardMetaItem: "flex items-center gap-1",
-    cardDescription: "text-sm text-foreground-soft leading-relaxed mb-4",
+    cardDescription:
+      "text-sm text-foreground-soft leading-relaxed mb-4 max-w-[78ch]",
     cardDescriptionSm: "text-sm text-foreground-soft leading-relaxed mb-3",
     cardTech: "flex flex-wrap gap-1.5",
+    cardTechWrapper: "mt-5 pt-5 border-t border-border-subtle",
     techBadge:
       "px-2 py-1 rounded-md text-xs font-medium bg-surface-3 border border-border-subtle text-foreground-muted flex items-center gap-1.5",
     techBadgeButton:
@@ -41,6 +43,20 @@ export const timelineStyles = tv({
       "absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 border-4 border-background z-10",
 
     mobileWrapper: "md:hidden space-y-4",
+    desktopSingleRow: "max-w-3xl mx-auto",
+
+    progression:
+      "flex flex-col gap-2.5 mt-5 pt-5 border-t border-border-subtle text-left",
+    progressionLabel:
+      "font-mono text-[10px] uppercase tracking-[0.12em] text-foreground-dim",
+    progressionList: "flex flex-col gap-2",
+    progressionItem:
+      "flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 text-sm",
+    progressionDot:
+      "w-1.5 h-1.5 rounded-full bg-accent-primary/60 self-center flex-shrink-0",
+    progressionRole: "text-foreground-soft",
+    progressionPeriod:
+      "font-mono text-[11px] text-foreground-dim whitespace-nowrap",
 
     dialogContent:
       "sm:max-w-[520px] max-h-[85vh] bg-surface border border-border-subtle text-white p-0 overflow-hidden",

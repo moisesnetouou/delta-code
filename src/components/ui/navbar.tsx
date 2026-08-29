@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/i18n/language-context";
 import { LanguageToggle } from "./language-toggle";
@@ -10,12 +11,14 @@ const sectionIds = [
   "about",
   "how-i-work",
   "timeline",
+  "projects",
   "skills",
   "contact",
 ] as const;
 
 export function Navbar() {
   const { t } = useLanguage();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -24,6 +27,7 @@ export function Navbar() {
     { id: "about", label: t.nav.about },
     { id: "how-i-work", label: t.nav.howIWork },
     { id: "timeline", label: t.nav.journey },
+    { id: "projects", label: t.nav.projects },
     { id: "skills", label: t.nav.skills },
     { id: "contact", label: t.nav.contact },
   ];
@@ -49,11 +53,13 @@ export function Navbar() {
   }, []);
 
   const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+      return;
     }
+    router.push(id === "hero" ? "/" : `/#${id}`);
   };
 
   return (

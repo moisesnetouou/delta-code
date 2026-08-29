@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Moisés Neto - Frontend Engineer";
+export const alt = "Moisés Neto - Engenheiro de Software";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -34,10 +34,10 @@ export default function OpengraphImage() {
         Moisés Neto
       </div>
       <div style={{ fontSize: 42, color: "#00d9ff", marginTop: 24 }}>
-        Frontend Engineer · React · Next.js
+        Engenheiro de Software · React · Next.js · Node.js
       </div>
       <div style={{ fontSize: 30, color: "#c0c0c8", marginTop: 28 }}>
-        Arquitetura, testes automatizados e automação com IA
+        Do requisito à produção: interface, API, testes e deploy
       </div>
     </div>,
     { ...size },

@@ -41,7 +41,6 @@ test.describe("Navegação — navbar e âncoras", () => {
       { timeout: 8000 },
     );
 
-    // no mobile o clique fecha o drawer; reabrir antes do próximo item
     await openMobileMenuIfPresent(page);
     await page
       .getByRole("button", { name: "Contato", exact: true })

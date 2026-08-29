@@ -4,12 +4,12 @@ test.describe("SEO — metadata e tags sociais", () => {
   test("title e meta description corretos", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page).toHaveTitle(/Moisés Neto.+Frontend Engineer/);
+    await expect(page).toHaveTitle(/Moisés Neto.+Engenheiro de Software/);
 
     const description = page.locator('meta[name="description"]');
     await expect(description).toHaveAttribute(
       "content",
-      /Frontend Engineer com \+5 anos/,
+      /Engenheiro de Software com \+5 anos/,
     );
   });
 

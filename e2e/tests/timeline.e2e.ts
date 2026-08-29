@@ -4,10 +4,14 @@ test.describe("Timeline — Minha Jornada", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/#timeline");
     await page.locator("#timeline").scrollIntoViewIfNeeded();
-    await page.waitForTimeout(300);
+    await page
+      .locator("#timeline")
+      .getByRole("heading", { name: "Engenheiro de Software" })
+      .first()
+      .waitFor({ state: "visible" });
   });
 
-  test("renderiza título, subtítulo de anos e cards de experiências", async ({
+  test("renderiza título, subtítulo de anos e a experiência consolidada", async ({
     page,
   }) => {
     const timeline = page.locator("#timeline");
@@ -18,37 +22,49 @@ test.describe("Timeline — Minha Jornada", () => {
     await expect(timeline.getByText(/anos de experiência/i)).toBeVisible();
 
     await expect(
-      timeline.getByRole("heading", { name: "Frontend Engineer" }).first(),
+      timeline.getByRole("heading", { name: "Engenheiro de Software" }).first(),
     ).toBeVisible();
     await expect(
-      timeline.getByRole("heading", { name: "Tech Lead Temporário" }).first(),
-    ).toBeVisible();
-    await expect(
-      timeline
-        .getByRole("heading", { name: "Desenvolvedor Frontend Pleno" })
-        .first(),
-    ).toBeVisible();
-    await expect(
-      timeline
-        .getByRole("heading", { name: "Desenvolvedor Frontend Jr" })
-        .first(),
+      timeline.getByText("Jul 2021 - Atual").filter({ visible: true }),
     ).toBeVisible();
   });
 
-  test("clicar em um card abre o modal de experiência com responsabilidades + impacto", async ({
+  test("card lista a progressão de cargos dentro da mesma empresa", async ({
+    page,
+  }) => {
+    const timeline = page.locator("#timeline");
+
+    await expect(
+      timeline.getByText("Progressão").filter({ visible: true }),
+    ).toBeVisible();
+
+    for (const role of [
+      "Frontend Jr",
+      "Frontend Pleno",
+      "Tech Lead interino",
+    ]) {
+      await expect(
+        timeline.getByText(role, { exact: true }).filter({ visible: true }),
+      ).toBeVisible();
+    }
+  });
+
+  test("clicar no card abre o modal com responsabilidades + impacto", async ({
     page,
   }) => {
     await page
       .locator("#timeline")
-      .getByRole("heading", { name: "Desenvolvedor Frontend Jr" })
+      .getByRole("heading", { name: "Engenheiro de Software" })
       .first()
       .click();
 
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByText("Responsabilidades")).toBeVisible();
-    await expect(dialog.getByText("Impacto")).toBeVisible();
-    await expect(dialog.getByText("Tecnologias")).toBeVisible();
+    for (const label of ["Responsabilidades", "Impacto", "Tecnologias"]) {
+      await expect(
+        dialog.getByRole("heading", { name: label, exact: true }),
+      ).toBeVisible();
+    }
   });
 
   test("modal de tecnologias abre via botão +N", async ({ page }) => {
@@ -63,7 +79,9 @@ test.describe("Timeline — Minha Jornada", () => {
 
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole("heading", { name: "Tecnologias" })).toBeVisible();
+    await expect(
+      dialog.getByRole("heading", { name: "Tecnologias" }),
+    ).toBeVisible();
   });
 
   test("clicar em uma skill no modal de tecnologias abre o SkillDialog", async ({
@@ -96,7 +114,7 @@ test.describe("Timeline — Minha Jornada", () => {
   }) => {
     await page
       .locator("#timeline")
-      .getByRole("heading", { name: "Frontend Engineer" })
+      .getByRole("heading", { name: "Engenheiro de Software" })
       .first()
       .click();
 

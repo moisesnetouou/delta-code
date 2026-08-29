@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   Bug,
+  ClipboardList,
   Cog,
   Globe,
   Layers,
@@ -44,6 +45,7 @@ const categoryIcons: Record<CategoryType, ReactNode> = {
   bots: <MessageCircle className="w-3 h-3" />,
   cms: <Globe className="w-3 h-3" />,
   ferramentas: <Wrench className="w-3 h-3" />,
+  produto: <ClipboardList className="w-3 h-3" />,
   soft: <Users className="w-3 h-3" />,
 };
 

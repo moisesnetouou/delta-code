@@ -9,8 +9,6 @@ import {
 } from "@/lib/achievements";
 
 function openExternal(url: string, achievement: AchievementId) {
-  // Open synchronously inside the click gesture, otherwise browsers block the
-  // popup (a delayed window.open breaks the user-activation chain).
   window.open(url, "_blank", "noopener,noreferrer");
   if (!isAchievementUnlocked(achievement)) unlockAchievement(achievement);
 }

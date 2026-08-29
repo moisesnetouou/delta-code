@@ -18,20 +18,20 @@ test.describe("About — bio e dados pessoais", () => {
     await aboutSection.scrollIntoViewIfNeeded();
 
     await expect(
-      aboutSection.getByText(/Frontend Engineer com \+5 anos/i),
+      aboutSection.getByText(/Engenheiro de Software com \+5 anos em React/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/Uso IA como alavanca de entrega/i),
+      aboutSection.getByText(/Já parti de uma necessidade de negócio/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/Construo produtos do zero/i),
+      aboutSection.getByText(/Como tech lead interino/i),
     ).toBeVisible();
     await expect(
-      aboutSection.getByText(/O que guia meu trabalho/i),
+      aboutSection.getByText(/procuro aplicar essa bagagem/i),
     ).toBeVisible();
   });
 
-  test("blocos de Formação, Idiomas e Certificações estão visíveis", async ({
+  test("blocos de Formação, Idiomas, Certificações e Destaques estão visíveis", async ({
     page,
   }) => {
     await page.goto("/#about");
@@ -40,6 +40,7 @@ test.describe("About — bio e dados pessoais", () => {
     await expect(page.getByText("Formação")).toBeVisible();
     await expect(page.getByText("Idiomas")).toBeVisible();
     await expect(page.getByText("Certificações")).toBeVisible();
+    await expect(page.getByText("Destaques & Impacto")).toBeVisible();
   });
 
   test("certificações abrem em nova aba (rel + target corretos)", async ({
