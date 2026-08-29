@@ -17,8 +17,6 @@ export const aboutStyles = tv({
     bioSection: "flex flex-col md:flex-row gap-5 md:gap-8 items-start",
     avatarWrapper:
       "relative w-24 h-32 md:w-36 md:h-52 flex-shrink-0 rounded-lg overflow-hidden border-2 border-accent-primary/30 bg-surface flex items-center justify-center",
-    avatarInitial:
-      "w-full h-full flex items-center justify-center text-3xl md:text-5xl font-bold text-accent-primary",
 
     textSection: "flex-1 space-y-3 md:space-y-4",
     bioTitle:
@@ -42,6 +40,11 @@ export const aboutStyles = tv({
     langItem: "text-sm text-foreground-muted",
     langName: "text-white",
     langLevel: "text-foreground-dim",
+    highlightList: "flex flex-col gap-3",
+    highlightItem: "flex flex-col gap-0.5",
+    highlightLabel:
+      "text-xs font-semibold uppercase tracking-wider text-accent-primary",
+    highlightText: "text-sm text-foreground-muted leading-relaxed",
     certList: "space-y-2",
     certCard:
       "block p-2 rounded-lg bg-surface border border-border-subtle hover:border-accent-secondary/50 transition-colors",

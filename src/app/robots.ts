@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl, SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://delta-code-dev.vercel.app/sitemap.xml",
-    host: "https://delta-code-dev.vercel.app",
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: SITE_URL,
   };
 }

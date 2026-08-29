@@ -11,14 +11,6 @@ export const howIWorkStyles = tv({
     title: "text-2xl md:text-3xl font-bold text-foreground",
     subtitle: "text-sm md:text-base text-foreground-muted mb-8 md:mb-10",
 
-    metricsGrid:
-      "grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10 md:mb-12",
-    metricTile:
-      "flex flex-col items-center justify-center text-center gap-1 p-4 md:p-5 rounded-xl bg-surface/50 border border-foreground-muted/10",
-    metricValue:
-      "text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent",
-    metricLabel: "text-xs md:text-sm text-foreground-muted leading-snug",
-
     grid: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6",
     card: "flex flex-col gap-3 p-5 md:p-6 rounded-xl bg-surface/50 border border-foreground-muted/10 hover:border-accent-primary/40 hover:bg-surface transition-all duration-200",
     cardIcon:

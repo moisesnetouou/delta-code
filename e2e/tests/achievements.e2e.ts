@@ -15,7 +15,6 @@ const REQUIRED_REGULAR = [
 test.describe("Achievements — completar 100% e revelar conquista secreta", () => {
   test.beforeEach(async ({ context }) => {
     await context.clearCookies();
-    // dispensa o banner de consentimento para ele não cobrir elementos no mobile
     await context.addCookies([
       {
         name: "delta-consent",
@@ -43,10 +42,8 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       content: "nextjs-portal{display:none!important}",
     });
 
-    // welcome (auto on mount)
     await expect(page.getByText("Bem-vindo")).toBeVisible({ timeout: 6000 });
 
-    // view_journey (scroll timeline + dispara evento scroll)
     await page.evaluate(() => {
       const el = document.getElementById("timeline");
       if (el) {
@@ -55,17 +52,15 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       }
     });
 
-    // open_experience
     await page
       .locator("#timeline")
-      .getByRole("heading", { name: "Frontend Engineer" })
+      .getByRole("heading", { name: "Engenheiro de Software" })
       .first()
       .click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await page.keyboard.press("Escape");
     await page.waitForTimeout(300);
 
-    // open_skill + curious (abrir 3 skills distintas na grade de habilidades)
     await page.locator("#skills").scrollIntoViewIfNeeded();
     for (const skill of ["React", "Next.js", "TypeScript"]) {
       const pattern = new RegExp(`^${skill.replace(".", "\\.")}$`);
@@ -78,19 +73,16 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       await page.waitForTimeout(300);
     }
 
-    // click_linkedin
     await page
       .locator("#hero")
       .getByRole("button", { name: "LinkedIn", exact: true })
       .click();
 
-    // click_github
     await page
       .locator("#hero")
       .getByRole("button", { name: "GitHub", exact: true })
       .click();
 
-    // download_cv
     const downloadPromise = page.waitForEvent("download");
     await page
       .locator("#hero")
@@ -98,7 +90,6 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       .click();
     await downloadPromise;
 
-    // view_contact (scroll + scroll event)
     await page.evaluate(() => {
       const el = document.getElementById("contact");
       if (el) {
@@ -107,7 +98,6 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       }
     });
 
-    // as 9 conquistas regulares desbloqueadas no cookie
     await expect
       .poll(
         async () => {
@@ -127,7 +117,6 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       )
       .toBe(true);
 
-    // com as 9 regulares no cookie, o manager desbloqueia platinum via polling
     await expect
       .poll(
         async () => {
@@ -139,14 +128,12 @@ test.describe("Achievements — completar 100% e revelar conquista secreta", () 
       )
       .toContain("platinum");
 
-    // abre painel de conquistas via Trophy button (canto inferior direito)
     const trophyButton = page.locator("button.fixed.bottom-6.right-6").first();
     await trophyButton.click();
 
     await expect(
       page.getByRole("heading", { name: "Conquistas" }),
     ).toBeVisible();
-    // progresso 100% confirma que todos os requisitos + platinum caíram no cookie
     await expect(page.getByText("100%")).toBeVisible();
     await expect(
       page.getByRole("button", { name: "Resetar Conquistas" }),

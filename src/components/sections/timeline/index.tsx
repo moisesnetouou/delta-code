@@ -150,7 +150,7 @@ export default function Timeline({ experiences }: TimelineProps) {
           </motion.div>
 
           <div className={styles.desktopWrapper()}>
-            <div className={styles.desktopLine()} />
+            {desktopRows.length > 1 && <div className={styles.desktopLine()} />}
 
             {desktopRows.map((row, rowIndex) => {
               const isPair = !!row.left;
@@ -188,6 +188,27 @@ export default function Timeline({ experiences }: TimelineProps) {
                         />
                       </div>
                     </div>
+                  </motion.div>
+                );
+              }
+
+              if (desktopRows.length === 1) {
+                return (
+                  <motion.div
+                    key={row.right.id}
+                    className={styles.desktopSingleRow()}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <TimelineCard
+                      experience={row.right}
+                      alignment="left"
+                      onClick={handleExperienceClick}
+                      onShowMoreSkills={setSelectedExperienceForSkills}
+                      onSkillClick={handleSkillClick}
+                    />
                   </motion.div>
                 );
               }

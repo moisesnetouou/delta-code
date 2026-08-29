@@ -2,29 +2,39 @@
 
 import { PlaywrightPlain } from "devicons-react";
 import {
+  Activity,
+  AudioLines,
   BookOpen,
   Bot,
   Brain,
+  ClipboardList,
+  Compass,
   Crown,
   FileText,
+  FolderGit2,
   GitMerge,
   GraduationCap,
+  Highlighter,
   KanbanSquare,
+  KeyRound,
   type LucideIcon,
   MessageCircle,
   MessageSquare,
   Pencil,
   Rocket,
+  Search,
   Smartphone,
   Sparkles,
   StickyNote,
   Terminal,
   TestTube,
+  Waypoints,
   Wind,
   Workflow,
 } from "lucide-react";
 import type React from "react";
 import {
+  SiBiome,
   SiChakraui,
   SiClaude,
   SiCypress,
@@ -34,19 +44,27 @@ import {
   SiFastify,
   SiFigma,
   SiGit,
+  SiGithub,
   SiGithubactions,
   SiHtml5,
   SiJavascript,
   SiJest,
   SiJira,
+  SiLinux,
+  SiMarkdown,
+  SiNetlify,
   SiNextdotjs,
+  SiNginx,
   SiNodedotjs,
+  SiPm2,
   SiPostgresql,
   SiPrisma,
   SiPrismic,
+  SiPython,
   SiRadixui,
   SiReact,
   SiReactquery,
+  SiRedis,
   SiSentry,
   SiShadcnui,
   SiStorybook,
@@ -68,7 +86,6 @@ function L(Icon: LucideIcon, color: string) {
 }
 
 const iconMap: Record<string, React.ReactNode> = {
-  // Frontend & Frameworks
   React: <SiReact size={SIZE} color="#61dafb" />,
   "Next.js": <SiNextdotjs size={SIZE} color="#ffffff" />,
   TypeScript: <SiTypescript size={SIZE} color="#3178c6" />,
@@ -112,17 +129,15 @@ const iconMap: Record<string, React.ReactNode> = {
   Stitches: L(Workflow, "#ec4899"),
   Storybook: <SiStorybook size={SIZE} color="#ff4785" />,
 
-  // Mobile
   "React Native": L(Smartphone, "#61dafb"),
   Expo: <SiExpo size={SIZE} color="#ffffff" />,
   NativeWind: L(Wind, "#38bdf8"),
 
-  // Design / Prototipação
   Figma: <SiFigma size={SIZE} color="#f24e1e" />,
+  Prototipagem: L(Pencil, "#f472b6"),
   Pencil: L(Pencil, "#fbbf24"),
   FigJam: L(StickyNote, "#facc15"),
 
-  // Testes & Qualidade
   Vitest: <SiVitest size={SIZE} color="#6e9f18" />,
   "Testing Library": <SiTestinglibrary size={SIZE} color="#e33332" />,
   Cypress: <SiCypress size={SIZE} color="#15B973" />,
@@ -132,16 +147,19 @@ const iconMap: Record<string, React.ReactNode> = {
   "Testes de Integração": L(TestTube, "#06b6d4"),
   "Testes E2E": L(TestTube, "#a855f7"),
 
-  // Automação & IA
   Claude: <SiClaude size={SIZE} color="#d97706" />,
+  "Claude Design": <SiClaude size={SIZE} color="#c084fc" />,
   OpenCode: L(Terminal, "#2563eb"),
   "Playwright MCP": <PlaywrightPlain size={SIZE} color="#2ead5f" />,
   "Sentry MCP": <SiSentry size={SIZE} color="#7c2eaa" />,
   n8n: L(Workflow, "#ea4b71"),
   "CLI customizado com IA": L(Sparkles, "#06b6d4"),
+  "Orquestração de Agentes": L(Workflow, "#a855f7"),
+  Whisper: L(AudioLines, "#22d3ee"),
+  Embeddings: L(Waypoints, "#34d399"),
+  "Busca Semântica": L(Search, "#60a5fa"),
   "Automação de Processos": L(Workflow, "#8b5cf6"),
 
-  // Bots & Chatbots
   Blip: (
     <svg
       width={SIZE}
@@ -161,9 +179,11 @@ const iconMap: Record<string, React.ReactNode> = {
   "RD Conversas": L(MessageCircle, "#f97316"),
   ManyChat: L(MessageSquare, "#3b82f6"),
   BotConversas: L(Bot, "#22c55e"),
+  "Telemetria de Atendimento": L(Activity, "#38bdf8"),
 
-  // CMS & Headless
   Prismic: <SiPrismic size={SIZE} color="#5163ba" />,
+  Keystatic: L(FolderGit2, "#f59e0b"),
+  Markdoc: <SiMarkdown size={SIZE} color="#f0f0f5" />,
   Hygraph: (
     <svg
       width={SIZE}
@@ -180,26 +200,36 @@ const iconMap: Record<string, React.ReactNode> = {
     </svg>
   ),
 
-  // Backend
   "Node.js": <SiNodedotjs size={SIZE} color="#339933" />,
+  Python: <SiPython size={SIZE} color="#3776ab" />,
   Fastify: <SiFastify size={SIZE} color="#ffffff" />,
   Prisma: <SiPrisma size={SIZE} color="#2d3748" />,
   Drizzle: <SiDrizzle size={SIZE} color="#c5f74f" />,
   "REST API": <SiSwagger size={SIZE} color="#85ea2d" />,
   PostgreSQL: <SiPostgresql size={SIZE} color="#336791" />,
+  Redis: <SiRedis size={SIZE} color="#dc382d" />,
   Swagger: <SiSwagger size={SIZE} color="#85ea2d" />,
 
-  // Ferramentas & Infra
   Git: <SiGit size={SIZE} color="#f05032" />,
+  GitHub: <SiGithub size={SIZE} color="#ffffff" />,
   "GitHub Actions": <SiGithubactions size={SIZE} color="#2088ff" />,
   "CI/CD": L(GitMerge, "#22c55e"),
   Jira: <SiJira size={SIZE} color="#0052cc" />,
   Vercel: <SiVercel size={SIZE} color="#ffffff" />,
   Railway: L(Rocket, "#a855f7"),
+  Netlify: <SiNetlify size={SIZE} color="#00c7b7" />,
   Docker: <SiDocker size={SIZE} color="#2496ed" />,
+  Nginx: <SiNginx size={SIZE} color="#009639" />,
+  PM2: <SiPm2 size={SIZE} color="#2b037a" />,
+  Linux: <SiLinux size={SIZE} color="#fcc624" />,
   Deploy: L(Rocket, "#06b6d4"),
+  Biome: <SiBiome size={SIZE} color="#60a5fa" />,
+  Shiki: L(Highlighter, "#4d9de0"),
 
-  // Soft Skills
+  "Requisitos (RF/RNF)": L(ClipboardList, "#14b8a6"),
+  "Definição de Produto": L(Compass, "#2dd4bf"),
+  "Controle de Acesso por Perfil": L(KeyRound, "#0d9488"),
+
   "Liderança Técnica": L(Crown, "#fbbf24"),
   Mentoria: L(GraduationCap, "#3b82f6"),
   Scrum: L(BookOpen, "#22c55e"),

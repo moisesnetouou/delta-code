@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, Globe, GraduationCap, MapPin, Sparkles } from "lucide-react";
+import {
+  Award,
+  Globe,
+  GraduationCap,
+  MapPin,
+  Sparkles,
+  Target,
+} from "lucide-react";
 import Image from "next/image";
 import { certifications, education } from "@/data/portfolio-data";
 import { useLanguage } from "@/i18n/language-context";
@@ -19,6 +26,8 @@ export default function About() {
     educationLabel,
     languagesLabel,
     certificationsLabel,
+    highlightsLabel,
+    highlights,
     course,
     languages,
   } = t.about;
@@ -124,6 +133,29 @@ export default function About() {
                       </span>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {highlights && highlights.length > 0 && (
+                <div className={styles.block()}>
+                  <div className={styles.blockHeader()}>
+                    <Target className={styles.blockIcon()} />
+                    <span className={styles.blockLabel()}>
+                      {highlightsLabel}
+                    </span>
+                  </div>
+                  <ul className={styles.highlightList()}>
+                    {highlights.map((item) => (
+                      <li key={item.label} className={styles.highlightItem()}>
+                        <span className={styles.highlightLabel()}>
+                          {item.label}
+                        </span>
+                        <span className={styles.highlightText()}>
+                          {item.description}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 

@@ -10,22 +10,23 @@ import { ToasterProvider } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { personalInfo } from "@/data/portfolio-data";
 import { LanguageProvider } from "@/i18n/language-context";
+import { absoluteUrl, SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const SITE_URL = "https://delta-code-dev.vercel.app/";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Moisés Neto",
-  jobTitle: "Frontend Engineer",
-  url: SITE_URL,
+  jobTitle: "Engenheiro de Software",
+  url: absoluteUrl("/"),
   sameAs: [personalInfo.linkedin, personalInfo.github],
   knowsAbout: [
     "React",
     "Next.js",
     "TypeScript",
     "Node.js",
+    "Redis",
+    "Segurança de aplicação",
     "Automação com IA",
     "Testes automatizados",
     "Arquitetura frontend",
@@ -50,12 +51,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://delta-code-dev.vercel.app/"),
-  title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
+  metadataBase: new URL(SITE_URL),
+  title: "Moisés Neto | Engenheiro de Software (React, Next.js & Node.js)",
   description:
-    "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
+    "Engenheiro de Software com +5 anos em React, Next.js e TypeScript, do requisito à produção: interface, API, testes, deploy e observabilidade. Manaus, Brasil.",
   keywords: [
+    "Engenheiro de Software",
+    "Software Engineer",
     "Frontend Developer",
+    "Full Stack",
+    "Node.js",
     "React",
     "Next.js",
     "TypeScript",
@@ -83,21 +88,21 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://delta-code-dev.vercel.app/",
-    title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
+    url: absoluteUrl("/"),
+    title: "Moisés Neto | Engenheiro de Software (React, Next.js & Node.js)",
     description:
-      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável. Manaus, Brasil.",
+      "Engenheiro de Software com +5 anos em React, Next.js e TypeScript, do requisito à produção: interface, API, testes, deploy e observabilidade. Manaus, Brasil.",
     siteName: "Moisés Neto",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Moisés Neto | Frontend Engineer (React & Next.js) | IA & Automação",
+    title: "Moisés Neto | Engenheiro de Software (React, Next.js & Node.js)",
     description:
-      "Frontend Engineer com +5 anos em React, Next.js e TypeScript. Liderança técnica, automação com IA e arquitetura escalável.",
+      "Engenheiro de Software com +5 anos em React, Next.js e TypeScript, do requisito à produção: interface, API, testes, deploy e observabilidade.",
     creator: "@moisesnetouou",
   },
   alternates: {
-    canonical: "https://delta-code-dev.vercel.app/",
+    canonical: absoluteUrl("/"),
   },
 };
 

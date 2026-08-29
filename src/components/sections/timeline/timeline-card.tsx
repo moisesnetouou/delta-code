@@ -56,12 +56,34 @@ export function TimelineCard({
         </span>
       </div>
       <p className={descClass}>{experienceText?.description}</p>
-      <TechBadgesList
-        technologies={experience.technologies}
-        justify={alignment === "right" && !isMobile ? "end" : "start"}
-        onSkillClick={onSkillClick}
-        onShowMore={() => onShowMoreSkills(experience)}
-      />
+
+      {experienceText?.progression && experienceText.progression.length > 0 && (
+        <div className={styles.progression()}>
+          <span className={styles.progressionLabel()}>
+            {t.timeline.progressionLabel}
+          </span>
+          <ol className={styles.progressionList()}>
+            {experienceText.progression.map((step) => (
+              <li key={step.role} className={styles.progressionItem()}>
+                <span className={styles.progressionDot()} />
+                <span className={styles.progressionRole()}>{step.role}</span>
+                <span className={styles.progressionPeriod()}>
+                  {step.period}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      <div className={styles.cardTechWrapper()}>
+        <TechBadgesList
+          technologies={experience.technologies}
+          justify={alignment === "right" && !isMobile ? "end" : "start"}
+          onSkillClick={onSkillClick}
+          onShowMore={() => onShowMoreSkills(experience)}
+        />
+      </div>
     </motion.div>
   );
 }

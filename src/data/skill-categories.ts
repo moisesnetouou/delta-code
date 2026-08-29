@@ -7,7 +7,8 @@ export type CategoryType =
   | "bots"
   | "ferramentas"
   | "soft"
-  | "cms";
+  | "cms"
+  | "produto";
 
 export interface CategoryConfig {
   type: CategoryType;
@@ -24,6 +25,7 @@ export const categoryConfig: Record<string, CategoryConfig> = {
   "Bots & Chatbots": { type: "bots", label: "Bots" },
   Backend: { type: "backend", label: "Back" },
   "Ferramentas & Infra": { type: "ferramentas", label: "Infra" },
+  "Engenharia de Produto": { type: "produto", label: "Produto" },
   "Soft Skills": { type: "soft", label: "Soft" },
 };
 
@@ -84,6 +86,12 @@ export const categoryStyles: Record<CategoryType, CategoryStyle> = {
     border: "border-orange-500/30",
     text: "text-orange-400",
     gradient: "from-orange-500 to-red-500",
+  },
+  produto: {
+    bg: "bg-teal-500/10",
+    border: "border-teal-500/30",
+    text: "text-teal-400",
+    gradient: "from-teal-500 to-emerald-500",
   },
   soft: {
     bg: "bg-blue-500/10",

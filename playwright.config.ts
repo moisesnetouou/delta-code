@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const isCI = !!process.env.CI;
+const port = Number(process.env.E2E_PORT ?? 3000);
+const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${port}`;
 
 export default defineConfig({
   testDir: "./e2e",
@@ -17,7 +19,7 @@ export default defineConfig({
   reporter: isCI ? "list" : "html",
 
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL,
     actionTimeout: 10_000,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
@@ -36,8 +38,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npm run start",
-    port: 3000,
+    command: `npm run start -- --port ${port}`,
+    port,
     reuseExistingServer: !isCI,
     timeout: 120_000,
   },

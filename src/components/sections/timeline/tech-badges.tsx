@@ -57,7 +57,7 @@ export function TechBadgesList({
   onShowMore,
 }: TechBadgesListProps) {
   const { t } = useLanguage();
-  const maxVisible = 4;
+  const maxVisible = 6;
   const visible = technologies.slice(0, maxVisible);
   const remaining = technologies.length - maxVisible;
   const justifyClass = justify === "end" ? "justify-end" : "justify-start";

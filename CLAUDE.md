@@ -1,6 +1,6 @@
 # CLAUDE.md — delta-code
 
-Personal portfolio site for Moisés Neto (Frontend Engineer). Public URL: <https://delta-code-dev.vercel.app/>.
+Personal portfolio site for Moisés Neto (Software Engineer). Public URL: <https://delta-code-dev.vercel.app/>.
 
 ## Stack
 
@@ -38,30 +38,34 @@ Personal portfolio site for Moisés Neto (Frontend Engineer). Public URL: <https
 ```
 src/
 ├── app/                    # App Router: layout, page, robots.ts, sitemap.ts, opengraph-image.tsx
+│   └── projects/[slug]/    #   project case-study route + its own opengraph-image.tsx
 ├── components/
 │   ├── achievements/       # Gamification overlay (AchievementsWrapper + manager)
-│   ├── sections/           # Page sections (order: hero → about → how-i-work → timeline → skills → contact)
+│   ├── sections/           # Page sections (order: hero → about → how-i-work → timeline → projects → skills → contact)
 │   │   ├── hero/           #   index.tsx | styles.ts | types.ts
 │   │   ├── about/
 │   │   ├── how-i-work/
 │   │   ├── timeline/
+│   │   ├── projects/       #   section: card grid, links to /projects/[slug]
+│   │   ├── project-detail/ #   case-study page body, rendered by the route
 │   │   ├── skills/
 │   │   └── contact/
 │   ├── skill-dialog/       # Shared skill-detail dialog
 │   └── ui/                 # Reusable primitives (navbar, dialog, back-to-top, language-toggle, cookie-consent, clarity-provider, sonner, ...)
 ├── data/                   # Structural portfolio data (non-translatable)
 │   ├── portfolio-data.ts   #   personalInfo, experiences (ids/dates/tech), skills, certifications, education, coreStack
+│   ├── projects.ts         #   Project type, projects array, period helper + status styles
 │   └── skill-categories.ts #   category type + color styles
 ├── i18n/                   # PT/EN dictionaries + LanguageProvider
 │   ├── pt.ts | en.ts       #   pt.ts is the source of truth; en.ts must match its shape
 │   ├── dictionary.ts       #   `Content` interface + `dictionaries` map
 │   ├── language-context.tsx#   LanguageProvider + useLanguage()
 │   └── types.ts            #   Locale, cookie name
-├── lib/                    # utils.ts (cn), icons.tsx, achievements.ts
+├── lib/                    # utils.ts (cn), icons.tsx, achievements.ts, site.ts (SITE_URL)
 └── types/                  # Shared TS types
 ```
 
-Note: certifications render inside About; there is no standalone Projects/Certifications/Experience section (the timeline IS the experience list).
+Note: certifications render inside About; there is no standalone Certifications/Experience section (the timeline IS the experience list). Projects is a real section plus the only nested route in the repo, `/projects/[slug]`.
 
 ## Conventions
 
@@ -94,7 +98,8 @@ Use `@/` alias (configured in `tsconfig.json`) → maps to `src/`.
 
 ### SEO/Metadata
 
-- Centralized in `src/app/layout.tsx` (locale `pt_BR`, canonical). JSON-LD (`Person`) injected there.
+- Centralized in `src/app/layout.tsx` (locale `pt_BR`, canonical). JSON-LD (`Person`) injected there. `SITE_URL` and `absoluteUrl()` come from `src/lib/site.ts` — do not hardcode the origin again.
+- `/projects/[slug]` builds its own metadata from `dictionaries.pt` (locale is a client cookie, so route metadata stays PT) and ships a per-project OG card.
 - `app/robots.ts`, `app/sitemap.ts`, and `app/opengraph-image.tsx` (generated OG image) use the App Router file conventions — do not add a manual `/og-image.png`.
 - Security headers (CSP, X-Frame-Options, etc.) are set in `next.config.ts` (`headers()`); CSP must keep allowing `*.clarity.ms` if analytics stays.
 
@@ -102,7 +107,7 @@ Use `@/` alias (configured in `tsconfig.json`) → maps to `src/`.
 
 Full conventions (naming, LGPD-safe fixtures, mocking boundaries, e2e setup) live in the `testing` skill. Summary:
 
-- **E2E (Playwright): implemented.** Specs in `e2e/tests/*.e2e.ts` run against the dev server at `:3000` (`baseURL` in `playwright.config.ts`). One spec per section/aspect (hero, about, skills, timeline, contact, navigation, seo, achievements). No auth, no API mocks — the site is static. Import `test`/`expect` straight from `@playwright/test`.
+- **E2E (Playwright): implemented.** Specs in `e2e/tests/*.e2e.ts` run against a production server on `:3000` by default. The port is env-driven (`E2E_PORT` / `E2E_BASE_URL` in `playwright.config.ts`) because `reuseExistingServer` will silently run the whole suite against whatever else is already on that port — use `E2E_PORT=3100 npx playwright test` when 3000 is taken. One spec per section/aspect (hero, about, skills, timeline, contact, navigation, seo, achievements). No auth, no API mocks — the site is static. Import `test`/`expect` straight from `@playwright/test`.
 - **Unit (Vitest + Testing Library): recommended, not yet wired.** No `vitest.config`/`__tests__` today; the `unit-*` rules document the convention for when it's added.
 - Descriptions verb-first, no `should` (EN for unit, pt-BR for e2e). Never `waitForTimeout`. Never real personal names in fixtures (LGPD, Lei 13.709/2018).
 
@@ -126,7 +131,7 @@ Full conventions (naming, LGPD-safe fixtures, mocking boundaries, e2e setup) liv
 
 - No backend/API routes currently.
 - No DB / auth.
-- i18n is PT/EN via a client toggle only — no per-locale routes (`/en`), so the EN variant isn't separately indexable (conscious tradeoff).
+- i18n is PT/EN via a client toggle only — no per-locale routes (`/en`), so the EN variant isn't separately indexable (conscious tradeoff). The same applies to `/projects/[slug]` metadata, which is always PT.
 
 ## Git Flow
 

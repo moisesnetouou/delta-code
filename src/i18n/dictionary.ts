@@ -1,3 +1,4 @@
+import type { ProjectKind, ProjectStatus } from "@/data/projects";
 import type { AchievementId } from "@/lib/achievements";
 import { en } from "./en";
 import { pt } from "./pt";
@@ -8,6 +9,8 @@ interface ExperienceText {
   period: string;
   location: string;
   description: string;
+  /** Role milestones inside the same company, oldest first */
+  progression: { role: string; period: string }[];
 }
 
 interface ExperienceDetail {
@@ -15,9 +18,35 @@ interface ExperienceDetail {
   impact: string[];
 }
 
+/** Every project: card plus dialog. */
+interface ProjectCopy {
+  title: string;
+  tagline: string;
+  /** Card summary, two lines at most */
+  summary: string;
+  role: string;
+  /** Dialog body */
+  overview: string[];
+  highlights: string[];
+}
+
+/** Only projects with `caseStudy: true` in `src/data/projects.ts`. */
+interface ProjectCaseStudy {
+  /** Detail-page hero blurb */
+  intro: string;
+  repoNote: string;
+  problem: string[];
+  architectureIntro: string;
+  architecture: string[];
+  /** One per entry in `screenshots`, same order */
+  screenshotCaptions: string[];
+  thumbnailAlt: string;
+  ctaTitle: string;
+  ctaDescription: string;
+}
+
 export interface Content {
   hero: {
-    title: string;
     roles: string[];
     tagline: string;
     highlights: string[];
@@ -29,12 +58,12 @@ export interface Content {
     about: string;
     howIWork: string;
     journey: string;
+    projects: string;
     skills: string;
     contact: string;
     openMenu: string;
     closeMenu: string;
   };
-  metrics: { value: string; label: string }[];
   howIWork: {
     heading: string;
     subtitle: string;
@@ -48,6 +77,8 @@ export interface Content {
     educationLabel: string;
     languagesLabel: string;
     certificationsLabel: string;
+    highlightsLabel: string;
+    highlights: { label: string; description: string }[];
     course: string;
     languages: { name: string; level: string }[];
   };
@@ -57,11 +88,45 @@ export interface Content {
     responsibilitiesLabel: string;
     impactLabel: string;
     technologiesLabel: string;
+    progressionLabel: string;
     clickForDetails: string;
     techDialogHint: string;
     moreTemplate: string;
     experiences: Record<string, ExperienceText>;
     details: Record<string, ExperienceDetail>;
+  };
+  projects: {
+    heading: string;
+    subtitle: string;
+    ongoing: string;
+    /** Elapsed-time labels, each with a `{count}` placeholder */
+    duration: { month: string; months: string; year: string; years: string };
+    moreTemplate: string;
+    viewCase: string;
+    viewLive: string;
+    viewRepo: string;
+    backToPortfolio: string;
+    stackHint: string;
+    notFound: string;
+    viewDetails: string;
+    groups: Record<ProjectKind, string>;
+    labels: {
+      problem: string;
+      stack: string;
+      architecture: string;
+      period: string;
+      role: string;
+      repo: string;
+      highlights: string;
+    };
+    eyebrows: {
+      problem: string;
+      stack: string;
+      architecture: string;
+    };
+    status: Record<ProjectStatus, string>;
+    items: Record<string, ProjectCopy>;
+    caseStudies: Record<string, ProjectCaseStudy>;
   };
   skills: {
     heading: string;

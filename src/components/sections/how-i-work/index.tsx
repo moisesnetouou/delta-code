@@ -18,7 +18,6 @@ const itemIcons: ReactNode[] = [
 export default function HowIWork() {
   const { t } = useLanguage();
   const { heading, subtitle, items } = t.howIWork;
-  const metrics = t.metrics;
 
   return (
     <section id="how-i-work" className={styles.section()}>
@@ -39,24 +38,6 @@ export default function HowIWork() {
         </motion.div>
 
         {subtitle && <p className={styles.subtitle()}>{subtitle}</p>}
-
-        {metrics && metrics.length > 0 && (
-          <div className={styles.metricsGrid()}>
-            {metrics.map((metric, index) => (
-              <motion.div
-                key={metric.label}
-                className={styles.metricTile()}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-              >
-                <span className={styles.metricValue()}>{metric.value}</span>
-                <span className={styles.metricLabel()}>{metric.label}</span>
-              </motion.div>
-            ))}
-          </div>
-        )}
 
         <div className={styles.grid()}>
           {items.map((item, index) => (
