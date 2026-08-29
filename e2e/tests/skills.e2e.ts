@@ -14,19 +14,17 @@ test.describe("Skills — habilidades por categoria", () => {
       skills.getByRole("heading", { name: "Habilidades" }),
     ).toBeVisible();
 
-    await expect(
-      skills.getByRole("heading", { name: "Frontend & Frameworks" }),
-    ).toBeVisible();
-    await expect(skills.getByRole("heading", { name: "Mobile" })).toBeVisible();
-    await expect(
-      skills.getByRole("heading", { name: "Automação & IA" }),
-    ).toBeVisible();
-    await expect(
-      skills.getByRole("heading", { name: "Backend" }),
-    ).toBeVisible();
-    await expect(
-      skills.getByRole("heading", { name: "Soft Skills" }),
-    ).toBeVisible();
+    for (const category of [
+      "Frontend & Frameworks",
+      "Mobile",
+      "Automação & IA",
+      "Backend",
+      "Soft Skills",
+    ]) {
+      const heading = skills.getByRole("heading", { name: category });
+      await heading.scrollIntoViewIfNeeded();
+      await expect(heading).toBeVisible();
+    }
   });
 
   test("clicar em uma skill com descrição abre o SkillDialog", async ({

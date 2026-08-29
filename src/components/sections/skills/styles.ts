@@ -2,8 +2,8 @@ import { tv } from "tailwind-variants";
 
 export const skillsStyles = tv({
   slots: {
-    section: "py-12 md:py-16 px-5 md:px-8 lg:px-16 relative overflow-hidden",
-    container: "max-w-6xl mx-auto relative z-10",
+    section: "py-12 md:py-16 px-5 md:px-8 lg:px-16",
+    container: "max-w-6xl mx-auto",
     header: "flex items-center gap-3 mb-8 md:mb-10",
     icon: "w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2 rounded-lg bg-accent-primary/10 text-accent-primary flex items-center justify-center",
     title: "text-2xl md:text-3xl font-bold text-foreground",

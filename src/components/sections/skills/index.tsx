@@ -50,6 +50,21 @@ const categoryIcons: Record<CategoryType, ReactNode> = {
 
 const FALLBACK_CATEGORY_TYPE: CategoryType = "frontend";
 
+const MOBILE_COLUMNS = 2;
+const TILE_HEIGHT = 80;
+const TILE_GAP = 8;
+const CATEGORY_ROW_HEIGHT = 44;
+
+/**
+ * Placeholder height for a category while it is skipped by
+ * `content-visibility: auto`. Only affects the first paint: the `auto` keyword
+ * makes the browser cache the real size once the category has rendered.
+ */
+function estimateCategoryHeight(itemCount: number) {
+  const rows = Math.ceil(itemCount / MOBILE_COLUMNS);
+  return CATEGORY_ROW_HEIGHT + rows * TILE_HEIGHT + (rows - 1) * TILE_GAP;
+}
+
 export default function Skills({ skills }: SkillsProps) {
   const { t } = useLanguage();
   const [selectedSkill, setSelectedSkill] = useState<SelectedSkill | null>(
@@ -134,7 +149,15 @@ export default function Skills({ skills }: SkillsProps) {
               const icon = categoryIcons[type];
 
               return (
-                <div key={skillCategory.category}>
+                <div
+                  key={skillCategory.category}
+                  style={{
+                    contentVisibility: "auto",
+                    containIntrinsicSize: `auto ${estimateCategoryHeight(
+                      skillCategory.items.length,
+                    )}px`,
+                  }}
+                >
                   <div className={styles.categoryRow()}>
                     <span
                       className={`${styles.categoryBadge()} ${style.bg} ${style.border} ${style.text}`}

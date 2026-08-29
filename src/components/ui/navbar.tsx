@@ -67,7 +67,7 @@ export function Navbar() {
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#050508]/90 backdrop-blur-md border-b border-[#2a2a35]"
+            ? "bg-[#050508]/95 md:bg-[#050508]/90 md:backdrop-blur-md border-b border-[#2a2a35]"
             : "bg-transparent"
         }`}
         initial={{ y: -100 }}
