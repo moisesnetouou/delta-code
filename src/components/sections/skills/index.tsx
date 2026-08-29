@@ -108,30 +108,24 @@ export default function Skills({ skills }: SkillsProps) {
             >
               <h3 className={styles.coreHeading()}>{t.skills.coreHeading}</h3>
               <div className={styles.coreGrid()}>
-                {coreStack.map((item, index) => {
+                {coreStack.map((item) => {
                   const skillDict =
                     t.skills.descriptions[
                       item as keyof typeof t.skills.descriptions
                     ];
                   const category = techToCategory[item] ?? DEFAULT_CATEGORY;
                   return (
-                    <motion.button
+                    <button
                       key={item}
                       type="button"
                       onClick={() => handleSkillClick(item, category)}
                       className={styles.coreBadge()}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                     >
                       <div className={styles.coreIcon()}>{getIcon(item)}</div>
                       <span className={styles.coreName()}>
                         {skillDict?.name ?? item}
                       </span>
-                    </motion.button>
+                    </button>
                   );
                 })}
               </div>
@@ -173,30 +167,22 @@ export default function Skills({ skills }: SkillsProps) {
                   </div>
 
                   <div className={styles.grid()}>
-                    {skillCategory.items.map((item, itemIndex) => {
+                    {skillCategory.items.map((item) => {
                       const skillDict =
                         t.skills.descriptions[
                           item as keyof typeof t.skills.descriptions
                         ];
                       const hasDescription = !!skillDict;
                       return (
-                        <motion.button
+                        <button
                           key={item}
+                          type="button"
                           onClick={() =>
                             handleSkillClick(item, skillCategory.category)
                           }
                           disabled={!hasDescription}
                           aria-disabled={!hasDescription}
                           className={styles.skillItem()}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{
-                            duration: 0.3,
-                            delay: itemIndex * 0.02,
-                          }}
-                          whileHover={hasDescription ? { scale: 1.05 } : {}}
-                          whileTap={hasDescription ? { scale: 0.95 } : {}}
                         >
                           <div className={styles.skillIcon()}>
                             {getIcon(item)}
@@ -204,7 +190,7 @@ export default function Skills({ skills }: SkillsProps) {
                           <span className={styles.skillName()}>
                             {skillDict?.name ?? item}
                           </span>
-                        </motion.button>
+                        </button>
                       );
                     })}
                   </div>
